@@ -13,7 +13,9 @@ init(data){
 preload(){
     this.load.image("title_bg", "./assets/images/background.png");
     this.load.image("logo", "./assets/images/logo.png");
-
+    this.load.image("singleplayer_button", "./assets/images/singleplayerbutton.png")
+    this.load.image("multiplayer_button", "./assets/images/multiplayerbutton.png")
+    this.load.image("returntomenu", "./assets/images/returntomenu.png");
 }
 
 create(){
