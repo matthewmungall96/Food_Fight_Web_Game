@@ -1,33 +1,35 @@
-import { CST } from "../CST"
-export class SinglePlayer extends Phaser.Scene{
-    constructor(){
-        super({
-            key: CST.SCENES.SINGLE
-        })
-    }
-init(data){
-    console.log("Loaded Single Player")
+let singleScene = new Phaser.Scene('Single');
+
+singleScene.preload = function(){
+
 }
 
-create(){
-    
-    let returnToMenu = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /2, "returntomenu").setDepth(1);   
+singleScene.create = function(){
+    let returnToMenu = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /2-100, "returntomenu").setDepth(1);   
     returnToMenu.setInteractive();
+    console.log(returnToMenu);
 
     returnToMenu.on("pointerover", ()=>{
-        console.log("return to menu hovering")
+        console.log("return to menu hovering  from signle");
     })
 
     returnToMenu.on("pointerout", ()=>{
-        console.log("return to menu exit")
+        console.log("return to menu exit  from single");
     })
 
     returnToMenu.on("pointerdown", ()=>
-        this.clickReturnMenuButton());
+        clickReturnMenuButtonSingle());
 }
 
-clickReturnMenuButton(){
-    console.log("return to menu")
-    this.scene.start(CST.SCENES.MENU);
-    }
+singleScene.update = function(){
+    
 }
+
+function clickReturnMenuButtonSingle(){
+    console.log("return to menu from single");
+    
+    
+    game.scene.start('Menu');
+    game.scene.stop('Single');
+}
+

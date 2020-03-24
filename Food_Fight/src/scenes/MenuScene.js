@@ -1,19 +1,10 @@
-import { CST } from "../CST"
-export class MenuScene extends Phaser.Scene{
-    constructor(){
-        super({
-            key: CST.SCENES.MENU
-        })
-    }
-init(){
-    console.log("Hello Menu")
-    }
+let menuScene = new Phaser.Scene('Menu');
 
-preload(){
+menuScene.preload = function(){
 
-    }
+}
 
-create(){
+menuScene.create = function(){
     this.add.image(this.game.renderer.width /2, this.game.renderer.height / 2, "title_bg").setDepth(1);
     this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, "logo").setDepth(1);
     let singlePlayButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /2, "singleplayer_button").setDepth(1);   
@@ -31,7 +22,7 @@ create(){
     })
 
     singlePlayButton.on("pointerdown", ()=>
-        this.clickSinglePlayerButton());
+        clickSinglePlayerButton());
     
 
     multiPlayerButton.on("pointerover", ()=>{
@@ -43,18 +34,18 @@ create(){
     })
 
     multiPlayerButton.on("pointerdown", ()=>
-    this.clickMultiPlayerButton());
+    clickMultiPlayerButton());
 }
 
-clickSinglePlayerButton(){
+function clickSinglePlayerButton(){
         console.log("single player chosen")
-        this.scene.start(CST.SCENES.SINGLE);
+        game.scene.stop('Menu');
+        game.scene.start('Single');
     }
 
-clickMultiPlayerButton(){
+function clickMultiPlayerButton(){
         console.log("multiplayer chosen")
-        this.scene.start(CST.SCENES.MULTI);
-    }
+        game.scene.start('Multi');
+        game.scene.stop('Menu');
 }
-
 
