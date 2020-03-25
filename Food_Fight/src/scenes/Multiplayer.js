@@ -20,7 +20,7 @@ multiScene.create = function () {
         clickReturnMenuButton());
 }
 
-singleScene.update = function () {
+multiScene.update = function () {
 
 }
 

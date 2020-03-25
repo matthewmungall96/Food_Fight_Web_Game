@@ -5,7 +5,7 @@ singleScene.preload = function(){
 }
 
 singleScene.create = function(){
-    let returnToMenu = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /2-100, "returntomenu").setDepth(1);   
+    let returnToMenu = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /2, "returntomenu").setDepth(1);   
     returnToMenu.setInteractive();
     console.log(returnToMenu);
 
