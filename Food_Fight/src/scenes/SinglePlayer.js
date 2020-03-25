@@ -64,12 +64,12 @@ singleScene.create = function(){
 
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
-    enemyBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+    zombieBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
 
-    // Add background player, enemy, reticle, healthpoint sprites
+    // Add background player, zombie, reticle, healthpoint sprites
     var background = this.add.image(800, 600, 'background');
-    player = this.physics.add.sprite(800, 600, 'player_handgun');
-    enemy = this.physics.add.sprite(300, 600, 'player_handgun');
+    player = this.physics.add.sprite(800, 600, 'player_single');
+    zombie = this.physics.add.sprite(300, 600, 'enemy');
     reticle = this.physics.add.sprite(800, 700, 'target');
     hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
     hp2 = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
@@ -78,7 +78,7 @@ singleScene.create = function(){
     // Set image/sprite properties
     background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
     player.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
-    enemy.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
+    zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
     hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
     hp2.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
@@ -86,8 +86,8 @@ singleScene.create = function(){
 
     // Set sprite variables
     player.health = 3;
-    enemy.health = 3;
-    enemy.lastFired = 0;
+    zombie.health = 3;
+    zombie.lastFired = 0;
 
     // Set camera properties
     this.cameras.main.zoom = 0.5;
@@ -144,7 +144,7 @@ singleScene.create = function(){
         if (bullet)
         {
             bullet.fire(player, reticle);
-            this.physics.add.collider(enemy, bullet, enemyHitCallback);
+            this.physics.add.collider(zombie, bullet, zombieHitCallback);
         }
     }, this);
 
@@ -169,18 +169,18 @@ singleScene.create = function(){
     }, this);
 }
 
-function enemyHitCallback(enemyHit, bulletHit)
+function zombieHitCallback(zombieHit, bulletHit)
 {
-    // Reduce health of enemy
-    if (bulletHit.active === true && enemyHit.active === true)
+    // Reduce health of zombie
+    if (bulletHit.active === true && zombieHit.active === true)
     {
-        enemyHit.health = enemyHit.health - 1;
-        console.log("Enemy hp: ", enemyHit.health);
+        zombieHit.health = zombieHit.health - 1;
+        console.log("zombie hp: ", zombieHit.health);
 
-        // Kill enemy if health <= 0
-        if (enemyHit.health <= 0)
+        // Kill zombie if health <= 0
+        if (zombieHit.health <= 0)
         {
-           enemyHit.setActive(false).setVisible(false);
+           zombieHit.setActive(false).setVisible(false);
         }
 
         // Destroy bullet
@@ -216,24 +216,24 @@ function playerHitCallback(playerHit, bulletHit)
     }
 }
 
-function enemyFire(enemy, player, time, gameObject)
+function zombieFire(zombie, player, time, gameObject)
 {
-    if (enemy.active === false)
+    if (zombie.active === false)
     {
         return;
     }
 
-    if ((time - enemy.lastFired) > 1000)
+    if ((time - zombie.lastFired) > 1000)
     {
         console.log('firing')
-        enemy.lastFired = time;
+        zombie.lastFired = time;
 
         // Get bullet from bullets group
-        var bullet = enemyBullets.get().setActive(true).setVisible(true);
+        var bullet = zombieBullets.get().setActive(true).setVisible(true);
 
         if (bullet)
         {
-            bullet.fire(enemy, player);
+            bullet.fire(zombie, player);
             // Add collider between bullet and player
             gameObject.physics.add.collider(player, bullet, playerHitCallback);
         }
@@ -302,8 +302,8 @@ singleScene.update = function(time, delta){
         // Rotates player to face towards reticle
         player.rotation = Phaser.Math.Angle.Between(player.x, player.y, reticle.x, reticle.y);
 
-        // Rotates enemy to face towards player
-        enemy.rotation = Phaser.Math.Angle.Between(enemy.x, enemy.y, player.x, player.y);
+        // Rotates zombie to face towards player
+        zombie.rotation = Phaser.Math.Angle.Between(zombie.x, zombie.y, player.x, player.y);
     
         //Make reticle move with player
         reticle.body.velocity.x = player.body.velocity.x;
@@ -316,8 +316,8 @@ singleScene.update = function(time, delta){
         constrainReticle(reticle);
         constrainPlayer(player)
     
-        // Make enemy fire
-        enemyFire(enemy, player, time, this);
+        // Make zombie fire
+        zombieFire(zombie, player, time, this);
 }
 
 function clickReturnMenuButton(){

@@ -6,7 +6,7 @@ var healthpoints = null;
 var reticle = null;
 var moveKeys = null;
 var playerBullets = null;
-var enemyBullets = null;
+var zombieBullets = null;
 var time = 0;
 
 loadScene.preload = function () {
@@ -16,10 +16,9 @@ loadScene.preload = function () {
     this.load.image("multiplayer_button", "./dist/assets/images/multi.png")
     this.load.image("returntomenu", "./dist/assets/images/returntomenu.png");
 
-    //this.load.spritesheet('player_handgun', 'assets/sprites/player_handgun.png',
-    //{ frameWidth: 66, frameHeight: 60 }
-    //); 
+    this.load.image('player_single', './dist/assets/characters/Survivor 1/survivor1_gun.png');
     //this.load.image('bullet', 'assets/sprites/bullets/bullet6.png');
+    this.load.image('enemy', './dist/assets/characters/Zombie 1/zombie.png');
     //this.load.image('target', 'assets/demoscene/ball.png');
     //this.load.image('background', 'assets/skies/underwater1.png');
 }
