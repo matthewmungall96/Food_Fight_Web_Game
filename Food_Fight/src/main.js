@@ -5,6 +5,13 @@ window.onload=function(){
     type: Phaser.AUTO,
     width: 800,
     height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+          gravity: { y: 0 },
+          debug: false
+        }
+    },
     backgroundColor: '#000000',
     parent: 'phaser-example',
     scene: [loadScene, menuScene, singleScene, multiScene]
