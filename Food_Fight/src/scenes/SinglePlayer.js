@@ -279,7 +279,26 @@ function constrainReticle(reticle)
         reticle.y = player.y-600;
 }
 
-singleScene.update = function(){
+function constrainPlayer(player) {
+
+    var distX = player.x - 800; // X distance between player & origin point
+    var distY = player.y - 600; // Y distance between player & origin point
+
+    var maxX = 100, maxY = 50;
+
+    // Ensures player cannot be moved offscreen (player follow)
+    if (distX > 100)
+        player.x = 800 + maxX;
+    else if (distX < -100)
+        player.x = 800 - maxX;
+
+    if (distY > 50)
+        player.y = 600 + maxY;
+    else if (distY < -50)
+        player.y = 600 - maxY;
+}
+
+singleScene.update = function(time, delta){
         // Rotates player to face towards reticle
         player.rotation = Phaser.Math.Angle.Between(player.x, player.y, reticle.x, reticle.y);
 
@@ -295,6 +314,7 @@ singleScene.update = function(){
     
         // Constrain position of constrainReticle
         constrainReticle(reticle);
+        constrainPlayer(player)
     
         // Make enemy fire
         enemyFire(enemy, player, time, this);
