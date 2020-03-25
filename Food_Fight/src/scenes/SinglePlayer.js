@@ -18,18 +18,19 @@ singleScene.create = function(){
     })
 
     returnToMenu.on("pointerdown", ()=>
-        clickReturnMenuButtonSingle());
+        clickReturnMenuButton());
 }
 
 singleScene.update = function(){
     
 }
 
-function clickReturnMenuButtonSingle(){
+function clickReturnMenuButton(){
     console.log("return to menu from single");
-    
+    game.scene.getScenes(true).forEach(scene => {
+        game.scene.stop(scene);
+    });
     
     game.scene.start('Menu');
-    game.scene.stop('Single');
 }
 

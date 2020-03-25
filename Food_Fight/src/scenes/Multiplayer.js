@@ -17,17 +17,10 @@ multiScene.create = function () {
     })
 
     returnToMenu.on("pointerdown", () =>
-        clickReturnMenuButtonMulti());
+        clickReturnMenuButton());
 }
 
 singleScene.update = function () {
 
-}
-
-function clickReturnMenuButtonMulti() {
-    console.log("return to menu from multi");
-    console.log("exitted scene");
-    game.scene.start('Menu');
-    game.scene.stop('Multi');
 }
 
