@@ -133,8 +133,8 @@ singleScene.create = function(){
    
 
      //top.setCollision([146]);
-     //this.physics.add.collider(this.player, top);
-   //top.setCollisionByProperty({collides:true});
+     this.physics.add.collider(player, top);
+     top.setCollisionByProperty({collides:true});
     
 }
 
