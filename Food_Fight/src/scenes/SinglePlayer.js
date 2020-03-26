@@ -287,15 +287,22 @@ function constrainPlayer(player) {
     var maxX = 100, maxY = 50;
 
     // Ensures player cannot be moved offscreen (player follow)
-    if (distX > 100)
+    if (distX > 100){
         player.x = 800 + maxX;
-    else if (distX < -100)
+        player.setAccelerationX(0);
+    }
+    else if (distX < -100){
         player.x = 800 - maxX;
-
-    if (distY > 50)
+        player.setAccelerationX(0);
+    }
+    if (distY > 50){
         player.y = 600 + maxY;
-    else if (distY < -50)
+        player.setAccelerationY(0);
+    }
+    else if (distY < -50){
         player.y = 600 - maxY;
+        player.setAccelerationY(0);
+    }
 }
 
 singleScene.update = function(time, delta){
