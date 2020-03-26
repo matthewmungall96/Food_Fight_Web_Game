@@ -60,7 +60,7 @@ singleScene.preload = function(){
     
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
     this.load.tilemapTiledJSON("map", "./dist/assets/map/map.json");
-
+    
 }
 
 singleScene.create = function(){
@@ -175,11 +175,13 @@ singleScene.create = function(){
 
     var map = this.make.tilemap({key: 'map'});
     var tiles = map.addTilesetImage('tilesheet_complete');
+    map.setBaseTileSize(32, 32);
 
     //layers
-    var top = map.createStaticLayer('top', tiles, 0, 0).setDepth(2);
-    var mid = map.createStaticLayer('mid', tiles, 0, 0).setDepth(1);
-    var bot = map.createStaticLayer('bot', tiles, 0, 0);
+    var top = map.createStaticLayer('top', tiles, 0, 0).setDepth(2).setScale(1.8);
+    var mid = map.createStaticLayer('mid', tiles, 0, 0).setDepth(1).setScale(1.8);
+    var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
+    
 }
 
 function zombieHitCallback(zombieHit, bulletHit)
