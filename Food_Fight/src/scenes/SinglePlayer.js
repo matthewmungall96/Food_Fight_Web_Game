@@ -57,10 +57,15 @@ var Bullet = new Phaser.Class({
 });
 
 singleScene.preload = function(){
+    
+    this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
+
+    this.load.tilemapTiledJSON("map", ".dist/assets/map/map.json");
 
 }
 
 singleScene.create = function(){
+   
     this.physics.world.setBounds(0, 0, 1600, 1200);
 
     // Add 2 groups for Bullet objects
@@ -168,6 +173,14 @@ singleScene.create = function(){
             reticle.y += pointer.movementY;
         }
     }, this);
+
+    var map = this.make.tilemap({key: 'map'});
+    var tiles = map.addTilesetImage('tilesheet_complete');
+
+    //layers
+    var top = map.createStaticLayer('top', tiles, 0, 0);
+    var mid = map.createStaticLayer('mid', tiles, 0, 0);
+    var bot = map.createStaticLayer('bot', tiles, 0, 0);
 }
 
 function zombieHitCallback(zombieHit, bulletHit)
