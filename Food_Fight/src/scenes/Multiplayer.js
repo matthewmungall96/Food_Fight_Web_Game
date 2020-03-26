@@ -284,21 +284,21 @@ function constrainVelocity(sprite, maxVelocity)
 }
 
 // Ensures reticle does not move offscreen
-function constrainReticle(reticle)
+function constrainReticle(reticle, player)
 {
-    var distX = reticle.x-player1.x; // X distance between player1 & reticle
-    var distY = reticle.y-player1.y; // Y distance between player1 & reticle
+    var distX = reticle.x-player.x; // X distance between player & reticle
+    var distY = reticle.y-player.y; // Y distance between player & reticle
 
-    // Ensures reticle cannot be moved offscreen (player1 follow)
+    // Ensures reticle cannot be moved offscreen (player follow)
     if (distX > 800)
-        reticle.x = player1.x+800;
+        reticle.x = player.x+800;
     else if (distX < -800)
-        reticle.x = player1.x-800;
+        reticle.x = player.x-800;
 
     if (distY > 600)
-        reticle.y = player1.y+600;
+        reticle.y = player.y+600;
     else if (distY < -600)
-        reticle.y = player1.y-600;
+        reticle.y = player.y-600;
 }
 
 function constrainplayer1(player1) {
@@ -345,7 +345,10 @@ multiScene.update = function(time, delta){
         constrainVelocity(player1, 500);
     
         // Constrain position of constrainReticle
-        constrainReticle(reticle);
+        constrainReticle(reticle, player1);
+        constrainReticle(reticle, player2);
+        constrainReticle(reticle, player3);
+        constrainReticle(reticle, player4);
         constrainplayer1(player1)
     
         // Make zombie fire
