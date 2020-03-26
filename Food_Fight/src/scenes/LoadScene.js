@@ -31,27 +31,40 @@ loadScene.create = function () {
 }
 
 var Zombie = new Phaser.Class({
+    Extends: Phaser.GameObjects.Image,
     initialize: function Zombie(scene) {
         Phaser.GameObjects.Image.call(this, scene, 0, 0, 'enemy');
+        this.setDepth(1);
         this.speed = 0.1;
         this.direction = 0;
         this.speedX = 0;
         this.speedY = 0;
         this.setPosition(100, 100);
+        this.setSize(12,12,true);
     },
-    update: function () {
+    go: function (startx, starty) {
+        this.setPosition(startx, starty);
+    },
+    update: function (time, delta) {
+
+        if (!globalY || !globalX){
+            globalY = 600; globalX = 800;
+        }
         this.direction = Math.atan((globalX - this.x) / (globalY - this.y));
 
         // Calculate X and y velocity of bullet to moves it from shooter to target
         if (globalY >= this.y) {
-            this.xSpeed = this.speed * Math.sin(this.direction);
-            this.ySpeed = this.speed * Math.cos(this.direction);
+            this.speedX = this.speed * Math.sin(this.direction);
+            this.speedY = this.speed * Math.cos(this.direction);
         }
         else {
-            this.xSpeed = -this.speed * Math.sin(this.direction);
-            this.ySpeed = -this.speed * Math.cos(this.direction);
+            this.speedX = -this.speed * Math.sin(this.direction);
+            this.speedY = -this.speed * Math.cos(this.direction);
         }
         this.rotation = Phaser.Math.Angle.Between(this.x, this.y, globalX, globalY);
+        this.x += this.speedX * delta;
+        this.y += this.speedY * delta;
+
     }
 });
 

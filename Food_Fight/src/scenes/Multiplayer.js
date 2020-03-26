@@ -134,7 +134,7 @@ multiScene.create = function(){
     var mid = map.createStaticLayer('mid', tiles, 0, 0);
     var bot = map.createStaticLayer('bot', tiles, 0, 0);
 }
-
+/*
 function zombieFire(zombie, player1, time, gameObject)
 {
     if (zombie.active === false)
@@ -158,7 +158,7 @@ function zombieFire(zombie, player1, time, gameObject)
         }
     }
 }
-
+*/
 multiScene.update = function(time, delta){
         globalX = player1.x;
         globalY = player1.y;

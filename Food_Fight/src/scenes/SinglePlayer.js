@@ -16,6 +16,7 @@ singleScene.create = function(){
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombieBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+    zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
 
     // Add background player, zombie, reticle, healthpoint sprites
     //var background = this.add.image(800, 600, 'background');
@@ -35,6 +36,15 @@ singleScene.create = function(){
     hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
     hp2.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
     hp3.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
+
+    //Creation of a zombie
+    var zzz = zombies.get().setActive(true).setVisible(true);
+
+    if (zzz) {
+        zzz.go(100, 100);
+        // Add collider between bullet and player1
+        this.physics.add.collider(player, zzz, playerHitCallback);
+    }
 
     // Set sprite variables
     player.health = 3;
@@ -177,29 +187,27 @@ function playerHitCallback(playerHit, bulletHit)
         bulletHit.setActive(false).setVisible(false);
     }
 }
-
+/*
 function zombieFire(zombie, player, time, gameObject)
 {
-    if (zombie.active === false)
-    {
+    if (zombie.active === false) {
         return;
     }
 
-    if ((time - zombie.lastFired) > 1000)
-    {
+    if ((time - zombie.lastFired) > 1000) {
         console.log('firing')
         zombie.lastFired = time;
 
         // Get bullet from bullets group
-        var zzz = zombieBullets.get().setActive(true).setVisible(true);
+        var bullet = zombieBullets.get().setActive(true).setVisible(true);
 
-        if (zzz)
-        {
-            // Add collider between zombie and player
-            gameObject.physics.add.collider(player, zzz, playerHitCallback);
+        if (bullet) {
+            bullet.fire(zombie, player);
+            // Add collider between bullet and player1
+            gameObject.physics.add.collider(player, bullet, playerHitCallback);
         }
     }
-}
+}*/
 
 // Ensures sprite speed doesnt exceed maxVelocity while update is called
 function constrainVelocity(sprite, maxVelocity)
@@ -288,7 +296,9 @@ singleScene.update = function(time, delta){
         //constrainPlayer(player)
     
         // Make zombie fire
-        zombieFire(zombie, player, time, this);
+        //zombieFire(zombie, player, time, this);
+
+    
         
 }
 
