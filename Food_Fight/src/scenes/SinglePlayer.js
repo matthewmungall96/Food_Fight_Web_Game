@@ -138,6 +138,13 @@ singleScene.create = function(){
     var top = map.createStaticLayer('top', tiles, 0, 0).setDepth(2).setScale(1.8);
     var mid = map.createStaticLayer('mid', tiles, 0, 0).setDepth(1).setScale(1.8);
     var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
+
+    //collisons
+   
+
+     //top.setCollision([146]);
+     this.physics.add.collider(player, top);
+     top.setCollisionByProperty({collides:true});
     
 }
 
@@ -296,9 +303,10 @@ singleScene.update = function(time, delta){
         //constrainPlayer(player)
     
         // Make zombie fire
+
         //zombieFire(zombie, player, time, this);
 
-    
+
         
 }
 
