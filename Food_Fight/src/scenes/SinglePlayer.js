@@ -1,5 +1,32 @@
 let singleScene = new Phaser.Scene('Single');
 
+var globalX, globalY;
+
+var Zombie = new Phaser.Class({
+    initialize: function Zombie(scene) {
+        Phaser.GameObjects.Image.call(this, scene, 0, 0, 'enemy');
+        this.speed = 0.1;
+        this.direction = 0;
+        this.speedX = 0;
+        this.speedY = 0;
+        this.setPosition(100,100);
+    },
+    update: function(){
+        this.direction = Math.atan((globalX - this.x) / (globalY - this.y));
+
+        // Calculate X and y velocity of bullet to moves it from shooter to target
+        if (globalY >= this.y) {
+            this.xSpeed = this.speed * Math.sin(this.direction);
+            this.ySpeed = this.speed * Math.cos(this.direction);
+        }
+        else {
+            this.xSpeed = -this.speed * Math.sin(this.direction);
+            this.ySpeed = -this.speed * Math.cos(this.direction);
+        }
+        this.rotation = Phaser.Math.Angle.Between(this.x, this.y, globalX, globalY);
+    }
+});
+
 var Bullet = new Phaser.Class({
 
     Extends: Phaser.GameObjects.Image,
@@ -244,13 +271,12 @@ function zombieFire(zombie, player, time, gameObject)
         zombie.lastFired = time;
 
         // Get bullet from bullets group
-        var bullet = zombieBullets.get().setActive(true).setVisible(true);
+        var zzz = zombieBullets.get().setActive(true).setVisible(true);
 
-        if (bullet)
+        if (zzz)
         {
-            bullet.fire(zombie, player);
-            // Add collider between bullet and player
-            gameObject.physics.add.collider(player, bullet, playerHitCallback);
+            // Add collider between zombie and player
+            gameObject.physics.add.collider(player, zzz, playerHitCallback);
         }
     }
 }
@@ -322,7 +348,7 @@ singleScene.update = function(time, delta){
     
         // Constrain position of constrainReticle
         constrainReticle(reticle, player);
-        constrainPlayer(player)
+        //constrainPlayer(player)
     
         // Make zombie fire
         zombieFire(zombie, player, time, this);
