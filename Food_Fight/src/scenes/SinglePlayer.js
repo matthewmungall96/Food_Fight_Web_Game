@@ -27,8 +27,9 @@ singleScene.create = function(){
     hp3 = this.add.image(-250, -250, 'target').setScrollFactor(0.5, 0.5);
 
     // Set image/sprite properties
-   // background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
-    player.setOrigin(-2, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+    //background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
+    player.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+
     zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
     hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
@@ -250,6 +251,23 @@ function constrainPlayer(player) {
         player.y = 600 - maxY;
         player.setAccelerationY(0);
     }
+}
+
+// Ensures reticle does not move offscreen
+function constrainReticle(reticle, player) {
+    var distX = reticle.x - player.x; // X distance between player & reticle
+    var distY = reticle.y - player.y; // Y distance between player & reticle
+
+    // Ensures reticle cannot be moved offscreen (player follow)
+    if (distX > 800)
+        reticle.x = player.x + 800;
+    else if (distX < -800)
+        reticle.x = player.x - 800;
+
+    if (distY > 600)
+        reticle.y = player.y + 600;
+    else if (distY < -600)
+        reticle.y = player.y - 600;
 }
 
 singleScene.update = function(time, delta){
