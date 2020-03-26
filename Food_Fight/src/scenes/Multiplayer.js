@@ -1,61 +1,5 @@
 let multiScene = new Phaser.Scene('Multi');
 
-var Bullet = new Phaser.Class({
-
-    Extends: Phaser.GameObjects.Image,
-
-    initialize:
-
-    // Bullet Constructor
-    function Bullet (scene)
-    {
-        Phaser.GameObjects.Image.call(this, scene, 0, 0, 'enemy');
-        this.speed = 0.1;
-        this.born = 0;
-        this.direction = 0;
-        this.xSpeed = 0;
-        this.ySpeed = 0;
-        this.setSize(12, 12, true);
-    },
-
-    // Fires a bullet from the player to the reticle
-    fire: function (shooter, target)
-    {
-        this.setPosition(shooter.x, shooter.y); // Initial position
-        this.direction = Math.atan( (target.x-this.x) / (target.y-this.y));
-
-        // Calculate X and y velocity of bullet to moves it from shooter to target
-        if (target.y >= this.y)
-        {
-            this.xSpeed = this.speed*Math.sin(this.direction);
-            this.ySpeed = this.speed*Math.cos(this.direction);
-        }
-        else
-        {
-            this.xSpeed = -this.speed*Math.sin(this.direction);
-            this.ySpeed = -this.speed*Math.cos(this.direction);
-        }
-
-        this.rotation = shooter.rotation; // angle bullet with shooters rotation
-        this.born = 0; // Time since new bullet spawned
-    },
-
-    // Updates the position of the bullet each cycle
-    update: function (time, delta)
-    {
-        
-        this.x += this.xSpeed * delta;
-        this.y += this.ySpeed * delta;
-        this.born += delta;
-        if (this.born > 5000)
-        {
-            this.setActive(false);
-            this.setVisible(false);
-        }
-    }
-
-});
-
 multiScene.preload = function(){
     
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
@@ -191,53 +135,6 @@ multiScene.create = function(){
     var bot = map.createStaticLayer('bot', tiles, 0, 0);
 }
 
-function zombieHitCallback(zombieHit, bulletHit)
-{
-    // Reduce health of zombie
-    if (bulletHit.active === true && zombieHit.active === true)
-    {
-        zombieHit.health = zombieHit.health - 1;
-        console.log("zombie hp: ", zombieHit.health);
-
-        // Kill zombie if health <= 0
-        if (zombieHit.health <= 0)
-        {
-           zombieHit.setActive(false).setVisible(false);
-        }
-
-        // Destroy bullet
-        bulletHit.setActive(false).setVisible(false);
-    }
-}
-
-function player1HitCallback(player1Hit, bulletHit)
-{
-    // Reduce health of player1
-    if (bulletHit.active === true && player1Hit.active === true)
-    {
-        player1Hit.health = player1Hit.health - 1;
-        console.log("player1 hp: ", player1Hit.health);
-
-        // Kill hp sprites and kill player1 if health <= 0
-        if (player1Hit.health == 2)
-        {
-            hp3.destroy();
-        }
-        else if (player1Hit.health == 1)
-        {
-            hp2.destroy();
-        }
-        else
-        {
-            hp1.destroy();
-            // Game over state should execute here
-        }
-
-        // Destroy bullet
-        bulletHit.setActive(false).setVisible(false);
-    }
-}
-
 function zombieFire(zombie, player1, time, gameObject)
 {
     if (zombie.active === false)
@@ -257,73 +154,8 @@ function zombieFire(zombie, player1, time, gameObject)
         {
             bullet.fire(zombie, player1);
             // Add collider between bullet and player1
-            gameObject.physics.add.collider(player1, bullet, player1HitCallback);
+            gameObject.physics.add.collider(player1, bullet, playerHitCallback);
         }
-    }
-}
-
-// Ensures sprite speed doesnt exceed maxVelocity while update is called
-function constrainVelocity(sprite, maxVelocity)
-{
-    if (!sprite || !sprite.body)
-      return;
-
-    var angle, currVelocitySqr, vx, vy;
-    vx = sprite.body.velocity.x;
-    vy = sprite.body.velocity.y;
-    currVelocitySqr = vx * vx + vy * vy;
-
-    if (currVelocitySqr > maxVelocity * maxVelocity)
-    {
-        angle = Math.atan2(vy, vx);
-        vx = Math.cos(angle) * maxVelocity;
-        vy = Math.sin(angle) * maxVelocity;
-        sprite.body.velocity.x = vx;
-        sprite.body.velocity.y = vy;
-    }
-}
-
-// Ensures reticle does not move offscreen
-function constrainReticle(reticle, player)
-{
-    var distX = reticle.x-player.x; // X distance between player & reticle
-    var distY = reticle.y-player.y; // Y distance between player & reticle
-
-    // Ensures reticle cannot be moved offscreen (player follow)
-    if (distX > 800)
-        reticle.x = player.x+800;
-    else if (distX < -800)
-        reticle.x = player.x-800;
-
-    if (distY > 600)
-        reticle.y = player.y+600;
-    else if (distY < -600)
-        reticle.y = player.y-600;
-}
-
-function constrainplayer1(player1) {
-
-    var distX = player1.x - 800; // X distance between player1 & origin point
-    var distY = player1.y - 600; // Y distance between player1 & origin point
-
-    var maxX = 100, maxY = 50;
-
-    // Ensures player1 cannot be moved offscreen (player1 follow)
-    if (distX > 100){
-        player1.x = 800 + maxX;
-        player1.setAccelerationX(0);
-    }
-    else if (distX < -100){
-        player1.x = 800 - maxX;
-        player1.setAccelerationX(0);
-    }
-    if (distY > 50){
-        player1.y = 600 + maxY;
-        player1.setAccelerationY(0);
-    }
-    else if (distY < -50){
-        player1.y = 600 - maxY;
-        player1.setAccelerationY(0);
     }
 }
 
@@ -349,7 +181,7 @@ multiScene.update = function(time, delta){
         constrainReticle(reticle, player2);
         constrainReticle(reticle, player3);
         constrainReticle(reticle, player4);
-        constrainplayer1(player1)
+        constrainPlayer(player1);
     
         // Make zombie fire
         zombieFire(zombie, player1, time, this);
