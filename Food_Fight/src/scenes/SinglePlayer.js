@@ -18,7 +18,7 @@ singleScene.create = function(){
     zombieBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
 
     // Add background player, zombie, reticle, healthpoint sprites
-    var background = this.add.image(800, 600, 'background');
+    //var background = this.add.image(800, 600, 'background');
     player = this.physics.add.sprite(800, 600, 'player1');
     zombie = this.physics.add.sprite(300, 600, 'enemy');
     reticle = this.physics.add.sprite(800, 700, 'target');
@@ -27,7 +27,7 @@ singleScene.create = function(){
     hp3 = this.add.image(-250, -250, 'target').setScrollFactor(0.5, 0.5);
 
     // Set image/sprite properties
-    background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
+   // background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
     player.setOrigin(-2, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
     zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
