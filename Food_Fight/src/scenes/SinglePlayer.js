@@ -130,10 +130,11 @@ singleScene.create = function(){
     var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
 
     //collisons
-    
-     top.setCollision([146]);
-     this.physics.add.collider(this.player, top);
-   // this.top.setCollisionByProperty({collides:true});
+   
+
+     //top.setCollision([146]);
+     //this.physics.add.collider(this.player, top);
+   //top.setCollisionByProperty({collides:true});
     
 }
 
