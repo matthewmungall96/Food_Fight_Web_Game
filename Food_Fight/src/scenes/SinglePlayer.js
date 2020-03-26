@@ -127,6 +127,10 @@ singleScene.create = function(){
     var top = map.createStaticLayer('top', tiles, 0, 0).setDepth(2).setScale(1.8);
     var mid = map.createStaticLayer('mid', tiles, 0, 0).setDepth(1).setScale(1.8);
     var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
+
+    //collisons
+
+   
     
 }
 
