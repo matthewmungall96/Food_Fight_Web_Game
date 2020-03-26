@@ -177,8 +177,8 @@ singleScene.create = function(){
     var tiles = map.addTilesetImage('tilesheet_complete');
 
     //layers
-    var top = map.createStaticLayer('top', tiles, 0, 0);
-    var mid = map.createStaticLayer('mid', tiles, 0, 0);
+    var top = map.createStaticLayer('top', tiles, 0, 0).setDepth(2);
+    var mid = map.createStaticLayer('mid', tiles, 0, 0).setDepth(1);
     var bot = map.createStaticLayer('bot', tiles, 0, 0);
 }
 
