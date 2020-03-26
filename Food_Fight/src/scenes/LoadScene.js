@@ -15,8 +15,10 @@ loadScene.preload = function () {
     this.load.image("singleplayer_button", "./dist/assets/images/single.png")
     this.load.image("multiplayer_button", "./dist/assets/images/multi.png")
     this.load.image("returntomenu", "./dist/assets/images/returntomenu.png");
-
-    this.load.image('player_single', './dist/assets/characters/Survivor 1/survivor1_gun.png');
+    this.load.image('player1', './dist/assets/characters/Survivor 1/survivor1_gun.png');
+    this.load.image('player2', './dist/assets/characters/Man Blue/manBlue_gun.png');
+    this.load.image('player3', './dist/assets/characters/Man Brown/manBrown_gun.png');
+    this.load.image('player4', './dist/assets/characters/Man Old/manOld_gun.png');
     //this.load.image('bullet', 'assets/sprites/bullets/bullet6.png');
     this.load.image('enemy', './dist/assets/characters/Zombie 1/zombie.png');
     //this.load.image('target', 'assets/demoscene/ball.png');

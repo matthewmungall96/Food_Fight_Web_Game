@@ -1,26 +1,363 @@
 let multiScene = new Phaser.Scene('Multi');
 
-multiScene.preload = function () {
+var Bullet = new Phaser.Class({
+
+    Extends: Phaser.GameObjects.Image,
+
+    initialize:
+
+    // Bullet Constructor
+    function Bullet (scene)
+    {
+        Phaser.GameObjects.Image.call(this, scene, 0, 0, 'enemy');
+        this.speed = 0.1;
+        this.born = 0;
+        this.direction = 0;
+        this.xSpeed = 0;
+        this.ySpeed = 0;
+        this.setSize(12, 12, true);
+    },
+
+    // Fires a bullet from the player to the reticle
+    fire: function (shooter, target)
+    {
+        this.setPosition(shooter.x, shooter.y); // Initial position
+        this.direction = Math.atan( (target.x-this.x) / (target.y-this.y));
+
+        // Calculate X and y velocity of bullet to moves it from shooter to target
+        if (target.y >= this.y)
+        {
+            this.xSpeed = this.speed*Math.sin(this.direction);
+            this.ySpeed = this.speed*Math.cos(this.direction);
+        }
+        else
+        {
+            this.xSpeed = -this.speed*Math.sin(this.direction);
+            this.ySpeed = -this.speed*Math.cos(this.direction);
+        }
+
+        this.rotation = shooter.rotation; // angle bullet with shooters rotation
+        this.born = 0; // Time since new bullet spawned
+    },
+
+    // Updates the position of the bullet each cycle
+    update: function (time, delta)
+    {
+        
+        this.x += this.xSpeed * delta;
+        this.y += this.ySpeed * delta;
+        this.born += delta;
+        if (this.born > 5000)
+        {
+            this.setActive(false);
+            this.setVisible(false);
+        }
+    }
+
+});
+
+multiScene.preload = function(){
+    
+    this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
+    this.load.tilemapTiledJSON("map", "./dist/assets/map/map.json");
 
 }
 
-multiScene.create = function () {
-    let returnToMenu = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, "returntomenu").setDepth(1);
-    returnToMenu.setInteractive();
+multiScene.create = function(){
+   
+    this.physics.world.setBounds(0, 0, 1600, 1200);
 
-    returnToMenu.on("pointerover", () => {
-        console.log("return to menu hovering  from multi");
-    })
+    // Add 2 groups for Bullet objects
+    player1Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+    zombieBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
 
-    returnToMenu.on("pointerout", () => {
-        console.log("return to menu exit  from multi");
-    })
+    // Add background player, zombie, reticle, healthpoint sprites
+    var background = this.add.image(800, 600, 'background');
+    player1 = this.physics.add.sprite(800, 600, 'player1');
+    player2 = this.physics.add.sprite(800, 500, 'player2');
+    player3 = this.physics.add.sprite(800, 400, 'player3');
+    player4 = this.physics.add.sprite(800, 300, 'player4');
+    zombie = this.physics.add.sprite(300, 600, 'enemy');
+    reticle = this.physics.add.sprite(800, 700, 'target');
+    hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
+    hp2 = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
+    hp3 = this.add.image(-250, -250, 'target').setScrollFactor(0.5, 0.5);
 
-    returnToMenu.on("pointerdown", () =>
-        clickReturnMenuButton());
+    // Set image/sprite properties
+    background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
+    player1.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
+    player2.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
+    player3.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
+    player4.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
+    zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
+    reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
+    hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
+    hp2.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
+    hp3.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
+
+    // Set sprite variables
+    player1.health = 3;
+    player2.health = 3;
+    player3.health = 3;
+    player4.health = 3;
+    zombie.health = 3;
+    zombie.lastFired = 0;
+
+    // Set camera properties
+    this.cameras.main.zoom = 0.5;
+    this.cameras.main.startFollow(player1);
+
+    // Creates object for input with WASD kets
+    moveKeys = this.input.keyboard.addKeys({
+        'up': Phaser.Input.Keyboard.KeyCodes.W,
+        'down': Phaser.Input.Keyboard.KeyCodes.S,
+        'left': Phaser.Input.Keyboard.KeyCodes.A,
+        'right': Phaser.Input.Keyboard.KeyCodes.D
+    });
+
+    // Enables movement of player1 with WASD keys
+    this.input.keyboard.on('keydown_W', function (event) {
+        player1.setAccelerationY(-800);
+    });
+    this.input.keyboard.on('keydown_S', function (event) {
+        player1.setAccelerationY(800);
+    });
+    this.input.keyboard.on('keydown_A', function (event) {
+        player1.setAccelerationX(-800);
+    });
+    this.input.keyboard.on('keydown_D', function (event) {
+        player1.setAccelerationX(800);
+    });
+
+    // Stops player1 acceleration on uppress of WASD keys
+    this.input.keyboard.on('keyup_W', function (event) {
+        if (moveKeys['down'].isUp)
+            player1.setAccelerationY(0);
+    });
+    this.input.keyboard.on('keyup_S', function (event) {
+        if (moveKeys['up'].isUp)
+            player1.setAccelerationY(0);
+    });
+    this.input.keyboard.on('keyup_A', function (event) {
+        if (moveKeys['right'].isUp)
+            player1.setAccelerationX(0);
+    });
+    this.input.keyboard.on('keyup_D', function (event) {
+        if (moveKeys['left'].isUp)
+            player1.setAccelerationX(0);
+    });
+
+    // Fires bullet from player1 on left click of mouse
+    this.input.on('pointerdown', function (pointer, time, lastFired) {
+        if (player1.active === false)
+            return;
+
+        // Get bullet from bullets group
+        var bullet = player1Bullets.get().setActive(true).setVisible(true);
+
+        if (bullet)
+        {
+            bullet.fire(player1, reticle);
+            this.physics.add.collider(zombie, bullet, zombieHitCallback);
+        }
+    }, this);
+
+    // Pointer lock will only work after mousedown
+    game.canvas.addEventListener('mousedown', function () {
+        game.input.mouse.requestPointerLock();
+    });
+
+    // Exit pointer lock when Q or escape (by default) is pressed.
+    this.input.keyboard.on('keydown_Q', function (event) {
+        if (game.input.mouse.locked)
+            game.input.mouse.releasePointerLock();
+    }, 0, this);
+
+    // Move reticle upon locked pointer move
+    this.input.on('pointermove', function (pointer) {
+        if (this.input.mouse.locked)
+        {
+            reticle.x += pointer.movementX;
+            reticle.y += pointer.movementY;
+        }
+    }, this);
+
+    var map = this.make.tilemap({key: 'map'});
+    var tiles = map.addTilesetImage('tilesheet_complete');
+
+    //layers
+    var top = map.createStaticLayer('top', tiles, 0, 0);
+    var mid = map.createStaticLayer('mid', tiles, 0, 0);
+    var bot = map.createStaticLayer('bot', tiles, 0, 0);
 }
 
-multiScene.update = function () {
+function zombieHitCallback(zombieHit, bulletHit)
+{
+    // Reduce health of zombie
+    if (bulletHit.active === true && zombieHit.active === true)
+    {
+        zombieHit.health = zombieHit.health - 1;
+        console.log("zombie hp: ", zombieHit.health);
 
+        // Kill zombie if health <= 0
+        if (zombieHit.health <= 0)
+        {
+           zombieHit.setActive(false).setVisible(false);
+        }
+
+        // Destroy bullet
+        bulletHit.setActive(false).setVisible(false);
+    }
+}
+
+function player1HitCallback(player1Hit, bulletHit)
+{
+    // Reduce health of player1
+    if (bulletHit.active === true && player1Hit.active === true)
+    {
+        player1Hit.health = player1Hit.health - 1;
+        console.log("player1 hp: ", player1Hit.health);
+
+        // Kill hp sprites and kill player1 if health <= 0
+        if (player1Hit.health == 2)
+        {
+            hp3.destroy();
+        }
+        else if (player1Hit.health == 1)
+        {
+            hp2.destroy();
+        }
+        else
+        {
+            hp1.destroy();
+            // Game over state should execute here
+        }
+
+        // Destroy bullet
+        bulletHit.setActive(false).setVisible(false);
+    }
+}
+
+function zombieFire(zombie, player1, time, gameObject)
+{
+    if (zombie.active === false)
+    {
+        return;
+    }
+
+    if ((time - zombie.lastFired) > 1000)
+    {
+        console.log('firing')
+        zombie.lastFired = time;
+
+        // Get bullet from bullets group
+        var bullet = zombieBullets.get().setActive(true).setVisible(true);
+
+        if (bullet)
+        {
+            bullet.fire(zombie, player1);
+            // Add collider between bullet and player1
+            gameObject.physics.add.collider(player1, bullet, player1HitCallback);
+        }
+    }
+}
+
+// Ensures sprite speed doesnt exceed maxVelocity while update is called
+function constrainVelocity(sprite, maxVelocity)
+{
+    if (!sprite || !sprite.body)
+      return;
+
+    var angle, currVelocitySqr, vx, vy;
+    vx = sprite.body.velocity.x;
+    vy = sprite.body.velocity.y;
+    currVelocitySqr = vx * vx + vy * vy;
+
+    if (currVelocitySqr > maxVelocity * maxVelocity)
+    {
+        angle = Math.atan2(vy, vx);
+        vx = Math.cos(angle) * maxVelocity;
+        vy = Math.sin(angle) * maxVelocity;
+        sprite.body.velocity.x = vx;
+        sprite.body.velocity.y = vy;
+    }
+}
+
+// Ensures reticle does not move offscreen
+function constrainReticle(reticle)
+{
+    var distX = reticle.x-player1.x; // X distance between player1 & reticle
+    var distY = reticle.y-player1.y; // Y distance between player1 & reticle
+
+    // Ensures reticle cannot be moved offscreen (player1 follow)
+    if (distX > 800)
+        reticle.x = player1.x+800;
+    else if (distX < -800)
+        reticle.x = player1.x-800;
+
+    if (distY > 600)
+        reticle.y = player1.y+600;
+    else if (distY < -600)
+        reticle.y = player1.y-600;
+}
+
+function constrainplayer1(player1) {
+
+    var distX = player1.x - 800; // X distance between player1 & origin point
+    var distY = player1.y - 600; // Y distance between player1 & origin point
+
+    var maxX = 100, maxY = 50;
+
+    // Ensures player1 cannot be moved offscreen (player1 follow)
+    if (distX > 100){
+        player1.x = 800 + maxX;
+        player1.setAccelerationX(0);
+    }
+    else if (distX < -100){
+        player1.x = 800 - maxX;
+        player1.setAccelerationX(0);
+    }
+    if (distY > 50){
+        player1.y = 600 + maxY;
+        player1.setAccelerationY(0);
+    }
+    else if (distY < -50){
+        player1.y = 600 - maxY;
+        player1.setAccelerationY(0);
+    }
+}
+
+multiScene.update = function(time, delta){
+        globalX = player1.x;
+        globalY = player1.y;
+    
+        // Rotates player1 to face towards reticle
+        player1.rotation = Phaser.Math.Angle.Between(player1.x, player1.y, reticle.x, reticle.y);
+
+        // Rotates zombie to face towards player1
+        zombie.rotation = Phaser.Math.Angle.Between(zombie.x, zombie.y, player1.x, player1.y);
+    
+        //Make reticle move with player1
+        reticle.body.velocity.x = player1.body.velocity.x;
+        reticle.body.velocity.y = player1.body.velocity.y;
+    
+        // Constrain velocity of player1
+        constrainVelocity(player1, 500);
+    
+        // Constrain position of constrainReticle
+        constrainReticle(reticle);
+        constrainplayer1(player1)
+    
+        // Make zombie fire
+        zombieFire(zombie, player1, time, this);
+        
+}
+
+function clickReturnMenuButton(){
+    game.scene.getScenes(true).forEach(scene => {
+        game.scene.stop(scene);
+    });
+    
+    game.scene.start('Menu');
 }
 
