@@ -130,8 +130,10 @@ singleScene.create = function(){
     var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
 
     //collisons
-
-   
+    
+     top.setCollision([146]);
+     this.physics.add.collider(this.player, top);
+   // this.top.setCollisionByProperty({collides:true});
     
 }
 
@@ -293,6 +295,11 @@ singleScene.update = function(time, delta){
     
         // Make zombie fire
         zombieFire(zombie, player, time, this);
+
+       
+        
+
+       // this.top.setCollision([119,146,117,118,144,145,478,463,469])
         
 }
 
