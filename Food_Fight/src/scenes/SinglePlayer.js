@@ -73,7 +73,7 @@ singleScene.create = function(){
 
     // Add background player, zombie, reticle, healthpoint sprites
     var background = this.add.image(800, 600, 'background');
-    player = this.physics.add.sprite(800, 600, 'player_single');
+    player = this.physics.add.sprite(800, 600, 'player1');
     zombie = this.physics.add.sprite(300, 600, 'enemy');
     reticle = this.physics.add.sprite(800, 700, 'target');
     hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
