@@ -9,8 +9,8 @@ var Bullet = new Phaser.Class({
     // Bullet Constructor
     function Bullet (scene)
     {
-        Phaser.GameObjects.Image.call(this, scene, 0, 0, 'bullet');
-        this.speed = 1;
+        Phaser.GameObjects.Image.call(this, scene, 0, 0, 'enemy');
+        this.speed = 0.1;
         this.born = 0;
         this.direction = 0;
         this.xSpeed = 0;
@@ -43,10 +43,11 @@ var Bullet = new Phaser.Class({
     // Updates the position of the bullet each cycle
     update: function (time, delta)
     {
+        
         this.x += this.xSpeed * delta;
         this.y += this.ySpeed * delta;
         this.born += delta;
-        if (this.born > 1800)
+        if (this.born > 5000)
         {
             this.setActive(false);
             this.setVisible(false);
@@ -306,6 +307,9 @@ function constrainPlayer(player) {
 }
 
 singleScene.update = function(time, delta){
+        globalX = player.x;
+        globalY = player.y;
+    
         // Rotates player to face towards reticle
         player.rotation = Phaser.Math.Angle.Between(player.x, player.y, reticle.x, reticle.y);
 
@@ -325,6 +329,7 @@ singleScene.update = function(time, delta){
     
         // Make zombie fire
         zombieFire(zombie, player, time, this);
+        
 }
 
 function clickReturnMenuButton(){
