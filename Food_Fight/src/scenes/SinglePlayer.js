@@ -23,9 +23,6 @@ singleScene.create = function(){
     player = this.physics.add.sprite(800, 600, 'player1');
     zombie = this.physics.add.sprite(300, 600, 'enemy');
     reticle = this.physics.add.sprite(800, 700, 'target');
-    hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
-    hp2 = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
-    hp3 = this.add.image(-250, -250, 'target').setScrollFactor(0.5, 0.5);
 
     // Set image/sprite properties
     //background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
@@ -33,9 +30,6 @@ singleScene.create = function(){
 
     zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
-    hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
-    hp2.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
-    hp3.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
 
     //Creation of a zombie
     var zzz = zombies.get().setActive(true).setVisible(true);
@@ -174,21 +168,6 @@ function playerHitCallback(playerHit, bulletHit)
     {
         playerHit.health = playerHit.health - 1;
         console.log("Player hp: ", playerHit.health);
-
-        // Kill hp sprites and kill player if health <= 0
-        if (playerHit.health == 2)
-        {
-            hp3.destroy();
-        }
-        else if (playerHit.health == 1)
-        {
-            hp2.destroy();
-        }
-        else
-        {
-            hp1.destroy();
-            // Game over state should execute here
-        }
 
         // Destroy bullet
         bulletHit.setActive(false).setVisible(false);
