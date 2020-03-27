@@ -217,7 +217,7 @@ function spawnZombies(zombies, player, spawnpoints, time, gameObject) {
         zombies.lastSpawned = time;
         //Creation of a zombie
         var zzz = zombies.get().setActive(true).setVisible(true);
-
+        console.log(zzz.health);
         if (zzz) {
             point = Math.floor(Math.random() * spawnpoints.length);
             zzz.go(spawnpoints[point].x, spawnpoints[point].y);
