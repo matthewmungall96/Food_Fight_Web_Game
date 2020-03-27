@@ -31,7 +31,7 @@ singleScene.create = function(){
     //background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
     zombie.setOrigin(100, 100).setDisplaySize(360, 240).setCollideWorldBounds(true);
-    reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
+    reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1);
     hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
     hp2.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
     hp3.setOrigin(0.5, 0.5).setDisplaySize(50, 50);

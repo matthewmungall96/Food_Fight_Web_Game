@@ -40,7 +40,7 @@ var Zombie = new Phaser.Class({
         this.speedX = 0;
         this.speedY = 0;
         this.setPosition(100, 100);
-        this.setSize(12,12,true);
+        this.setDisplaySize(66, 60);
     },
     go: function (startx, starty) {
         this.setPosition(startx, starty);
