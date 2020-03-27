@@ -16,5 +16,6 @@ window.onload=function(){
     parent: 'phaser-example',
     scene: [loadScene, menuScene, singleScene, multiScene]
     };
+    
 game = new Phaser.Game(config); 
 }
