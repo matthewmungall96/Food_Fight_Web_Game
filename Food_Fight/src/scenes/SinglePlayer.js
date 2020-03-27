@@ -17,13 +17,19 @@ singleScene.create = function(){
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
     this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
-    spawnpoints = [{x:460, y:224},{x:1153,y:220}];
+    
+    spawnpoints = [
+        {x:460, y:224},
+        {x:1153,y:220}
+    ];
 
 
     // Add background player, zombie, reticle, healthpoint sprites
     //var background = this.add.image(800, 600, 'background');
     player = this.physics.add.sprite(800, 1100, 'player1');
-
+    globalX = player.x;
+    globalY = player.y;
+    
     reticle = this.physics.add.sprite(800, 700, 'target');
     hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
     hp2 = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
@@ -89,8 +95,6 @@ singleScene.create = function(){
     this.input.on('pointerdown', function (pointer, time, lastFired) {
         if (player.active === false)
             return;
-
-            console.log(reticle.x + " " + reticle.y);
         // Get bullet from bullets group
         var bullet = playerBullets.get().setActive(true).setVisible(true);
 
@@ -146,7 +150,7 @@ function zombieHitCallback(zombieHit, bulletHit)
     if (bulletHit.active === true && zombieHit.active === true)
     {
         zombieHit.health = zombieHit.health - 1;
-        console.log("zombie hp: ", zombieHit.health);
+        //console.log("zombie hp: ", zombieHit.health);
 
         // Kill zombie if health <= 0
         if (zombieHit.health <= 0)

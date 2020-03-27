@@ -47,10 +47,6 @@ var Zombie = new Phaser.Class({
         this.setPosition(startx, starty);
     },
     update: function (time, delta) {
-
-        if (!globalY || !globalX){
-            globalY = 600; globalX = 800;
-        }
         this.direction = Math.atan((globalX - this.x) / (globalY - this.y));
 
         // Calculate X and y velocity of bullet to moves it from shooter to target
