@@ -1,6 +1,8 @@
 let singleScene = new Phaser.Scene('Single');
 
 var globalX, globalY;
+var singlePlayerScore = 0;
+var singlePlayerScoreText;
 
 singleScene.preload = function(){
     
@@ -23,12 +25,12 @@ singleScene.create = function(){
         {x:1153,y:220}
     ];
 
-
     // Add background player, zombie, reticle, healthpoint sprites
     //var background = this.add.image(800, 600, 'background');
     player = this.physics.add.sprite(800, 1100, 'player1');
     globalX = player.x;
     globalY = player.y;
+    singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
     reticle = this.physics.add.sprite(800, 700, 'target');
     hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
@@ -37,6 +39,7 @@ singleScene.create = function(){
 
     // Set image/sprite properties
     //background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
+    singlePlayerScoreText.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setDepth(1);
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1);
     hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
@@ -155,6 +158,9 @@ function zombieHitCallback(zombieHit, bulletHit)
         // Kill zombie if health <= 0
         if (zombieHit.health <= 0)
         {
+           singlePlayerScore += 10;
+           singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
+           console.log("Player Score: ", singlePlayerScore);
            zombieHit.setActive(false).setVisible(false);
         }
 
