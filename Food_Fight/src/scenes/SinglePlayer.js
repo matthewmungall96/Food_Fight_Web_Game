@@ -29,7 +29,7 @@ singleScene.create = function(){
     player = this.physics.add.sprite(800, 1100, 'player1');
     globalX = player.x;
     globalY = player.y;
-    
+
     reticle = this.physics.add.sprite(800, 700, 'target');
     hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
     hp2 = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
@@ -97,7 +97,7 @@ singleScene.create = function(){
             return;
         // Get bullet from bullets group
         var bullet = playerBullets.get().setActive(true).setVisible(true);
-
+        //console.log(reticle.x + " " + reticle.y);
         if (bullet)
         {
             bullet.fire(player, reticle);
