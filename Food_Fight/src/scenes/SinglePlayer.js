@@ -21,6 +21,7 @@ singleScene.create = function(){
     // Add background player, zombie, reticle, healthpoint sprites
     //var background = this.add.image(800, 600, 'background');
     player = this.physics.add.sprite(800, 600, 'player1');
+    cameraFollow = this.physics.add.sprite(800,700,'player1');
     zombie = this.physics.add.sprite(300, 600, 'enemy');
     reticle = this.physics.add.sprite(800, 700, 'target');
 
@@ -48,7 +49,7 @@ singleScene.create = function(){
     // Set camera properties
     this.cameras.main.zoom = 0.5;
     //this.cameras.main.startFollow(player);
-    this.cameras.main.setBounds(0,60,800,600).setName('main');
+    this.cameras.main.startFollow(cameraFollow);
     // Creates object for input with WASD kets
     moveKeys = this.input.keyboard.addKeys({
         'up': Phaser.Input.Keyboard.KeyCodes.W,
@@ -283,10 +284,7 @@ singleScene.update = function(time, delta){
     
         // Make zombie fire
 
-        //zombieFire(zombie, player, time, this);
-
-
-        
+        //zombieFire(zombie, player, time, this);   
 }
 
 function clickReturnMenuButton(){
