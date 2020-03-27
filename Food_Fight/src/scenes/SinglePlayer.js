@@ -27,8 +27,8 @@ singleScene.create = function(){
 
     // Set image/sprite properties
     //background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
-    player.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
-    zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
+    player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+    zombie.setOrigin(100, 100).setDisplaySize(360, 240).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
 
     //Creation of a zombie
