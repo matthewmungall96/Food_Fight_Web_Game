@@ -15,13 +15,15 @@ singleScene.create = function(){
 
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
-    zombieBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
+    this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
+    spawnpoints = [{x:460, y:224},{x:1153,y:220}];
+
 
     // Add background player, zombie, reticle, healthpoint sprites
     //var background = this.add.image(800, 600, 'background');
     player = this.physics.add.sprite(800, 1100, 'player1');
-    zombie = this.physics.add.sprite(300, 600, 'enemy');
+
     reticle = this.physics.add.sprite(800, 700, 'target');
     hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
     hp2 = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
@@ -30,25 +32,14 @@ singleScene.create = function(){
     // Set image/sprite properties
     //background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
-    zombie.setOrigin(100, 100).setDisplaySize(360, 240).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1);
     hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
     hp2.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
     hp3.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
 
-    //Creation of a zombie
-    var zzz = zombies.get().setActive(true).setVisible(true);
-
-    if (zzz) {
-        zzz.go(100, 100);
-        // Add collider between bullet and player1
-        this.physics.add.collider(player, zzz, playerHitCallback);
-    }
-
     // Set sprite variables
     player.health = 3;
-    zombie.health = 3;
-    zombie.lastFired = 0;
+    zombies.lastSpawned = 0;
 
     // Set camera properties
     this.cameras.main.zoom = 0.5;
@@ -99,13 +90,14 @@ singleScene.create = function(){
         if (player.active === false)
             return;
 
+            console.log(reticle.x + " " + reticle.y);
         // Get bullet from bullets group
         var bullet = playerBullets.get().setActive(true).setVisible(true);
 
         if (bullet)
         {
             bullet.fire(player, reticle);
-            this.physics.add.collider(zombie, bullet, zombieHitCallback);
+            //this.physics.add.collider(zzz, bullet, zombieHitCallback);
         }
     }, this);
 
@@ -216,6 +208,21 @@ function zombieFire(zombie, player, time, gameObject)
     }
 }*/
 
+function spawnZombies(zombies, player, spawnpoints, time, gameObject) {
+    if ((time - zombies.lastSpawned) > 2000){
+        zombies.lastSpawned = time;
+        //Creation of a zombie
+        var zzz = zombies.get().setActive(true).setVisible(true);
+
+        if (zzz) {
+            point = Math.floor(Math.random() * spawnpoints.length);
+            zzz.go(spawnpoints[point].x, spawnpoints[point].y);
+            // Add collider between bullet and player1
+            gameObject.physics.add.collider(player, zzz, playerHitCallback);
+        }
+    }
+}
+
 // Ensures sprite speed doesnt exceed maxVelocity while update is called
 function constrainVelocity(sprite, maxVelocity)
 {
@@ -237,7 +244,7 @@ function constrainVelocity(sprite, maxVelocity)
     }
 }
 
-
+/*
 function constrainPlayer(player) {
 
     var distX = player.x - 800; // X distance between player & origin point
@@ -263,6 +270,8 @@ function constrainPlayer(player) {
         player.setAccelerationY(0);
     }
 }
+*/
+
 
 // Ensures reticle does not move offscreen
 function constrainReticle(reticle, player) {
@@ -287,9 +296,6 @@ singleScene.update = function(time, delta){
     
         // Rotates player to face towards reticle
         player.rotation = Phaser.Math.Angle.Between(player.x, player.y, reticle.x, reticle.y);
-
-        // Rotates zombie to face towards player
-        zombie.rotation = Phaser.Math.Angle.Between(zombie.x, zombie.y, player.x, player.y);
     
         //Make reticle move with player
         reticle.body.velocity.x = player.body.velocity.x;
@@ -299,13 +305,11 @@ singleScene.update = function(time, delta){
         constrainVelocity(player, 500);
     
         // Constrain position of constrainReticle
-        constrainReticle(reticle, player);
+        //constrainReticle(reticle, player);
         //constrainPlayer(player)
     
-        // Make zombie fire
-
-        //zombieFire(zombie, player, time, this);
-
+        // Make zombie spawn
+        spawnZombies(zombies, player, spawnpoints, time, this);
 
         
 }

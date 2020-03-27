@@ -41,6 +41,7 @@ var Zombie = new Phaser.Class({
         this.speedY = 0;
         this.setPosition(100, 100);
         this.setDisplaySize(66, 60);
+        this.health = 2;
     },
     go: function (startx, starty) {
         this.setPosition(startx, starty);
@@ -77,7 +78,7 @@ var Bullet = new Phaser.Class({
         // Bullet Constructor
         function Bullet(scene) {
             Phaser.GameObjects.Image.call(this, scene, 0, 0, 'enemy');
-            this.speed = 0.1;
+            this.speed = 1;
             this.born = 0;
             this.direction = 0;
             this.xSpeed = 0;
