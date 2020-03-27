@@ -12,7 +12,7 @@ window.onload=function(){
           debug: false
         }
     },
-    backgroundColor: '#000000',
+    backgroundColor: '#888888',
     parent: 'phaser-example',
     scene: [loadScene, menuScene, singleScene, multiScene]
     };
