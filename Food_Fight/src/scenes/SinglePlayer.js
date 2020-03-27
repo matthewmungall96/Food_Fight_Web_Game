@@ -20,7 +20,7 @@ singleScene.create = function(){
 
     // Add background player, zombie, reticle, healthpoint sprites
     //var background = this.add.image(800, 600, 'background');
-    player = this.physics.add.sprite(800, 600, 'player1');
+    player = this.physics.add.sprite(800, 1100, 'player1');
     cameraFollow = this.physics.add.sprite(800,700,'player1');
     zombie = this.physics.add.sprite(300, 600, 'enemy');
     reticle = this.physics.add.sprite(800, 700, 'target');
@@ -28,7 +28,6 @@ singleScene.create = function(){
     // Set image/sprite properties
     //background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
     player.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
-
     zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
 
