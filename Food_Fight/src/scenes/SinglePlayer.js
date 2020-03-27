@@ -121,6 +121,7 @@ singleScene.create = function(){
         }
     }, this);
 
+    //map
     var map = this.make.tilemap({key: 'map'});
     var tiles = map.addTilesetImage('tilesheet_complete');
     map.setBaseTileSize(32, 32);
@@ -131,11 +132,10 @@ singleScene.create = function(){
     var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
 
     //collisons
- 
+    //map.setCollisionByProperty([478]);
 
-     //top.setCollision([146]);
-     this.physics.add.collider(player, top);
-
+    
+    this.physics.add.collider(player, top);
      top.setCollisionByProperty({collides:true});
     
 }
