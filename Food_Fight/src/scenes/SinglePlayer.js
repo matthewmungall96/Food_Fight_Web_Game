@@ -53,8 +53,8 @@ singleScene.create = function(){
 
     // Set camera properties
     this.cameras.main.zoom = 0.5;
-    this.cameras.main.startFollow(player);
-
+    //this.cameras.main.startFollow(player);
+    this.cameras.main.setBounds(0,60,800,600).setName('main');
     // Creates object for input with WASD kets
     moveKeys = this.input.keyboard.addKeys({
         'up': Phaser.Input.Keyboard.KeyCodes.W,
