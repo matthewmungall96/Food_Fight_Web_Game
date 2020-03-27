@@ -135,9 +135,9 @@ singleScene.create = function(){
     map.setBaseTileSize(32, 32);
 
     //layers
-    var top = map.createDynamicLayer('top', tiles, 0, 0).setDepth(2).setScale(1.8);
-    var mid = map.createDynamicLayer('mid', tiles, 0, 0).setDepth(1).setScale(1.8);
-    var bot = map.createDynamicLayer('bot', tiles, 0, 0).setScale(1.8);
+    var top = map.createStaticLayer('top', tiles, 0, 0).setDepth(2).setScale(1.8);
+    var mid = map.createStaticLayer('mid', tiles, 0, 0).setDepth(1).setScale(1.8);
+    var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
 
     //collisons
  
@@ -146,7 +146,6 @@ singleScene.create = function(){
      this.physics.add.collider(player, top);
 
      top.setCollisionByProperty({collides:true});
-     
     
 }
 
