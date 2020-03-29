@@ -8,6 +8,7 @@ var singlePlayerMusic_;
 var zombieSplatNoise;
 var zombieDeathNoise;
 var pistolSwoosh;
+var emptyGun;
 
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
@@ -28,42 +29,61 @@ singleScene.create = function(){
     zombieSplatNoise = this.sound.add('zombieHitNoise');
     zombieDeathNoise = this.sound.add('zombieDeath');
     pistolSwoosh = this.sound.add('pistolSwooshNoise');
+    emptyGun = this.sound.add('emptyGun');
 
     spawnpoints = [
         {x:460, y:224},
         {x:1153,y:220}
     ];
 
-    // Add background player, zombie, reticle, healthpoint sprites
-    //var background = this.add.image(800, 600, 'background');
     player = this.physics.add.sprite(800, 1100, 'player1');
     globalX = player.x;
     globalY = player.y;
     singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
     reticle = this.physics.add.sprite(800, 700, 'target');
-    hp1 = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
-    hp2 = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
-    hp3 = this.add.image(-250, -250, 'target').setScrollFactor(0.5, 0.5);
+    hp1Empty = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
+    hp1Full = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
+    Hp2Empty = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
+    hp2Full = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
+    hp3Empty = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5); 
+    hp3Full = this.add.image(-250, -250, 'target').setScrollFactor(0.5, 0.5);
 
-    // Set image/sprite properties
-    //background.setOrigin(0.5, 0.5).setDisplaySize(1600, 1200);
+
+    br0 = this.add.image(100, 100, 'bullet0')
+    br1 = this.add.image(100, 100, 'bullet1')
+    br2 = this.add.image(100, 100, 'bullet2')
+    br3 = this.add.image(100, 100, 'bullet3')
+    br4 = this.add.image(100, 100, 'bullet4')
+    br5 = this.add.image(100, 100, 'bullet5')
+    br6 = this.add.image(100, 100, 'bullet6')
+    br7 = this.add.image(100, 100, 'bullet7')
+    br8 = this.add.image(100, 100, 'bullet8')
+    br9 = this.add.image(100, 100, 'bullet9')
+    br10 = this.add.image(100, 100, 'bullet10')
+    
+    br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+    br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br8.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br7.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br6.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br5.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br4.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br3.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br2.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br1.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    br0.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+
     singlePlayerScoreText.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setDepth(1);
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1);
-    hp1.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
-    hp2.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
-    hp3.setOrigin(0.5, 0.5).setDisplaySize(50, 50);
+
 
     // Set sprite variables
     player.health = 3;
+    player.Bullets = 15;
+    player.MaxBullets = 15;
     zombies.lastSpawned = 0;
-
-    if (player.health <= 0)
-    {
-        playerHasDied()
-    }
-
     // Set camera properties
     this.cameras.main.zoom = 0.5;
     //this.cameras.main.startFollow(player);
@@ -74,6 +94,7 @@ singleScene.create = function(){
         'down': Phaser.Input.Keyboard.KeyCodes.S,
         'left': Phaser.Input.Keyboard.KeyCodes.A,
         'right': Phaser.Input.Keyboard.KeyCodes.D,
+        'reload': Phaser.Input.Keyboard.KeyCodes.R,
         'pause': Phaser.Input.Keyboard.KeyCodes.P
     });
 
@@ -89,6 +110,12 @@ singleScene.create = function(){
     });
     this.input.keyboard.on('keydown_D', function (event) {
         player.setAccelerationX(800);
+    });
+    
+    this.input.keyboard.on('keydown_R', function (event) {
+        if (player.Bullets < 10){
+            player.Bullets = player.MaxBullets;
+        }
     });
 
     this.input.keyboard.on('keydown_P', function (event) {
@@ -120,11 +147,17 @@ singleScene.create = function(){
         // Get bullet from bullets group
         var bullet = playerBullets.get().setActive(true).setVisible(true);
         //console.log(reticle.x + " " + reticle.y);
-        if (bullet)
+        if (bullet && player.Bullets > 0)
         {
+            player.Bullets = player.Bullets - 1;
+            console.log("Player Bullets: ", player.Bullets);
             pistolSwoosh.play();
             bullet.fire(player, reticle);
             //this.physics.add.collider(zzz, bullet, zombieHitCallback);
+        }
+
+        if (bullet && player.Bullets == 0){
+            emptyGun.play();
         }
     }, this);
 
@@ -170,7 +203,7 @@ singleScene.create = function(){
 function zombieHitCallback(zombieHit, bulletHit)
 {
     // Reduce health of zombie
-    if (bulletHit.active === true && zombieHit.active === true)
+    if (bulletHit.active === true && zombieHit.active === true && player.Bullets > 0)
     {
         zombieHit.health = zombieHit.health - 1;
         //console.log("zombie hp: ", zombieHit.health);
@@ -202,15 +235,15 @@ function playerHitCallback(playerHit, bulletHit)
         // Kill hp sprites and kill player if health <= 0
         if (playerHit.health == 2)
         {
-            hp3.destroy();
+
         }
         else if (playerHit.health == 1)
         {
-            hp2.destroy();
+
         }
         else
         {
-            hp1.destroy();
+
             // Game over state should execute here
         }
 
@@ -347,6 +380,71 @@ singleScene.update = function(time, delta){
         // Make zombie spawn
         spawnZombies(zombies, player, spawnpoints, time, this);
 
+        if (player.Bullets == 15)
+        {
+            br0.setVisible(false);
+            br10.setVisible(true);
+        }
+    
+        if (player.Bullets == 13)
+        {
+            br10.setVisible(false);
+            br9.setVisible(true);
+        }
+    
+        if (player.Bullets == 11)
+        {
+            br9.setVisible(false);
+            br8.setVisible(true);
+        }
+        
+        if (player.Bullets == 9)
+        {
+            br8.setVisible(false);
+            br7.setVisible(true);
+        }
+    
+        if (player.Bullets == 7)
+        {
+            br7.setVisible(false);
+            br6.setVisible(true);
+        }
+    
+        if (player.Bullets == 5)
+        {
+            br6.setVisible(false);
+            br5.setVisible(true);
+        }
+    
+        if (player.Bullets == 4)
+        {
+            br5.setVisible(false);
+            br4.setVisible(true);
+        }
+    
+        if (player.Bullets == 3)
+        {
+            br4.setVisible(false);
+            br3.setVisible(true);
+        }
+    
+        if (player.Bullets == 2)
+        {
+            br3.setVisible(false);
+            br2.setVisible(true);
+        }
+    
+        if (player.Bullets == 1)
+        {
+            br2.setVisible(false);
+            br1.setVisible(true);
+        }
+    
+        if (player.Bullets == 0)
+        {
+            br1.setVisible(false);
+            br0.setVisible(true);
+        }
         
 }
 

@@ -23,7 +23,8 @@ loadScene.preload = function () {
     this.load.audio("pressButton","./dist/assets/sfx/button_press.wav");
     this.load.audio("zombieHitNoise", "./dist/assets/sfx/zombie_Splat.wav");
     this.load.audio("zombieDeath", "./dist/assets/sfx/zombie_death.wav");
-    this.load.audio("pistolSwooshNoise","./dist/assets/sfx/pistolSwish.mp3");
+    this.load.audio("pistolSwooshNoise", "./dist/assets/sfx/pistolSwish.mp3");
+    this.load.audio("emptyGun", "./dist/assets/sfx/gun_empty.wav")
 
     //Loading Player Files
     this.load.image('player1', './dist/assets/characters/Survivor 1/survivor1_gun.png');
@@ -31,8 +32,20 @@ loadScene.preload = function () {
     this.load.image('player3', './dist/assets/characters/Man Brown/manBrown_gun.png');
     this.load.image('player4', './dist/assets/characters/Man Old/manOld_gun.png');
 
+    //Loading Player U.I.
+    this.load.image('bullet0', './dist/assets/images/U.I./beer0.png');
+    this.load.image('bullet1', './dist/assets/images/U.I./beer1.png');
+    this.load.image('bullet2', './dist/assets/images/U.I./beer2.png');
+    this.load.image('bullet3', './dist/assets/images/U.I./beer3.png');
+    this.load.image('bullet4', './dist/assets/images/U.I./beer4.png');
+    this.load.image('bullet5', './dist/assets/images/U.I./beer5.png');
+    this.load.image('bullet6', './dist/assets/images/U.I./beer6.png');
+    this.load.image('bullet7', './dist/assets/images/U.I./beer7.png');
+    this.load.image('bullet8', './dist/assets/images/U.I./beer8.png');   
+    this.load.image('bullet9', './dist/assets/images/U.I./beer9.png');
+    this.load.image('bullet10', './dist/assets/images/U.I./beer10.png');
 
-    //this.load.image('bullet', 'assets/sprites/bullets/bullet6.png');
+    this.load.image('pizzaBullet', './dist/assets/images/food/bulletPizza.png');
     this.load.image('enemy', './dist/assets/characters/Zombie 1/zombie.png');
     //this.load.image('target', 'assets/demoscene/ball.png');
     //this.load.image('background', 'assets/skies/underwater1.png');
@@ -87,7 +100,7 @@ var Bullet = new Phaser.Class({
 
         // Bullet Constructor
         function Bullet(scene) {
-            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'enemy');
+            Phaser.GameObjects.Image.call(this, scene, 0, 0, 'pizzaBullet');
             this.speed = 1;
             this.born = 0;
             this.direction = 0;
