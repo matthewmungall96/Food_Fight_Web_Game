@@ -5,6 +5,9 @@ var singlePlayerScore = 0;
 var singlePlayerScoreText;
 var highestSinglePlayerScore;
 var singlePlayerMusic_;
+var zombieSplatNoise;
+var zombieDeathNoise;
+var pistolSwoosh;
 
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
@@ -18,8 +21,14 @@ singleScene.create = function(){
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
     this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
+
     singlePlayerMusic_ = this.sound.add('singlePlayerMusic');
     singlePlayerMusic_.play();
+
+    zombieSplatNoise = this.sound.add('zombieHitNoise');
+    zombieDeathNoise = this.sound.add('zombieDeath');
+    pistolSwoosh = this.sound.add('pistolSwooshNoise');
+
     spawnpoints = [
         {x:460, y:224},
         {x:1153,y:220}
@@ -113,6 +122,7 @@ singleScene.create = function(){
         //console.log(reticle.x + " " + reticle.y);
         if (bullet)
         {
+            pistolSwoosh.play();
             bullet.fire(player, reticle);
             //this.physics.add.collider(zzz, bullet, zombieHitCallback);
         }
@@ -171,10 +181,12 @@ function zombieHitCallback(zombieHit, bulletHit)
            singlePlayerScore += 10;
            singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
            console.log("Player Score: ", singlePlayerScore);
+           zombieDeathNoise.play();
            zombieHit.setActive(false).setVisible(false);
         }
 
         // Destroy bullet
+        zombieSplatNoise.play();
         bulletHit.setActive(false).setVisible(false);
     }
 }
@@ -339,10 +351,8 @@ singleScene.update = function(time, delta){
 }
 
 function clickReturnMenuButton(){
-    game.scene.getScenes(true).forEach(scene => {
-        game.scene.stop(scene);
-    });
-    
+    singlePlayerMusic_.stop(),
+    game.scene.stop('Single');
     game.scene.start('Menu');
 }
 

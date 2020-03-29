@@ -177,11 +177,15 @@ multiScene.update = function(time, delta){
         constrainVelocity(player1, 500);
     
         // Constrain position of constrainReticle
-        constrainReticle(reticle, player1);
-        constrainReticle(reticle, player2);
-        constrainReticle(reticle, player3);
-        constrainReticle(reticle, player4);
-        constrainPlayer(player1);
+        constrainReticle1(reticle, player1);
+        constrainReticle2(reticle, player2);
+        constrainReticle3(reticle, player3);
+        constrainReticle4(reticle, player4);
+        constrainPlayer1(player1);
+        constrainPlayer1(player2);
+        constrainPlayer1(player3);
+        constrainPlayer1(player4);
+
     
         // Make zombie fire
         zombieFire(zombie, player1, time, this);
