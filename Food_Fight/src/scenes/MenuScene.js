@@ -5,6 +5,7 @@ menuScene.preload = function(){
 
 var esc = null;
 var mainMenuMusic;
+var buttonPress;
 
 menuScene.create = function(){
     if (game.input.mouse.locked)
@@ -12,7 +13,9 @@ menuScene.create = function(){
     this.add.image(this.game.renderer.width /2, this.game.renderer.height / 2, "title_bg").setDepth(1);
     this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, "logo").setDepth(1);
     singlePlayButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /2, "singleplayer_button").setDepth(1);   
-    multiPlayerButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 1.5, "multiplayer_button").setDepth(1);    
+    multiPlayerButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 1.5, "multiplayer_button").setDepth(1);
+    
+    buttonPress = this.sound.add('pressButton');
     mainMenuMusic = this.sound.add('mainMenu');
     mainMenuMusic.play();
     singlePlayButton.setInteractive();
@@ -59,6 +62,7 @@ menuScene.update = function(){
 
 
 function clickSinglePlayerButton(){
+        buttonPress.play(),
         mainMenuMusic.stop(),
         game.scene.stop('Menu');
         game.scene.start('Single');
