@@ -3,23 +3,23 @@ let singleScene = new Phaser.Scene('Single');
 var globalX, globalY;
 var singlePlayerScore = 0;
 var singlePlayerScoreText;
+var highestSinglePlayerScore;
+var singlePlayerMusic_;
 
 singleScene.preload = function(){
-    
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
     this.load.tilemapTiledJSON("map", "./dist/assets/map/map.json");
-    
 }
 
 singleScene.create = function(){
-   
+    singlePlayerScore = 0;
     this.physics.world.setBounds(0, 0, 1600, 1200);
-
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
     this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
-    
+    singlePlayerMusic_ = this.sound.add('singlePlayerMusic');
+    singlePlayerMusic_.play();
     spawnpoints = [
         {x:460, y:224},
         {x:1153,y:220}
@@ -50,6 +50,11 @@ singleScene.create = function(){
     player.health = 3;
     zombies.lastSpawned = 0;
 
+    if (player.health <= 0)
+    {
+        playerHasDied()
+    }
+
     // Set camera properties
     this.cameras.main.zoom = 0.5;
     //this.cameras.main.startFollow(player);
@@ -59,7 +64,8 @@ singleScene.create = function(){
         'up': Phaser.Input.Keyboard.KeyCodes.W,
         'down': Phaser.Input.Keyboard.KeyCodes.S,
         'left': Phaser.Input.Keyboard.KeyCodes.A,
-        'right': Phaser.Input.Keyboard.KeyCodes.D
+        'right': Phaser.Input.Keyboard.KeyCodes.D,
+        'pause': Phaser.Input.Keyboard.KeyCodes.P
     });
 
     // Enables movement of player with WASD keys
@@ -74,6 +80,10 @@ singleScene.create = function(){
     });
     this.input.keyboard.on('keydown_D', function (event) {
         player.setAccelerationX(800);
+    });
+
+    this.input.keyboard.on('keydown_P', function (event) {
+        clickReturnMenuButton();
     });
 
     // Stops player acceleration on uppress of WASD keys
@@ -195,6 +205,10 @@ function playerHitCallback(playerHit, bulletHit)
         // Destroy bullet
         bulletHit.setActive(false).setVisible(false);
     }
+}
+
+function playerHasDied(){
+    player.setActive(false).setVisible(false);
 }
 /*
 function zombieFire(zombie, player, time, gameObject)
