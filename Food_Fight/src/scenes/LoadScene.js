@@ -110,6 +110,7 @@ var Bullet = new Phaser.Class({
             this.xSpeed = 0;
             this.ySpeed = 0;
             this.setSize(12, 12, true);
+            this.setScale(3,3);
         },
 
     // Fires a bullet from the player to the reticle
