@@ -17,6 +17,7 @@ menuScene.create = function(){
     
     buttonPress = this.sound.add('pressButton');
     mainMenuMusic = this.sound.add('mainMenu');
+    mainMenuMusic.volume = 0.1;
     mainMenuMusic.play();
     singlePlayButton.setInteractive();
     multiPlayerButton.setInteractive();

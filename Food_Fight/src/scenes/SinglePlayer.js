@@ -3,12 +3,13 @@ let singleScene = new Phaser.Scene('Single');
 var globalX, globalY;
 var singlePlayerScore = 0;
 var singlePlayerScoreText;
-var highestSinglePlayerScore;
+var highestSinglePlayerScore = 0;
 var singlePlayerMusic_;
 var zombieSplatNoise;
 var zombieDeathNoise;
 var pistolSwoosh;
 var emptyGun;
+var text;
 
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
@@ -24,13 +25,21 @@ singleScene.create = function(){
     this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
 
     singlePlayerMusic_ = this.sound.add('singlePlayerMusic');
+    singlePlayerMusic_.volume = 0.1;
     singlePlayerMusic_.play();
+
+    text = this.add.text(350, 270, '', { font: '16px Courier', fill: '#00ff00' });
 
     zombieSplatNoise = this.sound.add('zombieHitNoise');
     zombieDeathNoise = this.sound.add('zombieDeath');
     pistolSwoosh = this.sound.add('pistolSwooshNoise');
     emptyGun = this.sound.add('emptyGun');
 
+    zombieSplatNoise.volume = 0.1;
+    zombieDeathNoise.volume = 0.1;
+    pistolSwoosh.volume = 0.1;
+    emptyGun.volume = 0.1;
+    
     spawnpoints = [
         {x:460, y:224},
         {x:1153,y:220}
@@ -49,7 +58,7 @@ singleScene.create = function(){
     hp3Empty = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5); 
     hp3Full = this.add.image(-250, -250, 'target').setScrollFactor(0.5, 0.5);
 
-
+    
     br0 = this.add.image(100, 100, 'bullet0')
     br1 = this.add.image(100, 100, 'bullet1')
     br2 = this.add.image(100, 100, 'bullet2')
@@ -447,6 +456,10 @@ singleScene.update = function(time, delta){
         }
         
 }
+
+setInterval(() => {
+    text.setText(highestSinglePlayerScore++ +" seconds passed")
+}, 1000);
 
 function clickReturnMenuButton(){
     singlePlayerMusic_.stop(),
