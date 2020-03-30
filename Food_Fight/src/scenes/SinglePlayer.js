@@ -28,7 +28,7 @@ singleScene.create = function(){
     singlePlayerMusic_.volume = 0.1;
     singlePlayerMusic_.play();
 
-    text = this.add.text(350, 270, '', { font: '16px Courier', fill: '#00ff00' });
+    text = this.add.text(700, 100, '', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
 
     zombieSplatNoise = this.sound.add('zombieHitNoise');
     zombieDeathNoise = this.sound.add('zombieDeath');
@@ -135,7 +135,7 @@ singleScene.create = function(){
     
     this.input.keyboard.on('keydown_R', function (event) {
         if (player.Bullets < 10){
-            reloadTime = game.time.now + 1000;
+            reloadTime = game.getTime()  + 1000;
             player.Bullets = player.MaxBullets;
         }
     });
@@ -220,6 +220,20 @@ singleScene.create = function(){
     this.physics.add.collider(player, top);
      top.setCollisionByProperty({collides:true});
     
+
+    setInterval(() => {
+        var xhttp;
+        var name = 'Test';
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                text.setText(this.responseText);
+            }
+        };
+        xhttp.open("GET", "database.php?name=" + name, true);
+        xhttp.send();
+        console.log(text);
+    }, 1000);
 }
 
 function zombieHitCallback(zombieHit, bulletHit)
@@ -473,9 +487,6 @@ singleScene.update = function(time, delta){
         
 }
 
-setInterval(() => {
-    text.setText(highestSinglePlayerScore++ +" seconds passed")
-}, 1000);
 
 function clickReturnMenuButton(){
     singlePlayerMusic_.stop(),
