@@ -18,7 +18,7 @@ singleScene.preload = function(){
 
 singleScene.create = function(){
     singlePlayerScore = 0;
-    this.physics.world.setBounds(0, 0, 1600, 1200);
+    this.physics.world.setBounds(0, 2, 1200, 1000);
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
@@ -45,7 +45,7 @@ singleScene.create = function(){
         {x:1153,y:220}
     ];
 
-    player = this.physics.add.sprite(800, 1100, 'player1');
+    player = this.physics.add.sprite(800, 1000, 'player1');
     globalX = player.x;
     globalY = player.y;
     singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -135,6 +135,7 @@ singleScene.create = function(){
     
     this.input.keyboard.on('keydown_R', function (event) {
         if (player.Bullets < 10){
+            reloadTime = game.time.now + 1000;
             player.Bullets = player.MaxBullets;
         }
     });
