@@ -13,7 +13,7 @@ var text;
 
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
-    this.load.tilemapTiledJSON("map", "./dist/assets/map/map.json");
+    this.load.tilemapTiledJSON("map", "./dist/assets/map/map1.json");
 }
 
 singleScene.create = function(){
