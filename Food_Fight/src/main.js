@@ -14,7 +14,7 @@ window.onload=function(){
     },
     backgroundColor: '#888888',
     parent: 'phaser-example',
-    scene: [loadScene, menuScene, singleScene, multiScene]
+    scene: [loadScene, menuScene, singleScene, multiSetupScene, multiScene]
     };
     
 game = new Phaser.Game(config); 
