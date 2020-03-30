@@ -3,12 +3,13 @@ let singleScene = new Phaser.Scene('Single');
 var globalX, globalY;
 var singlePlayerScore = 0;
 var singlePlayerScoreText;
-var highestSinglePlayerScore;
+var highestSinglePlayerScore = 0;
 var singlePlayerMusic_;
 var zombieSplatNoise;
 var zombieDeathNoise;
 var pistolSwoosh;
 var emptyGun;
+var text;
 
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
@@ -24,13 +25,21 @@ singleScene.create = function(){
     this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
 
     singlePlayerMusic_ = this.sound.add('singlePlayerMusic');
+    singlePlayerMusic_.volume = 0.1;
     singlePlayerMusic_.play();
+
+    text = this.add.text(350, 270, '', { font: '16px Courier', fill: '#00ff00' });
 
     zombieSplatNoise = this.sound.add('zombieHitNoise');
     zombieDeathNoise = this.sound.add('zombieDeath');
     pistolSwoosh = this.sound.add('pistolSwooshNoise');
     emptyGun = this.sound.add('emptyGun');
 
+    zombieSplatNoise.volume = 0.3;
+    zombieDeathNoise.volume = 0.3;
+    pistolSwoosh.volume = 0.3;
+    emptyGun.volume = 0.3;
+    
     spawnpoints = [
         {x:460, y:224},
         {x:1153,y:220}
@@ -43,6 +52,7 @@ singleScene.create = function(){
 
     reticle = this.physics.add.sprite(800, 700, 'target');
 
+
     //Burger Images (Used for Health Tracking)
     hp1Empty = this.add.image(100, 100, 'emptyBurger');
     hp1Full = this.add.image(100, 100, 'fullBurger');
@@ -51,6 +61,7 @@ singleScene.create = function(){
     hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
     hp3Full = this.add.image(300, 100, 'fullBurger');
 
+    //Burger Scaling
     hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
     hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -71,6 +82,7 @@ singleScene.create = function(){
     br9 = this.add.image(400, 100, 'bullet9')
     br10 = this.add.image(400, 100, 'bullet10')
     
+    //Beer Scaling
     br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
     br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     br8.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -459,6 +471,10 @@ singleScene.update = function(time, delta){
         }
         
 }
+
+setInterval(() => {
+    text.setText(highestSinglePlayerScore++ +" seconds passed")
+}, 1000);
 
 function clickReturnMenuButton(){
     singlePlayerMusic_.stop(),
