@@ -220,6 +220,19 @@ singleScene.create = function(){
     this.physics.add.collider(player, top);
      top.setCollisionByProperty({collides:true});
     
+
+    setInterval(() => {
+        var xhttp;
+        var name = 'Test';
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                text.setText(this.responseText);
+            }
+        };
+        xhttp.open("GET", "database.php?name=" + name, true);
+        xhttp.send();
+    }, 1000);
 }
 
 function zombieHitCallback(zombieHit, bulletHit)
