@@ -33,6 +33,8 @@ loadScene.preload = function () {
     this.load.image('player4', './dist/assets/characters/Man Old/manOld_gun.png');
 
     //Loading Player U.I.
+    this.load.image('emptyBurger', './dist/assets/images/U.I./burgerG.png');
+    this.load.image('fullBurger', './dist/assets/images/U.I./burgerC.png');
     this.load.image('bullet0', './dist/assets/images/U.I./beer0.png');
     this.load.image('bullet1', './dist/assets/images/U.I./beer1.png');
     this.load.image('bullet2', './dist/assets/images/U.I./beer2.png');
