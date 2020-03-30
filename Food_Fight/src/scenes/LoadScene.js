@@ -69,7 +69,8 @@ var Zombie = new Phaser.Class({
         this.speedX = 0;
         this.speedY = 0;
         this.setPosition(100, 100);
-        this.setDisplaySize(66, 60);
+        this.setSize(66, 60);
+        this.setDisplaySize(66,60);
         this.health = 5;
     },
     go: function (startx, starty) {
@@ -91,8 +92,8 @@ var Zombie = new Phaser.Class({
         this.rotation = Phaser.Math.Angle.Between(this.x, this.y, globalX, globalY);
         this.x += this.speedX * delta;
         this.y += this.speedY * delta;
-
-    }
+        
+        }
 });
 
 var Bullet = new Phaser.Class({
@@ -109,8 +110,8 @@ var Bullet = new Phaser.Class({
             this.direction = 0;
             this.xSpeed = 0;
             this.ySpeed = 0;
-            this.setSize(12, 12, true);
-            this.setScale(3,3);
+            this.setSize(30, 30, true);
+            this.setDisplaySize(30,30);
         },
 
     // Fires a bullet from the player to the reticle
