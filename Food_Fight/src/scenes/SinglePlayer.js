@@ -42,25 +42,34 @@ singleScene.create = function(){
     singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
     reticle = this.physics.add.sprite(800, 700, 'target');
-    hp1Empty = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
-    hp1Full = this.add.image(-350, -250, 'target').setScrollFactor(0.5, 0.5);
-    Hp2Empty = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
-    hp2Full = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5);
-    hp3Empty = this.add.image(-300, -250, 'target').setScrollFactor(0.5, 0.5); 
-    hp3Full = this.add.image(-250, -250, 'target').setScrollFactor(0.5, 0.5);
 
+    //Burger Images (Used for Health Tracking)
+    hp1Empty = this.add.image(100, 100, 'emptyBurger');
+    hp1Full = this.add.image(100, 100, 'fullBurger');
+    hp2Empty = this.add.image(200, 100, 'emptyBurger');
+    hp2Full = this.add.image(200, 100, 'fullBurger');
+    hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
+    hp3Full = this.add.image(300, 100, 'fullBurger');
 
-    br0 = this.add.image(100, 100, 'bullet0')
-    br1 = this.add.image(100, 100, 'bullet1')
-    br2 = this.add.image(100, 100, 'bullet2')
-    br3 = this.add.image(100, 100, 'bullet3')
-    br4 = this.add.image(100, 100, 'bullet4')
-    br5 = this.add.image(100, 100, 'bullet5')
-    br6 = this.add.image(100, 100, 'bullet6')
-    br7 = this.add.image(100, 100, 'bullet7')
-    br8 = this.add.image(100, 100, 'bullet8')
-    br9 = this.add.image(100, 100, 'bullet9')
-    br10 = this.add.image(100, 100, 'bullet10')
+    hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+    hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+    hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+
+    //Beer Images (Used for Bullet Tracking)
+    br0 = this.add.image(400, 100, 'bullet0')
+    br1 = this.add.image(400, 100, 'bullet1')
+    br2 = this.add.image(400, 100, 'bullet2')
+    br3 = this.add.image(400, 100, 'bullet3')
+    br4 = this.add.image(400, 100, 'bullet4')
+    br5 = this.add.image(400, 100, 'bullet5')
+    br6 = this.add.image(400, 100, 'bullet6')
+    br7 = this.add.image(400, 100, 'bullet7')
+    br8 = this.add.image(400, 100, 'bullet8')
+    br9 = this.add.image(400, 100, 'bullet9')
+    br10 = this.add.image(400, 100, 'bullet10')
     
     br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
     br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -235,15 +244,18 @@ function playerHitCallback(playerHit, bulletHit)
         // Kill hp sprites and kill player if health <= 0
         if (playerHit.health == 2)
         {
-
+            hp3Empty.setVisible(true);
+            hp3Full.setVisible(false);
         }
         else if (playerHit.health == 1)
         {
-
+            hp2Empty.setVisible(true);
+            hp2Full.setVisible(false);
         }
         else
         {
-
+            hp1Empty.setVisible(true);
+            hp1Full.setVisible(false);
             // Game over state should execute here
         }
 
