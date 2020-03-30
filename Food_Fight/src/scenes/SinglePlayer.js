@@ -18,7 +18,8 @@ singleScene.preload = function(){
 
 singleScene.create = function(){
     singlePlayerScore = 0;
-    this.physics.world.setBounds(0, 2, 1200, 1000);
+    this.physics.world.setBounds(0, 0, 800*2, 600*2);
+
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
@@ -124,15 +125,19 @@ singleScene.create = function(){
     // Enables movement of player with WASD keys
     this.input.keyboard.on('keydown_W', function (event) {
         player.setAccelerationY(-800);
+        console.log("w");
     });
     this.input.keyboard.on('keydown_S', function (event) {
         player.setAccelerationY(800);
+        console.log("s");
     });
     this.input.keyboard.on('keydown_A', function (event) {
         player.setAccelerationX(-800);
+        console.log("a");
     });
     this.input.keyboard.on('keydown_D', function (event) {
-        player.setAccelerationX(800);
+        player.setAccelerationX(800); 
+        console.log("d");
     });
     
     this.input.keyboard.on('keydown_R', function (event) {
@@ -174,7 +179,7 @@ singleScene.create = function(){
         if (bullet && player.Bullets > 0)
         {
             player.Bullets = player.Bullets - 1;
-            console.log("Player Bullets: ", player.Bullets);
+            //console.log("Player Bullets: ", player.Bullets);
             pistolSwoosh.play();
             bullet.fire(player, reticle);
             //this.physics.add.collider(zzz, bullet, zombieHitCallback);
@@ -218,9 +223,8 @@ singleScene.create = function(){
     //collisons
     //map.setCollisionByProperty([478]);
 
-    
     this.physics.add.collider(player, top);
-     top.setCollisionByProperty({collides:true});
+    top.setCollisionByProperty({collides:true});
     
 
     setInterval(() => {
@@ -229,13 +233,14 @@ singleScene.create = function(){
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                text.setText(this.responseText);
+                text.setText("highest:" + this.responseText + "\nCurrent: " + singlePlayerScore);
             }
         };
-        xhttp.open("GET", "database.php?name=" + name, true);
+        xhttp.open("GET", "get.php?name=" + name, true);
         xhttp.send();
-        console.log(text);
     }, 1000);
+
+    this.physics.world.createDebugGraphic();
 }
 
 function zombieHitCallback(zombieHit, bulletHit)
@@ -253,7 +258,7 @@ function zombieHitCallback(zombieHit, bulletHit)
         {
            singlePlayerScore += 10;
            singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
-           console.log("Player Score: ", singlePlayerScore);
+           //console.log("Player Score: ", singlePlayerScore);
            zombieDeathNoise.play();
            zombieHit.setActive(false).setVisible(false);
         }
@@ -270,7 +275,7 @@ function playerHitCallback(playerHit, bulletHit)
     if (bulletHit.active === true && playerHit.active === true)
     {
         playerHit.health = playerHit.health - 1;
-        console.log("Player hp: ", playerHit.health);
+        //console.log("Player hp: ", playerHit.health);
 
         // Kill hp sprites and kill player if health <= 0
         if (playerHit.health == 2)
@@ -287,7 +292,21 @@ function playerHitCallback(playerHit, bulletHit)
         {
             hp1Empty.setVisible(true);
             hp1Full.setVisible(false);
-            // Game over state should execute here
+
+            if (singlePlayerScore > highestSinglePlayerScore){
+            //UPDATE SCORE
+            var xhttp;
+            var name = 'Test';
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("highest:" + this.responseText + "\nCurrent: " + singlePlayerScore);
+                    text.setText("highest:"+this.responseText + "\nCurrent: "+singlePlayerScore);
+                }
+            };
+            xhttp.open("POST", "post.php?name=" + name + "&score="+ singlePlayerScore, true);
+            xhttp.send();
+        }
         }
 
         // Destroy bullet
@@ -325,7 +344,7 @@ function spawnZombies(zombies, player, spawnpoints, time, gameObject) {
         zombies.lastSpawned = time;
         //Creation of a zombie
         var zzz = zombies.get().setActive(true).setVisible(true);
-        console.log(zzz.health);
+        ///console.log(zzz.health);
         if (zzz) {
             point = Math.floor(Math.random() * spawnpoints.length);
             zzz.go(spawnpoints[point].x, spawnpoints[point].y);
@@ -497,4 +516,3 @@ function clickReturnMenuButton(){
     game.scene.stop('Single');
     game.scene.start('Menu');
 }
-
