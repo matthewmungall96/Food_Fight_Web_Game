@@ -52,14 +52,16 @@ singleScene.create = function(){
 
     reticle = this.physics.add.sprite(800, 700, 'target');
 
-
+    playerinfoHolder = this.add.image(200, 1200, 'playerTable');
+    playerinfoHolder.setOrigin(0.5, 0.5).setDisplaySize(400, 200).setDepth(3).setVisible(true);
+    
     //Burger Images (Used for Health Tracking)
-    hp1Empty = this.add.image(100, 100, 'emptyBurger');
-    hp1Full = this.add.image(100, 100, 'fullBurger');
-    hp2Empty = this.add.image(200, 100, 'emptyBurger');
-    hp2Full = this.add.image(200, 100, 'fullBurger');
-    hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
-    hp3Full = this.add.image(300, 100, 'fullBurger');
+    hp1Empty = this.add.image(100, 1200, 'emptyBurger');
+    hp1Full = this.add.image(100, 1200, 'fullBurger');
+    hp2Empty = this.add.image(200, 1200, 'emptyBurger');
+    hp2Full = this.add.image(200, 1200, 'fullBurger');
+    hp3Empty = this.add.image(300, 1200, 'emptyBurger'); 
+    hp3Full = this.add.image(300, 1200, 'fullBurger');
 
     //Burger Scaling
     hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -70,17 +72,17 @@ singleScene.create = function(){
     hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
 
     //Beer Images (Used for Bullet Tracking)
-    br0 = this.add.image(400, 100, 'bullet0')
-    br1 = this.add.image(400, 100, 'bullet1')
-    br2 = this.add.image(400, 100, 'bullet2')
-    br3 = this.add.image(400, 100, 'bullet3')
-    br4 = this.add.image(400, 100, 'bullet4')
-    br5 = this.add.image(400, 100, 'bullet5')
-    br6 = this.add.image(400, 100, 'bullet6')
-    br7 = this.add.image(400, 100, 'bullet7')
-    br8 = this.add.image(400, 100, 'bullet8')
-    br9 = this.add.image(400, 100, 'bullet9')
-    br10 = this.add.image(400, 100, 'bullet10')
+    br0 = this.add.image(400, 1200, 'bullet0')
+    br1 = this.add.image(400, 1200, 'bullet1')
+    br2 = this.add.image(400, 1200, 'bullet2')
+    br3 = this.add.image(400, 1200, 'bullet3')
+    br4 = this.add.image(400, 1200, 'bullet4')
+    br5 = this.add.image(400, 1200, 'bullet5')
+    br6 = this.add.image(400, 1200, 'bullet6')
+    br7 = this.add.image(400, 1200, 'bullet7')
+    br8 = this.add.image(400, 1200, 'bullet8')
+    br9 = this.add.image(400, 1200, 'bullet9')
+    br10 = this.add.image(400, 1200, 'bullet10')
     
     //Beer Scaling
     br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
@@ -239,9 +241,11 @@ singleScene.create = function(){
 function zombieHitCallback(zombieHit, bulletHit)
 {
     // Reduce health of zombie
-    if (bulletHit.active === true && zombieHit.active === true && player.Bullets > 0)
+    if (bulletHit.active === true && zombieHit.active === true)
     {
-        zombieHit.health = zombieHit.health - 1;
+        if (player.Bullets > 0){
+            zombieHit.health = zombieHit.health - 1;
+        }
         //console.log("zombie hp: ", zombieHit.health);
 
         // Kill zombie if health <= 0

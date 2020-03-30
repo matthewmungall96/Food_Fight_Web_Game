@@ -13,20 +13,23 @@ multiScene.create = function(){
 
     // Add 2 groups for Bullet objects
     player1Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
-    zombieBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
-
+    player2Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+    player3Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+    player4Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+    zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
+    this.physics.add.collider(zombies,player1Bullets, zombieHitCallback);
+    this.physics.add.collider(zombies,player2Bullets, zombieHitCallback);
+    this.physics.add.collider(zombies,player3Bullets, zombieHitCallback);
+    this.physics.add.collider(zombies,player4Bullets, zombieHitCallback);
     // Add background player, zombie, reticle, healthpoint sprites
     var background = this.add.image(800, 600, 'background');
-    zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
     reticle = this.physics.add.sprite(800, 700, 'target');
-
-
     // Set image/sprite properties
     zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
 
     //creates the player 1 entity 
-    if (gamePadNo == 1){
+    if (controller_count == 1){
         player1 = this.physics.add.sprite(800, 300, 'player1');
         player1.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
         player1hp1Empty = this.add.image(100, 100, 'emptyBurger');
@@ -67,7 +70,7 @@ multiScene.create = function(){
     }
 
     //creates the player 2 entity 
-    if (gamePadNo == 2){
+    if (controller_count == 2){
         player2 = this.physics.add.sprite(800, 300, 'player2');
         player2.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
         player2hp1Empty = this.add.image(100, 100, 'emptyBurger');
@@ -108,7 +111,7 @@ multiScene.create = function(){
     }
 
     //creates the player 3 entity 
-    if (gamePadNo == 3){
+    if (controller_count == 3){
         player3 = this.physics.add.sprite(800, 300, 'player3');
         player3.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
         player3hp1Empty = this.add.image(100, 100, 'emptyBurger');
@@ -149,7 +152,7 @@ multiScene.create = function(){
     }
     
     //creates the player 4 entity 
-    if (gamePadNo == 4){
+    if (controller_count == 4){
         player4 = this.physics.add.sprite(800, 300, 'player4');
         player4.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
         player4hp1Empty = this.add.image(100, 100, 'emptyBurger');

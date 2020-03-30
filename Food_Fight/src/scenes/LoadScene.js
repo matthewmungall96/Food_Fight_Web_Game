@@ -9,12 +9,25 @@ var zombieBullets = null;
 var time = 0;
 
 loadScene.preload = function () {
+    //Loading Main Menu Files
     this.load.image("title_bg", "./dist/assets/images/background.jpg");
     this.load.image("logo", "./dist/assets/images/foodFight.png");
     this.load.image("singleplayer_button", "./dist/assets/images/G.U.I/single.png");
     this.load.image("multiplayer_button", "./dist/assets/images/G.U.I./multi.png");
     this.load.image("narrative_button", "./dist/assets/images/G.U.I./narrative.png");
     this.load.image("returntomenu", "./dist/assets/images/returntomenu.png");
+
+    //Loading Setup Files
+    this.load.image("singlesetup", "./dist/assets/images/G.U.I/singlesetup.png");
+    this.load.image("multisetup", "./dist/assets/images/G.U.I/multisetup.png");
+    this.load.image("start_game", "./dist/assets/images/G.U.I/startgame.png");
+    this.load.image("return", "./dist/assets/images/G.U.I/return.png");
+
+    //Loading Controller Check
+    this.load.image("controller_1", "./dist/assets/images/G.U.I/cont1.png");
+    this.load.image("controller_2", "./dist/assets/images/G.U.I/cont2.png");
+    this.load.image("controller_3", "./dist/assets/images/G.U.I/cont3.png");
+    this.load.image("controller_4", "./dist/assets/images/G.U.I/cont4.png");
 
     //Loading Game Music Files
     this.load.audio("mainMenu", "./dist/assets/music/Main_Menu.wav");
@@ -34,6 +47,7 @@ loadScene.preload = function () {
     this.load.image('player4', './dist/assets/characters/Man Old/manOld_gun.png');
 
     //Loading Player U.I.
+    this.load.image('playerTable', './dist/assets/images/U.I./table.png');
     this.load.image('emptyBurger', './dist/assets/images/U.I./burgerG.png');
     this.load.image('fullBurger', './dist/assets/images/U.I./burgerC.png');
     this.load.image('bullet0', './dist/assets/images/U.I./beer0.png');
