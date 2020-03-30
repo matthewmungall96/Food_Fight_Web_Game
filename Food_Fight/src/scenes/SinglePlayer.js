@@ -13,7 +13,7 @@ var text;
 
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
-    this.load.tilemapTiledJSON("map", "./dist/assets/map/map.json");
+    this.load.tilemapTiledJSON("map", "./dist/assets/map/map1.json");
 }
 
 singleScene.create = function(){
@@ -35,10 +35,10 @@ singleScene.create = function(){
     pistolSwoosh = this.sound.add('pistolSwooshNoise');
     emptyGun = this.sound.add('emptyGun');
 
-    zombieSplatNoise.volume = 0.1;
-    zombieDeathNoise.volume = 0.1;
-    pistolSwoosh.volume = 0.1;
-    emptyGun.volume = 0.1;
+    zombieSplatNoise.volume = 0.3;
+    zombieDeathNoise.volume = 0.3;
+    pistolSwoosh.volume = 0.3;
+    emptyGun.volume = 0.3;
     
     spawnpoints = [
         {x:460, y:224},
@@ -61,6 +61,7 @@ singleScene.create = function(){
     hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
     hp3Full = this.add.image(300, 100, 'fullBurger');
 
+    //Burger Scaling
     hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
     hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -81,6 +82,7 @@ singleScene.create = function(){
     br9 = this.add.image(400, 100, 'bullet9')
     br10 = this.add.image(400, 100, 'bullet10')
     
+    //Beer Scaling
     br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
     br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     br8.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
