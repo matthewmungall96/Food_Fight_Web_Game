@@ -4,7 +4,9 @@ window.onload=function(){
     var config = {
     type: Phaser.AUTO,
     width: 800,
-    height: 600,
+      height: 600, input: {
+        gamepad: true
+      },
     physics: {
         default: 'arcade',
         arcade: {

@@ -11,7 +11,6 @@ multiSetupScene.preload = function(){
 }
 
 multiSetupScene.create = function(){
-    game.input.gamepad.start();
 
     this.add.image(this.game.renderer.width /2, this.game.renderer.height / 2, "title_bg").setDepth(1);
     this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 10.5, 'multisetup').setDisplaySize(300, 80).setDepth(1);
@@ -19,6 +18,7 @@ multiSetupScene.create = function(){
     this.add.image(this.game.renderer.width / 3, this.game.renderer.height / 2.5, 'controller_2').setDisplaySize(300, 80).setDepth(1);
     this.add.image(this.game.renderer.width / 3, this.game.renderer.height / 1.80, 'controller_3').setDisplaySize(300, 80).setDepth(1);
     this.add.image(this.game.renderer.width / 3, this.game.renderer.height / 1.4, 'controller_4').setDisplaySize(300, 80).setDepth(1);
+    hp1Empty = this.add.image(this.game.renderer.width / 3 *2, this.game.renderer.height / 4, 'emptyBurger').setDepth(1).setVisible(false);
     
     multiPlayButton = this.add.image(this.game.renderer.width / 3, this.game.renderer.height / 1.1, 'start_game').setDisplaySize(300, 80).setDepth(1).setVisible(false);
     returnButton = this.add.image(this.game.renderer.width / 1.5, this.game.renderer.height / 1.1, 'return').setDisplaySize(300, 80).setDepth(1);
@@ -26,10 +26,19 @@ multiSetupScene.create = function(){
     multiPlayButton.setInteractive();
     returnButton.setInteractive();
 
-    controller1 = game.gamepad.pad1;
-    controller2 = game.gamepad.pad2;
-    controller3 = game.gamepad.pad3;
-    controller4 = game.gamepad.pad4;
+    var controllers = [];
+
+    this.input.gamepad.on('down', function (pad, button, index) {
+        /*
+        console.log(pad);
+        console.log(index);
+        console.log(button);
+        */
+        if (!controllers.find(c => c.pad.index == pad.pad.index) && controllers.length <=4){
+            controllers.push(pad);
+            console.log("new controller registered");
+        }
+    });
 
     multiPlayButton.on("pointerover", ()=>{
         console.log("single player hovering")
