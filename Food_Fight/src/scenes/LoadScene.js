@@ -10,7 +10,7 @@ var time = 0;
 
 loadScene.preload = function () {
     //Loading Main Menu Files
-    this.load.image("title_bg", "./dist/assets/images/background.jpg");
+    this.load.image("title_bg", "./dist/assets/images/bground.jpg");
     this.load.image("logo", "./dist/assets/images/foodFight.png");
     this.load.image("singleplayer_button", "./dist/assets/images/G.U.I/single.png");
     this.load.image("multiplayer_button", "./dist/assets/images/G.U.I./multi.png");

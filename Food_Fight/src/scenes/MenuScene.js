@@ -11,7 +11,7 @@ menuScene.create = function(){
     if (game.input.mouse.locked)
     game.input.mouse.releasePointerLock();
 
-    this.add.image(this.game.renderer.width /2, this.game.renderer.height / 2, "title_bg").setDepth(1);
+    this.add.image(this.game.renderer.width /2, this.game.renderer.height / 2, "title_bg").setDepth(1).setScale(.93);
     this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, "logo").setDepth(1);
     
     singlePlayButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /2.3, "singleplayer_button").setDisplaySize(300, 80).setDepth(1);   
