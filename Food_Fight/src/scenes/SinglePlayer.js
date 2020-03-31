@@ -185,7 +185,7 @@ singleScene.create = function(){
 
     // Fires bullet from player on left click of mouse
     this.input.on('pointerdown', function (pointer, time, lastFired) {
-        if (player.active === false)
+        if (player.active === false || player.currentBullets <=0)
             return;
         // Get bullet from bullets group
         var bullet = playerBullets.get().setActive(true).setVisible(true);
@@ -241,7 +241,7 @@ singleScene.create = function(){
     top.setCollisionByProperty({collides:true});
     
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
         var xhttp;
         var name = 'Test';
         xhttp = new XMLHttpRequest();
@@ -263,9 +263,9 @@ function zombieHitCallback(zombieHit, bulletHit,)
     // Reduce health of zombie
     if (bulletHit.active === true && zombieHit.active === true)
     {
-        if (player.currentBullets > 0){
+        
             zombieHit.health = zombieHit.health - 1;
-        }
+        
         //console.log("zombie hp: ", zombieHit.health);
 
         // Kill zombie if health <= 0
@@ -323,6 +323,7 @@ function playerHitCallback(playerHit, bulletHit)
             };
             xhttp.open("POST", "post.php?name=" + name + "&score="+ singlePlayerScore, true);
             xhttp.send();
+            clearTimeout(this.interval);
         }
         }
 
@@ -460,70 +461,66 @@ singleScene.update = function(time, delta){
         // Make zombie spawn
         spawnZombies(zombies, player, spawnpoints, time, this);
 
-        if (player.currentBullets == 15)
-        {
-            br0.setVisible(false);
-            br10.setVisible(true);
-        }
-    
-        if (player.currentBullets == 13)
-        {
-            br10.setVisible(false);
-            br9.setVisible(true);
-        }
-    
-        if (player.currentBullets == 11)
-        {
-            br9.setVisible(false);
-            br8.setVisible(true);
-        }
-        
-        if (player.currentBullets == 9)
-        {
-            br8.setVisible(false);
-            br7.setVisible(true);
-        }
-    
-        if (player.currentBullets == 7)
-        {
-            br7.setVisible(false);
-            br6.setVisible(true);
-        }
-    
-        if (player.currentBullets == 5)
-        {
-            br6.setVisible(false);
-            br5.setVisible(true);
-        }
-    
-        if (player.currentBullets == 4)
-        {
-            br5.setVisible(false);
-            br4.setVisible(true);
-        }
-    
-        if (player.currentBullets == 3)
-        {
-            br4.setVisible(false);
-            br3.setVisible(true);
-        }
-    
-        if (player.currentBullets == 2)
-        {
-            br3.setVisible(false);
-            br2.setVisible(true);
-        }
-    
-        if (player.currentBullets == 1)
-        {
-            br2.setVisible(false);
-            br1.setVisible(true);
-        }
-    
-        if (player.currentBullets == 0)
-        {
+        switch (player.currentBullets) {
+            case 0:
             br1.setVisible(false);
             br0.setVisible(true);
+                break;
+
+            case 1:
+            br2.setVisible(false);
+            br1.setVisible(true);
+                break;
+
+            case 2:
+            br3.setVisible(false);
+            br2.setVisible(true);
+                break;
+
+            case 3:
+            br4.setVisible(false);
+            br3.setVisible(true);
+                break;
+
+            case 4:
+            br5.setVisible(false);
+            br4.setVisible(true);
+                break;
+
+            case 5:
+            br6.setVisible(false);
+            br5.setVisible(true);
+                break;
+
+            case 7:
+            br7.setVisible(false);
+            br6.setVisible(true);
+                break;
+
+            case 9:
+            br8.setVisible(false);
+            br7.setVisible(true);
+                break;
+
+            case 11:
+            br9.setVisible(false);
+            br8.setVisible(true);
+                break;
+
+            case 13:
+            br10.setVisible(false);
+            br9.setVisible(true);
+                break;
+
+            case 15:
+            br0.setVisible(false);
+            br10.setVisible(true);
+                break;
+
+        
+            default:
+                break;
+
         }
         
 }
