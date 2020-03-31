@@ -59,6 +59,7 @@ singleScene.create = function(){
     ];
 
     player = this.physics.add.sprite(800, 1000, 'player1');
+    player.beers = [];
     globalX = player.x;
     globalY = player.y;
     singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -86,6 +87,7 @@ singleScene.create = function(){
     hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
 
+    /*
     //Beer Images (Used for Bullet Tracking)
     br0 = this.add.image(400, 1200, 'bullet0')
     br1 = this.add.image(400, 1200, 'bullet1')
@@ -111,6 +113,12 @@ singleScene.create = function(){
     br2.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     br1.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     br0.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+*/
+    for (let i = 0; i < 11; i++) {
+        player.beers.push(this.add.image(400, 1200, 'bullet' + i));
+        player.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    }
+    player.beers[10].setVisible(true);
 
     singlePlayerScoreText.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setDepth(1);
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
@@ -122,10 +130,12 @@ singleScene.create = function(){
     player.currentBullets = 15;
     player.MaxBullets = 15;
     zombies.lastSpawned = 0;
+
     // Set camera properties
     this.cameras.main.zoom = 0.5;
     //this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0,60,800,600).setName('main');
+
     // Creates object for input with WASD kets
     moveKeys = this.input.keyboard.addKeys({
         'up': Phaser.Input.Keyboard.KeyCodes.W,
@@ -462,71 +472,67 @@ singleScene.update = function(time, delta){
         // Make zombie spawn
         spawnZombies(zombies, player, spawnpoints, time, this);
 
-        if (player.currentBullets == 15)
-        {
-            br0.setVisible(false);
-            br10.setVisible(true);
-        }
-    
-        if (player.currentBullets == 13)
-        {
-            br10.setVisible(false);
-            br9.setVisible(true);
-        }
-    
-        if (player.currentBullets == 11)
-        {
-            br9.setVisible(false);
-            br8.setVisible(true);
-        }
-        
-        if (player.currentBullets == 9)
-        {
-            br8.setVisible(false);
-            br7.setVisible(true);
-        }
-    
-        if (player.currentBullets == 7)
-        {
-            br7.setVisible(false);
-            br6.setVisible(true);
-        }
-    
-        if (player.currentBullets == 5)
-        {
-            br6.setVisible(false);
-            br5.setVisible(true);
-        }
-    
-        if (player.currentBullets == 4)
-        {
-            br5.setVisible(false);
-            br4.setVisible(true);
-        }
-    
-        if (player.currentBullets == 3)
-        {
-            br4.setVisible(false);
-            br3.setVisible(true);
-        }
-    
-        if (player.currentBullets == 2)
-        {
-            br3.setVisible(false);
-            br2.setVisible(true);
-        }
-    
-        if (player.currentBullets == 1)
-        {
-            br2.setVisible(false);
-            br1.setVisible(true);
-        }
-    
-        if (player.currentBullets == 0)
-        {
-            br1.setVisible(false);
-            br0.setVisible(true);
-        }
+    switch (player.currentBullets) {
+        case 0:
+            player.beers[10].setVisible(false);
+            player.beers[0].setVisible(true);
+            break;
+
+        case 1:
+            player.beers[1].setVisible(false);
+            player.beers[0].setVisible(true);
+            break;
+
+        case 2:
+            player.beers[2].setVisible(false);
+            player.beers[1].setVisible(true);
+            break;
+
+        case 3:
+            player.beers[3].setVisible(false);
+            player.beers[2].setVisible(true);
+            break;
+
+        case 4:
+            player.beers[4].setVisible(false);
+            player.beers[3].setVisible(true);
+            break;
+
+        case 5:
+            player.beers[5].setVisible(false);
+            player.beers[4].setVisible(true);
+            break;
+
+        case 7:
+            player.beers[6].setVisible(false);
+            player.beers[5].setVisible(true);
+            break;
+
+        case 9:
+            player.beers[7].setVisible(false);
+            player.beers[6].setVisible(true);
+            break;
+
+        case 11:
+            player.beers[8].setVisible(false);
+            player.beers[7].setVisible(true);
+            break;
+
+        case 13:
+            player.beers[9].setVisible(false);
+            player.beers[8].setVisible(true);
+            break;
+
+        case 15:
+            player.beers[10].setVisible(false);
+            player.beers[9].setVisible(true);
+            break;
+
+
+        default:
+            break;
+
+    }
         
 }
 
