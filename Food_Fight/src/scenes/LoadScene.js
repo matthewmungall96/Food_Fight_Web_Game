@@ -66,7 +66,7 @@ loadScene.preload = function () {
     this.load.image('chickenBullet', './dist/assets/images/food/bulletChicken.png');
 
     this.load.image('enemy', './dist/assets/characters/Zombie 1/zombie.png');
-    //this.load.image('target', 'assets/demoscene/ball.png');
+    this.load.image('target', './dist/assets/images/U.I/cHairWhite.png');
     //this.load.image('background', 'assets/skies/underwater1.png');
 }
 

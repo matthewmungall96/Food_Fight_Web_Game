@@ -100,7 +100,7 @@ singleScene.create = function(){
 
     singlePlayerScoreText.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setDepth(1);
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
-    reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1);
+    reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1).setScale(1);
 
 
     // Set sprite variables
