@@ -317,7 +317,7 @@ function playerHitCallback(playerHit, bulletHit)
         }
 
         // Destroy bullet
-        bulletHit.setActive(false).setVisible(false);
+        bulletHit.destroy();
     }
 }
 
