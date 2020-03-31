@@ -44,14 +44,14 @@ multiSetupScene.create = function(){
 
     
 
-    this.input.gamepad.on('down', function (pad1, button, index) {
+    this.input.gamepad.on('down', function (pad, button, index) {
         /*
         console.log(pad);
         console.log(index);
         console.log(button);
         */
-        if (!controllers.find(c => c.pad1.index == pad.pad1.index) && controllers.length <=4){
-            controllers.push(pad1);
+    if (!controllers.find(c => c.pad.index == pad.pad.index) && controllers.length <=4){
+            controllers.push(pad);
             console.log("new controller registered");
         }
     });
@@ -105,32 +105,29 @@ function addPlayer(){
         console.log(controller_count);
     }
        
-    if (controller_count >= 1)
+    if (controllers.length >= 1)
         {
             controller1_active.setVisible(true);
             controller1_inactive.setVisible(false);
-            multiPlayButton.setVisible(true);
-    }
+        }
 
-    if (controller_count >= 2)
+    if (controllers.length >= 2)
     {
             controller2_active.setVisible(true);
             controller2_inactive.setVisible(false);
             multiPlayButton.setVisible(true);
     }
 
-    if (controller_count >= 3)
+    if (controllers.length >= 3)
     {
             controller3_active.setVisible(true);
             controller3_inactive.setVisible(false);
-            multiPlayButton.setVisible(true);
     }
 
-    if (controller_count >= 4)
+    if (controllers.length >= 4)
     {
             controller4_active.setVisible(true);
             controller4_inactive.setVisible(false);
-            multiPlayButton.setVisible(true);
     }   
 
     else{
