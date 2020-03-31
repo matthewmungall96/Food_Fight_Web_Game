@@ -192,18 +192,6 @@ multiScene.create = function(){
         player4.health = 3;
     }
 
-
-    //Burger Scaling
-
-
-    //Beer Images (Used for Bullet Tracking)
-
-    
-    //Beer Scaling
-
-
-    // Set sprite variables
-
     zombie.health = 3;
     zombie.lastFired = 0;
 
@@ -346,9 +334,68 @@ multiScene.update = function(time, delta){
         constrainPlayer1(player3);
         constrainPlayer1(player4);
 
-    
+        switch (player.currentBullets) {
+            case 0:
+                player1br1.setVisible(false);
+                player1br0.setVisible(true);
+                break;
+
+            case 1:
+                player1br2.setVisible(false);
+                player1br1.setVisible(true);
+                break;
+
+            case 2:
+                player1br3.setVisible(false);
+                player1br2.setVisible(true);
+                break;
+
+            case 3:
+                player1br4.setVisible(false);
+                player1br3.setVisible(true);
+                break;
+
+            case 4:
+                player1br5.setVisible(false);
+                player1br4.setVisible(true);
+                break;
+
+            case 5:
+                player1br6.setVisible(false);
+                player1br5.setVisible(true);
+                break;
+
+            case 7:
+                player1br7.setVisible(false);
+                player1br6.setVisible(true);
+                break;
+
+            case 9:
+                player1br8.setVisible(false);
+                player1br7.setVisible(true);
+                break;
+
+            case 11:
+                player1br9.setVisible(false);
+                player1br8.setVisible(true);
+                break;
+
+            case 13:
+                player1br10.setVisible(false);
+                player1br9.setVisible(true);
+                break;
+
+            case 15:
+                player1br0.setVisible(false);
+                player1br10.setVisible(true);
+                break;
+
+        
+            default:
+                break;
+
+        }
         // Make zombie fire
-        zombieFire(zombie, player1, time, this);
         
 }
 
