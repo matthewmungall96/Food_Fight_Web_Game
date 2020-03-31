@@ -275,14 +275,14 @@ function zombieHitCallback(zombieHit, bulletHit,)
            singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
            //console.log("Player Score: ", singlePlayerScore);
            zombieDeathNoise.play();
-           zombieHit.setActive(false).setVisible(false);
+           zombieHit.destroy();
            
            
         }
 
         // Destroy bullet
         zombieSplatNoise.play();
-        bulletHit.setActive(false).setVisible(false);
+        bulletHit.destroy();
     }
 }
 
