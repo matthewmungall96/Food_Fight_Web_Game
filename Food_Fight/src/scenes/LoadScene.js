@@ -68,6 +68,12 @@ loadScene.preload = function () {
     this.load.image('enemy', './dist/assets/characters/Zombie 1/zombie.png');
     this.load.image('target', './dist/assets/images/U.I/cHairWhite.png');
     //this.load.image('background', 'assets/skies/underwater1.png');
+
+    //loads spritesheet for animations
+    this.load.spritesheet('explosion','./dist/assets/images/explosion.png', {
+        frameWidth: 16,
+        frameHeight: 16
+    });
 }
 
 loadScene.create = function () {
