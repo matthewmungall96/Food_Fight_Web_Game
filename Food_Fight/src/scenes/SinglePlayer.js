@@ -63,7 +63,7 @@ singleScene.create = function(){
     globalY = player.y;
     singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
-    explosion = this.physics.add.sprite(400,300,'explosion').setDepth(3).setScale(1.5);
+    explosion = this.physics.add.sprite(400,300,'explosion').setDepth(3).setScale(4).setVisible(false);
 
     reticle = this.physics.add.sprite(800, 700, 'target');
 
@@ -274,8 +274,11 @@ function zombieHitCallback(zombieHit, bulletHit,)
            singlePlayerScore += 10;
            singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
            //console.log("Player Score: ", singlePlayerScore);
-           explosion.play('explode');
            zombieDeathNoise.play();
+           explosion.setVisible(true);
+           explosion.setPosition(zombieHit.x, zombieHit.y);
+           
+           explosion.play('explode');
            zombieHit.destroy();
            
            
