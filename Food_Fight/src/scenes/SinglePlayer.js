@@ -21,7 +21,7 @@ singleScene.create = function(){
     this.physics.world.setBounds(0, 0, 800*2, 600*2);
 
     // Add 2 groups for Bullet objects
-    playerBullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
+    playerBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
     this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
 
@@ -105,7 +105,7 @@ singleScene.create = function(){
 
     // Set sprite variables
     player.health = 3;
-    player.Bullets = 15;
+    player.currentBullets = 15;
     player.MaxBullets = 15;
     zombies.lastSpawned = 0;
     // Set camera properties
@@ -141,9 +141,9 @@ singleScene.create = function(){
     });
     
     this.input.keyboard.on('keydown_R', function (event) {
-        if (player.Bullets < 10){
-            reloadTime = game.getTime()  + 1000;
-            player.Bullets = player.MaxBullets;
+        if (player.currentBullets < 15){
+            reloadTime = game.getTime()  + 2000;
+            player.currentBullets = player.MaxBullets;
         }
     });
 
@@ -176,16 +176,16 @@ singleScene.create = function(){
         // Get bullet from bullets group
         var bullet = playerBullets.get().setActive(true).setVisible(true);
         //console.log(reticle.x + " " + reticle.y);
-        if (bullet && player.Bullets > 0)
+        if (bullet && player.currentBullets > 0)
         {
-            player.Bullets = player.Bullets - 1;
-            //console.log("Player Bullets: ", player.Bullets);
+            player.currentBullets = player.currentBullets - 1;
+            //console.log("Player Bullets: ", player.currentBullets);
             pistolSwoosh.play();
             bullet.fire(player, reticle);
             //this.physics.add.collider(zzz, bullet, zombieHitCallback);
         }
 
-        if (bullet && player.Bullets == 0){
+        if (bullet && player.currentBullets == 0){
             emptyGun.play();
         }
     }, this);
@@ -248,7 +248,7 @@ function zombieHitCallback(zombieHit, bulletHit)
     // Reduce health of zombie
     if (bulletHit.active === true && zombieHit.active === true)
     {
-        if (player.Bullets > 0){
+        if (player.currentBullets > 0){
             zombieHit.health = zombieHit.health - 1;
         }
         //console.log("zombie hp: ", zombieHit.health);
@@ -442,67 +442,67 @@ singleScene.update = function(time, delta){
         // Make zombie spawn
         spawnZombies(zombies, player, spawnpoints, time, this);
 
-        if (player.Bullets == 15)
+        if (player.currentBullets == 15)
         {
             br0.setVisible(false);
             br10.setVisible(true);
         }
     
-        if (player.Bullets == 13)
+        if (player.currentBullets == 13)
         {
             br10.setVisible(false);
             br9.setVisible(true);
         }
     
-        if (player.Bullets == 11)
+        if (player.currentBullets == 11)
         {
             br9.setVisible(false);
             br8.setVisible(true);
         }
         
-        if (player.Bullets == 9)
+        if (player.currentBullets == 9)
         {
             br8.setVisible(false);
             br7.setVisible(true);
         }
     
-        if (player.Bullets == 7)
+        if (player.currentBullets == 7)
         {
             br7.setVisible(false);
             br6.setVisible(true);
         }
     
-        if (player.Bullets == 5)
+        if (player.currentBullets == 5)
         {
             br6.setVisible(false);
             br5.setVisible(true);
         }
     
-        if (player.Bullets == 4)
+        if (player.currentBullets == 4)
         {
             br5.setVisible(false);
             br4.setVisible(true);
         }
     
-        if (player.Bullets == 3)
+        if (player.currentBullets == 3)
         {
             br4.setVisible(false);
             br3.setVisible(true);
         }
     
-        if (player.Bullets == 2)
+        if (player.currentBullets == 2)
         {
             br3.setVisible(false);
             br2.setVisible(true);
         }
     
-        if (player.Bullets == 1)
+        if (player.currentBullets == 1)
         {
             br2.setVisible(false);
             br1.setVisible(true);
         }
     
-        if (player.Bullets == 0)
+        if (player.currentBullets == 0)
         {
             br1.setVisible(false);
             br0.setVisible(true);
