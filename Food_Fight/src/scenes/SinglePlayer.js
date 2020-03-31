@@ -253,8 +253,6 @@ singleScene.create = function(){
         xhttp.open("GET", "get.php?name=" + name, true);
         xhttp.send();
     }, 1000);
-
-    this.physics.world.createDebugGraphic();
 }
 
 function zombieHitCallback(zombieHit, bulletHit,)

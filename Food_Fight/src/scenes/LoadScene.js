@@ -28,6 +28,8 @@ loadScene.preload = function () {
     this.load.image("controller_2", "./dist/assets/images/G.U.I/cont2.png");
     this.load.image("controller_3", "./dist/assets/images/G.U.I/cont3.png");
     this.load.image("controller_4", "./dist/assets/images/G.U.I/cont4.png");
+    this.load.image("controller_inactive", "./dist/assets/images/G.U.I/inactive.png")
+    this.load.image("controller_active", "./dist/assets/images/G.U.I/active.png")
 
     //Loading Game Music Files
     this.load.audio("mainMenu", "./dist/assets/music/Main_Menu.wav");
@@ -62,14 +64,13 @@ loadScene.preload = function () {
     this.load.image('bullet9', './dist/assets/images/U.I./beer9.png');
     this.load.image('bullet10', './dist/assets/images/U.I./beer10.png');
 
+    //Loading Controller Button Detection
     this.load.image('pizzaBullet', './dist/assets/images/food/bulletPizza.png');
     this.load.image('chickenBullet', './dist/assets/images/food/bulletChicken.png');
 
     this.load.image('enemy', './dist/assets/characters/Zombie 1/zombie.png');
     this.load.image('target', './dist/assets/images/U.I/cHairWhite.png');
     //this.load.image('background', 'assets/skies/underwater1.png');
-
-    
 
     //loads spritesheet for animations
     this.load.spritesheet('explosion','./dist/assets/images/explosion.png', {

@@ -191,8 +191,7 @@ multiScene.create = function(){
         player4.health = 3;
     }
 
-    zombie.health = 3;
-    zombie.lastFired = 0;
+    zombie.health = 5;
 
     // Set camera properties
     this.cameras.main.zoom = 0.5;
