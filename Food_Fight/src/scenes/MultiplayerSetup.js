@@ -53,6 +53,7 @@ multiSetupScene.create = function(){
     if (!controllers.find(c => c.pad.index == pad.pad.index) && controllers.length <=4){
             controllers.push(pad);
             console.log("new controller registered");
+            addPlayer();
         }
     });
 
@@ -77,7 +78,7 @@ multiSetupScene.create = function(){
     })
 
     returnButton.on("pointerdown", ()=>{
-        addPlayer()
+        addPlayer();
     })
 }
 
@@ -96,15 +97,6 @@ function clickReturnMenuButton(){
 }
 
 function addPlayer(){
-    if (controller_count == 4){
-        return;
-    }
-
-    else{
-        controller_count++;
-        console.log(controller_count);
-    }
-       
     if (controllers.length >= 1)
         {
             controller1_active.setVisible(true);
@@ -128,11 +120,7 @@ function addPlayer(){
     {
             controller4_active.setVisible(true);
             controller4_inactive.setVisible(false);
-    }   
-
-    else{
-            return;
-    }
+    } 
 }
 
 function ready(){
@@ -140,5 +128,4 @@ function ready(){
 }
 
 multiSetupScene.update = function(time, delta){
-
 }
