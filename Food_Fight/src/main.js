@@ -16,6 +16,9 @@ window.onload=function(){
     },
     backgroundColor: '#888888',
     parent: 'phaser-example',
+    input: {
+        gamepad: true
+    },
     scene: [loadScene, menuScene, singleScene, multiSetupScene, multiScene]
     };
     

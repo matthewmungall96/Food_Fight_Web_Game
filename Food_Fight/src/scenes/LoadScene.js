@@ -69,6 +69,8 @@ loadScene.preload = function () {
     this.load.image('target', './dist/assets/images/U.I/cHairWhite.png');
     //this.load.image('background', 'assets/skies/underwater1.png');
 
+    
+
     //loads spritesheet for animations
     this.load.spritesheet('explosion','./dist/assets/images/explosion.png', {
         frameWidth: 16,
@@ -94,6 +96,7 @@ var Zombie = new Phaser.Class({
         this.setSize(66, 60);
         this.setDisplaySize(66,60);
         this.health = 5;
+     
     },
     go: function (startx, starty) {
         this.health = 5;
@@ -101,6 +104,8 @@ var Zombie = new Phaser.Class({
     },
     update: function (time, delta) {
         this.direction = Math.atan((globalX - this.x) / (globalY - this.y));
+
+        
 
         // Calculate X and y velocity of bullet to moves it from shooter to target
         if (globalY >= this.y) {
@@ -111,6 +116,7 @@ var Zombie = new Phaser.Class({
             this.speedX = -this.speed * Math.sin(this.direction);
             this.speedY = -this.speed * Math.cos(this.direction);
         }
+        
         this.rotation = Phaser.Math.Angle.Between(this.x, this.y, globalX, globalY);
         this.x += this.speedX * delta;
         this.y += this.speedY * delta;

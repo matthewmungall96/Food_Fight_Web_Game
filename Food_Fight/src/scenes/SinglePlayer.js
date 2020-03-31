@@ -14,11 +14,23 @@ var text;
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
     this.load.tilemapTiledJSON("map", "./dist/assets/map/map1.json");
+   
+    
 }
 
 singleScene.create = function(){
     singlePlayerScore = 0;
     this.physics.world.setBounds(0, 0, 800*2, 600*2);
+    //creates animation for explosion 
+ 
+    this.anims.create({
+        key: 'explode',
+        frames: this.anims.generateFrameNumbers('explosion'),
+        frameRate: 20,
+        repeat: 0,
+        hiddenOnComplete: true
+    })
+   
 
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
@@ -42,8 +54,8 @@ singleScene.create = function(){
     emptyGun.volume = 0.3;
     
     spawnpoints = [
-        {x:457, y:100},
-        {x:1150,y:100},
+        {x:460, y:224},
+        {x:1153,y:220}
     ];
 
     player = this.physics.add.sprite(800, 1000, 'player1');
@@ -51,18 +63,20 @@ singleScene.create = function(){
     globalY = player.y;
     singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
+    explosion = this.physics.add.sprite(400,300,'explosion').setDepth(3);
+
     reticle = this.physics.add.sprite(800, 700, 'target');
 
-    playerinfoHolder = this.add.image(250, 1150, 'playerTable');
-    playerinfoHolder.setOrigin(0.5, 0.5).setDisplaySize(500, 200).setDepth(3).setVisible(true);
+    playerinfoHolder = this.add.image(200, 1200, 'playerTable');
+    playerinfoHolder.setOrigin(0.5, 0.5).setDisplaySize(400, 200).setDepth(3).setVisible(true);
     
     //Burger Images (Used for Health Tracking)
-    hp1Empty = this.add.image(100, 1175, 'emptyBurger');
-    hp1Full = this.add.image(100, 1175, 'fullBurger');
-    hp2Empty = this.add.image(200, 1175, 'emptyBurger');
-    hp2Full = this.add.image(200, 1175, 'fullBurger');
-    hp3Empty = this.add.image(300, 1175, 'emptyBurger'); 
-    hp3Full = this.add.image(300, 1175, 'fullBurger');
+    hp1Empty = this.add.image(100, 1200, 'emptyBurger');
+    hp1Full = this.add.image(100, 1200, 'fullBurger');
+    hp2Empty = this.add.image(200, 1200, 'emptyBurger');
+    hp2Full = this.add.image(200, 1200, 'fullBurger');
+    hp3Empty = this.add.image(300, 1200, 'emptyBurger'); 
+    hp3Full = this.add.image(300, 1200, 'fullBurger');
 
     //Burger Scaling
     hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -73,17 +87,17 @@ singleScene.create = function(){
     hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
 
     //Beer Images (Used for Bullet Tracking)
-    br0 = this.add.image(400, 1175, 'bullet0')
-    br1 = this.add.image(400, 1175, 'bullet1')
-    br2 = this.add.image(400, 1175, 'bullet2')
-    br3 = this.add.image(400, 1175, 'bullet3')
-    br4 = this.add.image(400, 1175, 'bullet4')
-    br5 = this.add.image(400, 1175, 'bullet5')
-    br6 = this.add.image(400, 1175, 'bullet6')
-    br7 = this.add.image(400, 1175, 'bullet7')
-    br8 = this.add.image(400, 1175, 'bullet8')
-    br9 = this.add.image(400, 1175, 'bullet9')
-    br10 = this.add.image(400, 1175, 'bullet10')
+    br0 = this.add.image(400, 1200, 'bullet0')
+    br1 = this.add.image(400, 1200, 'bullet1')
+    br2 = this.add.image(400, 1200, 'bullet2')
+    br3 = this.add.image(400, 1200, 'bullet3')
+    br4 = this.add.image(400, 1200, 'bullet4')
+    br5 = this.add.image(400, 1200, 'bullet5')
+    br6 = this.add.image(400, 1200, 'bullet6')
+    br7 = this.add.image(400, 1200, 'bullet7')
+    br8 = this.add.image(400, 1200, 'bullet8')
+    br9 = this.add.image(400, 1200, 'bullet9')
+    br10 = this.add.image(400, 1200, 'bullet10')
     
     //Beer Scaling
     br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
@@ -142,9 +156,13 @@ singleScene.create = function(){
     
     this.input.keyboard.on('keydown_R', function (event) {
         if (player.currentBullets < 15){
-            (time - 2000)            
+            reloadTime = game.getTime()  + 2000;
             player.currentBullets = player.MaxBullets;
         }
+    });
+
+    this.input.keyboard.on('keydown_P', function (event) {
+        clickReturnMenuButton();
     });
 
     // Stops player acceleration on uppress of WASD keys
@@ -164,17 +182,6 @@ singleScene.create = function(){
         if (moveKeys['left'].isUp)
             player.setAccelerationX(0);
     });
-
-    if (!esc) {
-        esc = this.input.keyboard.addKey('P');
-        esc.on('down', function (event) {
-            console.log("Escape pressed");
-            if (game.scene.isPaused('Single'))
-                game.paused = false;
-            if (!game.scene.isPaused('Single'))
-                game.paused = true;
-        });
-    }    
 
     // Fires bullet from player on left click of mouse
     this.input.on('pointerdown', function (pointer, time, lastFired) {
@@ -250,8 +257,9 @@ singleScene.create = function(){
     this.physics.world.createDebugGraphic();
 }
 
-function zombieHitCallback(zombieHit, bulletHit)
+function zombieHitCallback(zombieHit, bulletHit,)
 {
+    
     // Reduce health of zombie
     if (bulletHit.active === true && zombieHit.active === true)
     {
@@ -267,12 +275,14 @@ function zombieHitCallback(zombieHit, bulletHit)
            singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
            //console.log("Player Score: ", singlePlayerScore);
            zombieDeathNoise.play();
-           zombieHit.destroy();
+           zombieHit.setActive(false).setVisible(false);
+           
+           
         }
 
         // Destroy bullet
         zombieSplatNoise.play();
-        bulletHit.destroy();
+        bulletHit.setActive(false).setVisible(false);
     }
 }
 
@@ -318,7 +328,7 @@ function playerHitCallback(playerHit, bulletHit)
         }
 
         // Destroy bullet
-        bulletHit.destroy();
+        bulletHit.setActive(false).setVisible(false);
     }
 }
 
@@ -349,6 +359,7 @@ function zombieFire(zombie, player, time, gameObject)
 
 function spawnZombies(zombies, player, spawnpoints, time, gameObject) {
     if ((time - zombies.lastSpawned) > 2000){
+        explosion.play('explode');
         zombies.lastSpawned = time;
         //Creation of a zombie
         var zzz = zombies.get().setActive(true).setVisible(true);
