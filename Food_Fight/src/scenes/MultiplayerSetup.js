@@ -5,6 +5,7 @@ var controller2;
 var controller3;
 var controller4;
 var controller_count = 0;
+var controllers = [];
 
 multiSetupScene.preload = function(){
 
@@ -26,7 +27,7 @@ multiSetupScene.create = function(){
     multiPlayButton.setInteractive();
     returnButton.setInteractive();
 
-    var controllers = [];
+    
 
     this.input.gamepad.on('down', function (pad, button, index) {
         /*

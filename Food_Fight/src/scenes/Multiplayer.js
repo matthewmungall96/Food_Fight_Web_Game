@@ -12,11 +12,11 @@ multiScene.create = function(){
     this.physics.world.setBounds(0, 0, 1600, 1200);
 
     // Add 2 groups for Bullet objects
-    player1Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
-    player2Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
-    player3Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
-    player4Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
+    player1Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
+    player2Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
+    player3Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
+    player4Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
     this.physics.add.collider(zombies,player1Bullets, zombieHitCallback);
     this.physics.add.collider(zombies,player2Bullets, zombieHitCallback);
     this.physics.add.collider(zombies,player3Bullets, zombieHitCallback);
@@ -25,7 +25,6 @@ multiScene.create = function(){
     var background = this.add.image(800, 600, 'background');
     reticle = this.physics.add.sprite(800, 700, 'target');
     // Set image/sprite properties
-    zombie.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
 
     //creates the player 1 entity 
