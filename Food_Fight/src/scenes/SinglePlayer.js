@@ -1,6 +1,6 @@
 let singleScene = new Phaser.Scene('Single');
 
-var globalX, globalY;
+
 var singlePlayerScore = 0;
 var singlePlayerScoreText;
 var highestSinglePlayerScore = 0;
@@ -10,11 +10,18 @@ var zombieDeathNoise;
 var pistolSwoosh;
 var emptyGun;
 var text;
+var player = null;
+var healthpoints = null;
+var reticle = null;
+var moveKeys = null;
+var playerBullets = null;
+var zombieBullets = null;
+var time = 0;
 
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
     this.load.tilemapTiledJSON("map", "./dist/assets/map/map1.json");
-   
+    
     
 }
 
@@ -22,7 +29,7 @@ singleScene.create = function(){
     singlePlayerScore = 0;
     this.physics.world.setBounds(0, 0, 800*2, 600*2);
     //creates animation for explosion 
- 
+    
     this.anims.create({
         key: 'explode',
         frames: this.anims.generateFrameNumbers('explosion'),
@@ -30,7 +37,7 @@ singleScene.create = function(){
         repeat: 0,
         hiddenOnComplete: true
     })
-   
+    
 
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
@@ -54,14 +61,14 @@ singleScene.create = function(){
     emptyGun.volume = 0.3;
     
     spawnpoints = [
-        {x:460, y:224},
-        {x:1153,y:220}
+    {x:460, y:224},
+    {x:1153,y:220}
     ];
 
     player = this.physics.add.sprite(800, 1000, 'player1');
     player.beers = [];
-    globalX = player.x;
-    globalY = player.y;
+    playersPos.push([player.x, player.y]);
+
     singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
     explosion = this.physics.add.sprite(400,300,'explosion').setDepth(3).setScale(4).setVisible(false);
@@ -87,33 +94,6 @@ singleScene.create = function(){
     hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
 
-    /*
-    //Beer Images (Used for Bullet Tracking)
-    br0 = this.add.image(400, 1200, 'bullet0')
-    br1 = this.add.image(400, 1200, 'bullet1')
-    br2 = this.add.image(400, 1200, 'bullet2')
-    br3 = this.add.image(400, 1200, 'bullet3')
-    br4 = this.add.image(400, 1200, 'bullet4')
-    br5 = this.add.image(400, 1200, 'bullet5')
-    br6 = this.add.image(400, 1200, 'bullet6')
-    br7 = this.add.image(400, 1200, 'bullet7')
-    br8 = this.add.image(400, 1200, 'bullet8')
-    br9 = this.add.image(400, 1200, 'bullet9')
-    br10 = this.add.image(400, 1200, 'bullet10')
-    
-    //Beer Scaling
-    br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-    br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br8.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br7.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br6.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br5.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br4.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br3.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br2.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br1.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    br0.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-*/
     for (let i = 0; i < 11; i++) {
         player.beers.push(this.add.image(400, 1200, 'bullet' + i));
         player.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -279,8 +259,8 @@ function zombieHitCallback(zombieHit, bulletHit,)
         // Kill zombie if health <= 0
         if (zombieHit.health <= 0)
         {
-           singlePlayerScore += 10;
-           singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
+         singlePlayerScore += 10;
+         singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
            //console.log("Player Score: ", singlePlayerScore);
            zombieDeathNoise.play();
            explosion.setVisible(true);
@@ -290,7 +270,7 @@ function zombieHitCallback(zombieHit, bulletHit,)
            zombieHit.destroy();
            
            
-        }
+       }
 
         // Destroy bullet
         zombieSplatNoise.play();
@@ -336,7 +316,7 @@ function playerHitCallback(playerHit, bulletHit)
             xhttp.open("POST", "post.php?name=" + name + "&score="+ singlePlayerScore, true);
             xhttp.send();
         }
-        }
+    }
 
         // Destroy bullet
         bulletHit.setActive(false).setVisible(false);
@@ -346,27 +326,7 @@ function playerHitCallback(playerHit, bulletHit)
 function playerHasDied(){
     player.setActive(false).setVisible(false);
 }
-/*
-function zombieFire(zombie, player, time, gameObject)
-{
-    if (zombie.active === false) {
-        return;
-    }
 
-    if ((time - zombie.lastFired) > 1000) {
-        console.log('firing')
-        zombie.lastFired = time;
-
-        // Get bullet from bullets group
-        var bullet = zombieBullets.get().setActive(true).setVisible(true);
-
-        if (bullet) {
-            bullet.fire(zombie, player);
-            // Add collider between bullet and player1
-            gameObject.physics.add.collider(player, bullet, playerHitCallback);
-        }
-    }
-}*/
 
 function spawnZombies(zombies, player, spawnpoints, time, gameObject) {
     if ((time - zombies.lastSpawned) > 2000){
@@ -390,49 +350,20 @@ function constrainVelocity(sprite, maxVelocity)
     if (!sprite || !sprite.body)
       return;
 
-    var angle, currVelocitySqr, vx, vy;
-    vx = sprite.body.velocity.x;
-    vy = sprite.body.velocity.y;
-    currVelocitySqr = vx * vx + vy * vy;
+  var angle, currVelocitySqr, vx, vy;
+  vx = sprite.body.velocity.x;
+  vy = sprite.body.velocity.y;
+  currVelocitySqr = vx * vx + vy * vy;
 
-    if (currVelocitySqr > maxVelocity * maxVelocity)
-    {
-        angle = Math.atan2(vy, vx);
-        vx = Math.cos(angle) * maxVelocity;
-        vy = Math.sin(angle) * maxVelocity;
-        sprite.body.velocity.x = vx;
-        sprite.body.velocity.y = vy;
-    }
+  if (currVelocitySqr > maxVelocity * maxVelocity)
+  {
+    angle = Math.atan2(vy, vx);
+    vx = Math.cos(angle) * maxVelocity;
+    vy = Math.sin(angle) * maxVelocity;
+    sprite.body.velocity.x = vx;
+    sprite.body.velocity.y = vy;
 }
-
-/*
-function constrainPlayer(player) {
-
-    var distX = player.x - 800; // X distance between player & origin point
-    var distY = player.y - 600; // Y distance between player & origin point
-
-    var maxX = 100, maxY = 50;
-
-    // Ensures player cannot be moved offscreen (player follow)
-    if (distX > 100){
-        player.x = 800 + maxX;
-        player.setAccelerationX(0);
-    }
-    else if (distX < -100){
-        player.x = 800 - maxX;
-        player.setAccelerationX(0);
-    }
-    if (distY > 50){
-        player.y = 600 + maxY;
-        player.setAccelerationY(0);
-    }
-    else if (distY < -50){
-        player.y = 600 - maxY;
-        player.setAccelerationY(0);
-    }
 }
-*/
-
 
 // Ensures reticle does not move offscreen
 function constrainReticle(reticle, player) {
@@ -452,93 +383,92 @@ function constrainReticle(reticle, player) {
 }
 
 singleScene.update = function(time, delta){
-        globalX = player.x;
-        globalY = player.y;
+    playersPos[0] = [player.x, player.y];
     
         // Rotates player to face towards reticle
         player.rotation = Phaser.Math.Angle.Between(player.x, player.y, reticle.x, reticle.y);
-    
+        
         //Make reticle move with player
         reticle.body.velocity.x = player.body.velocity.x;
         reticle.body.velocity.y = player.body.velocity.y;
-    
+        
         // Constrain velocity of player
         constrainVelocity(player, 500);
-    
+        
         // Constrain position of constrainReticle
         //constrainReticle(reticle, player);
         //constrainPlayer(player)
-    
+        
         // Make zombie spawn
         spawnZombies(zombies, player, spawnpoints, time, this);
 
-    switch (player.currentBullets) {
-        case 0:
+        switch (player.currentBullets) {
+            case 0:
             player.beers[10].setVisible(false);
             player.beers[0].setVisible(true);
             break;
 
-        case 1:
+            case 1:
             player.beers[1].setVisible(false);
             player.beers[0].setVisible(true);
             break;
 
-        case 2:
+            case 2:
             player.beers[2].setVisible(false);
             player.beers[1].setVisible(true);
             break;
 
-        case 3:
+            case 3:
             player.beers[3].setVisible(false);
             player.beers[2].setVisible(true);
             break;
 
-        case 4:
+            case 4:
             player.beers[4].setVisible(false);
             player.beers[3].setVisible(true);
             break;
 
-        case 5:
+            case 5:
             player.beers[5].setVisible(false);
             player.beers[4].setVisible(true);
             break;
 
-        case 7:
+            case 7:
             player.beers[6].setVisible(false);
             player.beers[5].setVisible(true);
             break;
 
-        case 9:
+            case 9:
             player.beers[7].setVisible(false);
             player.beers[6].setVisible(true);
             break;
 
-        case 11:
+            case 11:
             player.beers[8].setVisible(false);
             player.beers[7].setVisible(true);
             break;
 
-        case 13:
+            case 13:
             player.beers[9].setVisible(false);
             player.beers[8].setVisible(true);
             break;
 
-        case 15:
+            case 15:
             player.beers[10].setVisible(false);
             player.beers[9].setVisible(true);
             break;
 
 
-        default:
+            default:
             break;
 
-    }
+        }
         
-}
+    }
 
 
-function clickReturnMenuButton(){
-    singlePlayerMusic_.stop(),
-    game.scene.stop('Single');
-    game.scene.start('Menu');
-}
+    function clickReturnMenuButton(){
+        singlePlayerMusic_.stop(),
+        game.scene.stop('Single');
+        game.scene.start('Menu');
+    }

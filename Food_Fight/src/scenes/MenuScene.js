@@ -3,13 +3,12 @@ let menuScene = new Phaser.Scene('Menu');
 menuScene.preload = function(){
 }
 
-var esc = null;
 var mainMenuMusic;
 var buttonPress;
 
 menuScene.create = function(){
     if (game.input.mouse.locked)
-    game.input.mouse.releasePointerLock();
+        game.input.mouse.releasePointerLock();
 
     this.add.image(this.game.renderer.width /2, this.game.renderer.height / 2, "title_bg").setDepth(1).setScale(.93);
     this.add.image(this.game.renderer.width / 2, this.game.renderer.height * 0.20, "logo").setDepth(1);
@@ -46,18 +45,9 @@ menuScene.create = function(){
     })
 
     multiPlayerButton.on("pointerdown", ()=>
-    clickMultiPlayerButton());
+        clickMultiPlayerButton());
 
-    if (!esc) {
-        esc = this.input.keyboard.addKey('ESC');
-        esc.on('down', function (event) {
-            console.log("Escape pressed");
-            if (game.scene.isPaused('Menu'))
-                game.scene.resume('Menu');
-            else if (!game.scene.isPaused('Menu'))
-                game.scene.pause('Menu');
-        });
-    }
+    
 }
 
 menuScene.update = function(){
@@ -66,18 +56,18 @@ menuScene.update = function(){
 
 
 function clickSinglePlayerButton(){
-        buttonPress.play(),
-        mainMenuMusic.stop(),
-        game.scene.stop('Menu');
-        game.scene.start('Single');
-        menuScene.input.keyboard.removeKey('ESC');
-        esc = null;
-    }
+    buttonPress.play(),
+    mainMenuMusic.stop(),
+    game.scene.stop('Menu');
+    game.scene.start('Single');
+    menuScene.input.keyboard.removeKey('ESC');
+    esc = null;
+}
 
 function clickMultiPlayerButton(){
-        game.scene.start('MultiSetup');
-        game.scene.stop('Menu');
-        menuScene.input.keyboard.removeKey('ESC');
-        esc = null;
+    game.scene.start('MultiSetup');
+    game.scene.stop('Menu');
+    menuScene.input.keyboard.removeKey('ESC');
+    esc = null;
 }
 

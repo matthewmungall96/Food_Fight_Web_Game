@@ -1,10 +1,5 @@
 let multiSetupScene = new Phaser.Scene('MultiSetup');
 
-var controller1;
-var controller2;
-var controller3;
-var controller4;
-var controller_count = 0;
 var controllers = [];
 var controller1_active;
 var controller1_inactive;
@@ -45,12 +40,7 @@ multiSetupScene.create = function(){
     
 
     this.input.gamepad.on('down', function (pad, button, index) {
-        /*
-        console.log(pad);
-        console.log(index);
-        console.log(button);
-        */
-    if (!controllers.find(c => c.pad.index == pad.pad.index) && controllers.length <=4){
+        if (!controllers.find(c => c.pad.index == pad.pad.index) && controllers.length <=4){
             controllers.push(pad);
             console.log("new controller registered");
             addPlayer();
@@ -83,43 +73,43 @@ multiSetupScene.create = function(){
 }
 
 function clickMultiplayerSetupButton(){
-        buttonPress.play();
-        mainMenuMusic.stop();
-        game.scene.stop('MultiSetup');
-        game.scene.start('Multi');
+    buttonPress.play();
+    mainMenuMusic.stop();
+    game.scene.stop('MultiSetup');
+    game.scene.start('Multi');
 }
 
 function clickReturnMenuButton(){
-        buttonPress.play();
-        mainMenuMusic.stop();
-        game.scene.stop('MultiSetup');
-        game.scene.start('Menu');
+    buttonPress.play();
+    mainMenuMusic.stop();
+    game.scene.stop('MultiSetup');
+    game.scene.start('Menu');
 }
 
 function addPlayer(){
     if (controllers.length >= 1)
-        {
-            controller1_active.setVisible(true);
-            controller1_inactive.setVisible(false);
-        }
+    {
+        controller1_active.setVisible(true);
+        controller1_inactive.setVisible(false);
+    }
 
     if (controllers.length >= 2)
     {
-            controller2_active.setVisible(true);
-            controller2_inactive.setVisible(false);
-            multiPlayButton.setVisible(true);
+        controller2_active.setVisible(true);
+        controller2_inactive.setVisible(false);
+        multiPlayButton.setVisible(true);
     }
 
     if (controllers.length >= 3)
     {
-            controller3_active.setVisible(true);
-            controller3_inactive.setVisible(false);
+        controller3_active.setVisible(true);
+        controller3_inactive.setVisible(false);
     }
 
     if (controllers.length >= 4)
     {
-            controller4_active.setVisible(true);
-            controller4_inactive.setVisible(false);
+        controller4_active.setVisible(true);
+        controller4_inactive.setVisible(false);
     } 
 }
 

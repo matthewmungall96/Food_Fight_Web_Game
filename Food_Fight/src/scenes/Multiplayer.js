@@ -49,32 +49,7 @@ multiScene.create = function(){
             player1.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
         }
         player1.beers[10].setVisible(true);
-        /*
-    	player1br0 = this.add.image(400, 100, 'bullet0');
-    	player1br1 = this.add.image(400, 100, 'bullet1');
-    	player1br2 = this.add.image(400, 100, 'bullet2');
-    	player1br3 = this.add.image(400, 100, 'bullet3');
-    	player1br4 = this.add.image(400, 100, 'bullet4');
-    	player1br5 = this.add.image(400, 100, 'bullet5');
-    	player1br6 = this.add.image(400, 100, 'bullet6');
-    	player1br7 = this.add.image(400, 100, 'bullet7');
-    	player1br8 = this.add.image(400, 100, 'bullet8');
-    	player1br9 = this.add.image(400, 100, 'bullet9');
-    	player1br10 = this.add.image(400, 100, 'bullet10');
-        */
-       /*
-        player1br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-    	player1br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br8.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br7.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br6.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br5.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br4.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br3.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br2.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br1.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player1br0.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        */
+        
         player1.health = 3;
     }
 
@@ -99,32 +74,7 @@ multiScene.create = function(){
             player2.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
         }
         player2.beers[10].setVisible(true);
-        /*
-    	player2br0 = this.add.image(400, 100, 'bullet0');
-    	player2br1 = this.add.image(400, 100, 'bullet1');
-    	player2br2 = this.add.image(400, 100, 'bullet2');
-    	player2br3 = this.add.image(400, 100, 'bullet3');
-    	player2br4 = this.add.image(400, 100, 'bullet4');
-    	player2br5 = this.add.image(400, 100, 'bullet5');
-    	player2br6 = this.add.image(400, 100, 'bullet6');
-    	player2br7 = this.add.image(400, 100, 'bullet7');
-    	player2br8 = this.add.image(400, 100, 'bullet8');
-    	player2br9 = this.add.image(400, 100, 'bullet9');
-    	player2br10 = this.add.image(400, 100, 'bullet10');
-        */
-        /*
-         player2br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-         player2br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br8.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br7.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br6.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br5.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br4.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br3.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br2.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br1.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         player2br0.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-         */
+        
         player2.health = 3;
     }
 
@@ -149,32 +99,7 @@ multiScene.create = function(){
             player3.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
         }
         player3.beers[10].setVisible(true);
-        /*
-    	player3br0 = this.add.image(400, 100, 'bullet0');
-    	player3br1 = this.add.image(400, 100, 'bullet1');
-    	player3br2 = this.add.image(400, 100, 'bullet2');
-    	player3br3 = this.add.image(400, 100, 'bullet3');
-    	player3br4 = this.add.image(400, 100, 'bullet4');
-    	player3br5 = this.add.image(400, 100, 'bullet5');
-    	player3br6 = this.add.image(400, 100, 'bullet6');
-    	player3br7 = this.add.image(400, 100, 'bullet7');
-    	player3br8 = this.add.image(400, 100, 'bullet8');
-    	player3br9 = this.add.image(400, 100, 'bullet9');
-    	player3br10 = this.add.image(400, 100, 'bullet10');
-        */
-       /*
-        player3br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-    	player3br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br8.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br7.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br6.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br5.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br4.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br3.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br2.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br1.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player3br0.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        */
+        
         player3.health = 3;
     }
     
@@ -199,32 +124,7 @@ multiScene.create = function(){
             player4.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
         }
         player4.beers[10].setVisible(true);
-        /*
-    	player4br0 = this.add.image(400, 100, 'bullet0');
-    	player4br1 = this.add.image(400, 100, 'bullet1');
-    	player4br2 = this.add.image(400, 100, 'bullet2');
-    	player4br3 = this.add.image(400, 100, 'bullet3');
-    	player4br4 = this.add.image(400, 100, 'bullet4');
-    	player4br5 = this.add.image(400, 100, 'bullet5');
-    	player4br6 = this.add.image(400, 100, 'bullet6');
-    	player4br7 = this.add.image(400, 100, 'bullet7');
-    	player4br8 = this.add.image(400, 100, 'bullet8');
-    	player4br9 = this.add.image(400, 100, 'bullet9');
-    	player4br10 = this.add.image(400, 100, 'bullet10');
-        */
-       /*
-        player4br10.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-    	player4br9.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br8.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br7.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br6.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br5.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br4.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br3.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br2.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br1.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    	player4br0.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        */
+        
         player4.health = 3;
     }
 
@@ -317,31 +217,7 @@ multiScene.create = function(){
     var mid = map.createStaticLayer('mid', tiles, 0, 0);
     var bot = map.createStaticLayer('bot', tiles, 0, 0);
 }
-/*
-function zombieFire(zombie, player1, time, gameObject)
-{
-    if (zombie.active === false)
-    {
-        return;
-    }
 
-    if ((time - zombie.lastFired) > 1000)
-    {
-        console.log('firing')
-        zombie.lastFired = time;
-
-        // Get bullet from bullets group
-        var bullet = zombieBullets.get().setActive(true).setVisible(true);
-
-        if (bullet)
-        {
-            bullet.fire(zombie, player1);
-            // Add collider between bullet and player1
-            gameObject.physics.add.collider(player1, bullet, playerHitCallback);
-        }
-    }
-}
-*/
 multiScene.update = function(time, delta){
 	globalX = player1.x;
 	globalY = player1.y;
@@ -377,14 +253,7 @@ multiScene.update = function(time, delta){
         	default:
         	break;
         }
-        // constrainPlayer(player1);
-        // constrainPlayer(player2);
-        // constrainPlayer(player3);
-        // constrainPlayer(player4);
 
-        
-        // Make zombie fire
-        
     }
 
     function clickReturnMenuButton(){
