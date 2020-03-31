@@ -17,10 +17,10 @@ multiScene.create = function(){
     player3Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     player4Bullets = this.physics.add.group({ classType: Bullet, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
-    this.physics.add.collider(zombies,player1Bullets, zombieHitCallback);
-    this.physics.add.collider(zombies,player2Bullets, zombieHitCallback);
-    this.physics.add.collider(zombies,player3Bullets, zombieHitCallback);
-    this.physics.add.collider(zombies,player4Bullets, zombieHitCallback);
+    this.physics.add.collider(zombiesMultiplayer,player1Bullets, zombieHitCallback);
+    this.physics.add.collider(zombiesMultiplayer,player2Bullets, zombieHitCallback);
+    this.physics.add.collider(zombiesMultiplayer,player3Bullets, zombieHitCallback);
+    this.physics.add.collider(zombiesMultiplayer,player4Bullets, zombieHitCallback);
     // Add background player, zombie, reticle, healthpoint sprites
     var background = this.add.image(800, 600, 'background');
     reticle = this.physics.add.sprite(800, 700, 'target');
@@ -192,8 +192,7 @@ multiScene.create = function(){
         player4.health = 3;
     }
 
-    zombie.health = 3;
-    zombie.lastFired = 0;
+    zombie.health = 5;
 
     // Set camera properties
     this.cameras.main.zoom = 0.5;
