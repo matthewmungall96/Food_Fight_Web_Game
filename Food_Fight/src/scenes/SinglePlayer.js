@@ -1,35 +1,48 @@
+//
 let singleScene = new Phaser.Scene('Single');
 
-
+//
 var singlePlayerScore = 0;
 var singlePlayerScoreText;
 var highestSinglePlayerScore = 0;
+
+//
 var singlePlayerMusic_;
 var zombieSplatNoise;
 var zombieDeathNoise;
 var pistolSwoosh;
 var emptyGun;
-var text;
+
+//
+var scoreText;
+
+//
 var player = null;
 var healthpoints = null;
 var reticle = null;
 var moveKeys = null;
 var playerBullets = null;
 var zombieBullets = null;
-var time = 0;
 
+/**
+ * 
+ */
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
     this.load.tilemapTiledJSON("map", "./dist/assets/map/map1.json");
-    
-    
 }
 
+/**
+ * 
+ */
 singleScene.create = function(){
+    //
     singlePlayerScore = 0;
+
+    //
     this.physics.world.setBounds(0, 0, 800*2, 600*2);
+
     //creates animation for explosion 
-    
     this.anims.create({
         key: 'explode',
         frames: this.anims.generateFrameNumbers('explosion'),
@@ -38,43 +51,51 @@ singleScene.create = function(){
         hiddenOnComplete: true
     })
     
-
     // Add 2 groups for Bullet objects
     playerBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
+
+    //
     this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
 
+    //
     singlePlayerMusic_ = this.sound.add('singlePlayerMusic');
     singlePlayerMusic_.volume = 0.1;
     singlePlayerMusic_.play();
 
-    text = this.add.text(700, 100, '', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
+    //
+    scoreText = this.add.text(700, 100, '', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
 
+    //
     zombieSplatNoise = this.sound.add('zombieHitNoise');
     zombieDeathNoise = this.sound.add('zombieDeath');
     pistolSwoosh = this.sound.add('pistolSwooshNoise');
     emptyGun = this.sound.add('emptyGun');
 
+    //
     zombieSplatNoise.volume = 0.3;
     zombieDeathNoise.volume = 0.3;
     pistolSwoosh.volume = 0.3;
     emptyGun.volume = 0.3;
     
+    //
     spawnpoints = [
     {x:460, y:224},
     {x:1153,y:220}
     ];
 
+    //
     player = this.physics.add.sprite(800, 1000, 'player1');
     player.beers = [];
     playersPos.push([player.x, player.y]);
 
-    singlePlayerScoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-
+    //
     explosion = this.physics.add.sprite(400,300,'explosion').setDepth(3).setScale(4).setVisible(false);
 
+    //
     reticle = this.physics.add.sprite(800, 700, 'target');
 
+    //
     playerinfoHolder = this.add.image(200, 1200, 'playerTable');
     playerinfoHolder.setOrigin(0.5, 0.5).setDisplaySize(400, 200).setDepth(3).setVisible(true);
     
@@ -94,12 +115,15 @@ singleScene.create = function(){
     hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
 
+    //
     for (let i = 0; i < 11; i++) {
         player.beers.push(this.add.image(400, 1200, 'bullet' + i));
         player.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     }
+    //
     player.beers[10].setVisible(true);
 
+    //
     singlePlayerScoreText.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setDepth(1);
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1).setScale(1);
@@ -144,6 +168,7 @@ singleScene.create = function(){
         console.log("d");
     });
     
+    //
     this.input.keyboard.on('keydown_R', function (event) {
         if (player.currentBullets < 15){
             reloadTime = game.getTime()  + 2000;
@@ -151,6 +176,7 @@ singleScene.create = function(){
         }
     });
 
+    //
     this.input.keyboard.on('keydown_P', function (event) {
         clickReturnMenuButton();
     });
@@ -179,16 +205,17 @@ singleScene.create = function(){
             return;
         // Get bullet from bullets group
         var bullet = playerBullets.get().setActive(true).setVisible(true);
-        //console.log(reticle.x + " " + reticle.y);
+        
+        //
         if (bullet && player.currentBullets > 0)
         {
+            //
             player.currentBullets = player.currentBullets - 1;
-            //console.log("Player Bullets: ", player.currentBullets);
             pistolSwoosh.play();
             bullet.fire(player, reticle);
-            //this.physics.add.collider(zzz, bullet, zombieHitCallback);
         }
 
+        //
         if (bullet && player.currentBullets == 0){
             emptyGun.play();
         }
@@ -224,20 +251,18 @@ singleScene.create = function(){
     var mid = map.createStaticLayer('mid', tiles, 0, 0).setDepth(1).setScale(1.8);
     var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
 
-    //collisons
-    //map.setCollisionByProperty([478]);
-
+    //
     this.physics.add.collider(player, top);
     top.setCollisionByProperty({collides:true});
     
-
-    setInterval(() => {
+    //
+    this.interval = setInterval(() => {
         var xhttp;
         var name = 'Test';
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                text.setText("highest:" + this.responseText + "\nCurrent: " + singlePlayerScore);
+                scoreText.setText("Highest:" + this.responseText + "\nCurrent: " + singlePlayerScore);
             }
         };
         xhttp.open("GET", "get.php?name=" + name, true);
@@ -245,72 +270,92 @@ singleScene.create = function(){
     }, 1000);
 }
 
+/**
+ * 
+ * @param {*} zombieHit 
+ * @param {*} bulletHit 
+ */
 function zombieHitCallback(zombieHit, bulletHit,)
 {
     
     // Reduce health of zombie
     if (bulletHit.active === true && zombieHit.active === true)
     {
+        //
         if (player.currentBullets > 0){
             zombieHit.health = zombieHit.health - 1;
         }
-        //console.log("zombie hp: ", zombieHit.health);
 
-        // Kill zombie if health <= 0
+        //
         if (zombieHit.health <= 0)
         {
-         singlePlayerScore += 10;
-         singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
-           //console.log("Player Score: ", singlePlayerScore);
-           zombieDeathNoise.play();
-           explosion.setVisible(true);
-           explosion.setPosition(zombieHit.x, zombieHit.y);
+            //
+            singlePlayerScore += 10;
+            singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
+            
+            //
+            zombieDeathNoise.play();
+            
+            //
+            explosion.setVisible(true);
+            explosion.setPosition(zombieHit.x, zombieHit.y);
            
-           explosion.play('explode');
-           zombieHit.destroy();
-           
-           
+            //
+            explosion.play('explode');
+            
+            //
+            zombieHit.destroy();
        }
 
-        // Destroy bullet
+        //
         zombieSplatNoise.play();
+        
+        //
         bulletHit.destroy();
     }
 }
 
+/**
+ * 
+ * @param {*} playerHit 
+ * @param {*} bulletHit 
+ */
 function playerHitCallback(playerHit, bulletHit)
 {
-    // Reduce health of player
+    //
     if (bulletHit.active === true && playerHit.active === true)
     {
         playerHit.health = playerHit.health - 1;
-        //console.log("Player hp: ", playerHit.health);
 
-        // Kill hp sprites and kill player if health <= 0
+        //
         if (playerHit.health == 2)
         {
             hp3Empty.setVisible(true);
             hp3Full.setVisible(false);
         }
+        //
         else if (playerHit.health == 1)
         {
             hp2Empty.setVisible(true);
             hp2Full.setVisible(false);
         }
+        //
         else
         {
             hp1Empty.setVisible(true);
             hp1Full.setVisible(false);
 
+            //
             if (singlePlayerScore > highestSinglePlayerScore){
-            //UPDATE SCORE
+
+            //
             var xhttp;
             var name = 'Test';
             xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log("highest:" + this.responseText + "\nCurrent: " + singlePlayerScore);
-                    text.setText("highest:"+this.responseText + "\nCurrent: "+singlePlayerScore);
+                    scoreText.setText("highest:"+this.responseText + "\nCurrent: "+singlePlayerScore);
                 }
             };
             xhttp.open("POST", "post.php?name=" + name + "&score="+ singlePlayerScore, true);
@@ -318,43 +363,74 @@ function playerHitCallback(playerHit, bulletHit)
         }
     }
 
+        //
+        clearTimeout(this.interval);
+
         // Destroy bullet
-        bulletHit.setActive(false).setVisible(false);
+        bulletHit.destroy();
     }
 }
 
+/**
+ * 
+ */
 function playerHasDied(){
     player.setActive(false).setVisible(false);
+    playersPos[0] = null;
 }
 
-
+/**
+ * 
+ * @param {*} zombies 
+ * @param {*} player 
+ * @param {*} spawnpoints 
+ * @param {*} time 
+ * @param {*} gameObject 
+ */
 function spawnZombies(zombies, player, spawnpoints, time, gameObject) {
+    //
     if ((time - zombies.lastSpawned) > 2000){
         
+        //
         zombies.lastSpawned = time;
+        
         //Creation of a zombie
         var zzz = zombies.get().setActive(true).setVisible(true);
-        ///console.log(zzz.health);
+        
+        //
         if (zzz) {
+
+            //
             point = Math.floor(Math.random() * spawnpoints.length);
             zzz.go(spawnpoints[point].x, spawnpoints[point].y);
-            // Add collider between bullet and player1
+            
+            //Add collider between bullet and player1
             gameObject.physics.add.collider(player, zzz, playerHitCallback);
         }
     }
 }
 
-// Ensures sprite speed doesnt exceed maxVelocity while update is called
+/**
+ * 
+ * @param {*} sprite 
+ * @param {*} maxVelocity 
+ */
 function constrainVelocity(sprite, maxVelocity)
 {
+    //
     if (!sprite || !sprite.body)
       return;
-
+//
   var angle, currVelocitySqr, vx, vy;
+  
+  //
   vx = sprite.body.velocity.x;
   vy = sprite.body.velocity.y;
+
+  //
   currVelocitySqr = vx * vx + vy * vy;
 
+  //
   if (currVelocitySqr > maxVelocity * maxVelocity)
   {
     angle = Math.atan2(vy, vx);
@@ -365,10 +441,16 @@ function constrainVelocity(sprite, maxVelocity)
 }
 }
 
-// Ensures reticle does not move offscreen
+/**
+ * 
+ * @param {*} reticle 
+ * @param {*} player 
+ */
 function constrainReticle(reticle, player) {
-    var distX = reticle.x - player.x; // X distance between player & reticle
-    var distY = reticle.y - player.y; // Y distance between player & reticle
+    // X distance between player & reticle
+    var distX = reticle.x - player.x; 
+    // Y distance between player & reticle
+    var distY = reticle.y - player.y; 
 
     // Ensures reticle cannot be moved offscreen (player follow)
     if (distX > 800)
@@ -382,6 +464,9 @@ function constrainReticle(reticle, player) {
         reticle.y = player.y - 600;
 }
 
+/**
+ * 
+ */
 singleScene.update = function(time, delta){
     playersPos[0] = [player.x, player.y];
     
@@ -395,14 +480,12 @@ singleScene.update = function(time, delta){
         // Constrain velocity of player
         constrainVelocity(player, 500);
         
-        // Constrain position of constrainReticle
-        //constrainReticle(reticle, player);
-        //constrainPlayer(player)
-        
         // Make zombie spawn
         spawnZombies(zombies, player, spawnpoints, time, this);
 
+        //
         switch (player.currentBullets) {
+
             case 0:
             player.beers[10].setVisible(false);
             player.beers[0].setVisible(true);
@@ -458,7 +541,6 @@ singleScene.update = function(time, delta){
             player.beers[9].setVisible(true);
             break;
 
-
             default:
             break;
 
@@ -466,9 +548,13 @@ singleScene.update = function(time, delta){
         
     }
 
-
+/**
+ * 
+ */
     function clickReturnMenuButton(){
-        singlePlayerMusic_.stop(),
+        //
+        singlePlayerMusic_.stop();
+        //
         game.scene.stop('Single');
         game.scene.start('Menu');
     }
