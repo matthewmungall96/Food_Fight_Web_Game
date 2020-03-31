@@ -19,6 +19,7 @@ multiSetupScene.create = function(){
     this.add.image(this.game.renderer.width / 3, this.game.renderer.height / 2.5, 'controller_2').setDisplaySize(300, 80).setDepth(1);
     this.add.image(this.game.renderer.width / 3, this.game.renderer.height / 1.80, 'controller_3').setDisplaySize(300, 80).setDepth(1);
     this.add.image(this.game.renderer.width / 3, this.game.renderer.height / 1.4, 'controller_4').setDisplaySize(300, 80).setDepth(1);
+    
     multiPlayButton = this.add.image(this.game.renderer.width / 3, this.game.renderer.height / 1.1, 'start_game').setDisplaySize(300, 80).setDepth(1).setVisible(false);
     returnButton = this.add.image(this.game.renderer.width / 1.5, this.game.renderer.height / 1.1, 'return').setDisplaySize(300, 80).setDepth(1);
     
@@ -94,12 +95,5 @@ function ready(){
 }
 
 multiSetupScene.update = function(time, delta){
-    if(game.input.gamepad.supported && game.input.gamepad.active && game.input.gamepad.pad1.connected) {
-        controller_count++;
-        controller1 = true;
-    } 
-    
-    else {
 
-    }
 }
