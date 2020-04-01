@@ -3,7 +3,6 @@ let singleScene = new Phaser.Scene('Single');
 
 //
 var singlePlayerScore = 0;
-var singlePlayerScoreText;
 var highestSinglePlayerScore = 0;
 
 //
@@ -124,7 +123,6 @@ singleScene.create = function(){
     player.beers[10].setVisible(true);
 
     //
-    singlePlayerScoreText.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setDepth(1);
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1).setScale(1);
 
