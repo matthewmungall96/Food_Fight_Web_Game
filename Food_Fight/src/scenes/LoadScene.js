@@ -77,8 +77,8 @@ var playersPos = [];
     //this.load.image('background', 'assets/skies/underwater1.png');
 
     //loading images for narrative scene
-    this.load.image('Ronan', './dist/assets/images/cha_sprites/chaSpriteMac.png');
-    this.load.image('Dom', './dist/assets/images/cha_sprites/chaSpritedominos.png');
+    this.load.image('Ron', './dist/assets/images/cha_sprites/chaSpriteMac.png');
+    this.load.image('Dom', './dist/assets/images/cha_sprites/chaSpriteDom.png');
     this.load.image('Fred', './dist/assets/images/cha_sprites/chaSpriteKFC.png');
     this.load.image('Rod', './dist/assets/images/cha_sprites/chaSpriteBacoHell.png');
     this.load.image('narBground','./dist/assets/images/bios.png');
