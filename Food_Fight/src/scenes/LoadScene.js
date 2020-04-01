@@ -86,7 +86,11 @@ var playersPos = [];
     this.load.image('rodButton','./dist/assets/images/G.U.I/rod.png');
     this.load.image('domButton','./dist/assets/images/G.U.I/dom.png');
     this.load.image('fredButton','./dist/assets/images/G.U.I/fred.png');
-
+    this.load.image('ronBackstory','./dist/assets/images/G.U.I/ronBackstory.png');
+    this.load.image('rodBackstory','./dist/assets/images/G.U.I/rodBackstory.png');
+    this.load.image('domBackstory','./dist/assets/images/G.U.I/domBackstory.png');
+    this.load.image('fredBackstory','./dist/assets/images/G.U.I/fredBackstory.png');
+    this.load.image('plot','./dist/assets/images/G.U.I/plot.png');
     //loads spritesheet for animations
     this.load.spritesheet('explosion','./dist/assets/images/explosion.png', {
         frameWidth: 16,
