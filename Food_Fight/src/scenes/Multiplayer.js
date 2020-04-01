@@ -49,7 +49,7 @@ var player4 = null;
         //
         player1 = this.physics.add.sprite(800, 300, 'player1');
         player1.isOn = true;
-        player1.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
+        player1.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
         
         //
         player1hp1Empty = this.add.image(100, 100, 'emptyBurger');
@@ -86,7 +86,7 @@ var player4 = null;
         //
         player2 = this.physics.add.sprite(800, 300, 'player2');
         player2.isOn = true;
-        player2.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
+        player2.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
         
         //
         player2hp1Empty = this.add.image(100, 100, 'emptyBurger');
@@ -123,7 +123,7 @@ var player4 = null;
     	//
         player3 = this.physics.add.sprite(800, 300, 'player3');
         player3.isOn = true;
-        player3.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
+        player3.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
         
         //
         player3hp1Empty = this.add.image(100, 100, 'emptyBurger');
@@ -160,7 +160,7 @@ var player4 = null;
     	//
         player4 = this.physics.add.sprite(800, 300, 'player4');
         player4.isOn = true;
-        player4.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
+        player4.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
         
         //
         player4hp1Empty = this.add.image(100, 100, 'emptyBurger');
