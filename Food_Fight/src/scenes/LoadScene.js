@@ -77,10 +77,10 @@ var playersPos = [];
     //this.load.image('background', 'assets/skies/underwater1.png');
 
     //loading images for narrative scene
-    this.load.image('Ron', './dist/assets/images/cha_sprites/chaSpriteMac.png');
+    this.load.image('Ron', './dist/assets/images/cha_sprites/chaSpriteRon.png');
     this.load.image('Dom', './dist/assets/images/cha_sprites/chaSpriteDom.png');
-    this.load.image('Fred', './dist/assets/images/cha_sprites/chaSpriteKFC.png');
-    this.load.image('Rod', './dist/assets/images/cha_sprites/chaSpriteBacoHell.png');
+    this.load.image('Fred', './dist/assets/images/cha_sprites/chaSpriteFred.png');
+    this.load.image('Rod', './dist/assets/images/cha_sprites/chaSpriteRod.png');
     this.load.image('narBground','./dist/assets/images/bios.png');
     this.load.image('ronButton','./dist/assets/images/G.U.I/ronan.png');
     this.load.image('rodButton','./dist/assets/images/G.U.I/rod.png');
