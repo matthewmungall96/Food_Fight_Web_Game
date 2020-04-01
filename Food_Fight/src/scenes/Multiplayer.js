@@ -117,6 +117,7 @@ var player4 = null;
         
         //
         player1.health = 3;
+        player1.score = 0;
         player1.currentBullets =15;
 
         this.physics.add.collider(player1, zombies, playerHitCallback);
@@ -157,6 +158,7 @@ var player4 = null;
         
         //
         player2.health = 3;
+        player2.score = 0;
         player2.currentBullets = 15;
         
         this.physics.add.collider(player2, zombies, playerHitCallback);
@@ -197,6 +199,7 @@ var player4 = null;
         
         //
         player3.health = 3;
+        player3.score = 0;
         player3.currentBullets = 15;
 
         this.physics.add.collider(player3, zombies, playerHitCallback);
@@ -237,6 +240,7 @@ var player4 = null;
         
         //
         player4.health = 3;
+        player4.score = 0;
         player4.currentBullets = 15;
 
         this.physics.add.collider(player4, zombies, playerHitCallback);
@@ -510,7 +514,7 @@ function zombieHitCallback1(zombieHit, bulletHit) {
         //
         if (zombieHit.health <= 0) {
             //
-            singlePlayerScore += 10;
+            player1.score += 10;
 
             //
             zombieDeathNoise.play();
@@ -551,7 +555,7 @@ function zombieHitCallback2(zombieHit, bulletHit) {
         //
         if (zombieHit.health <= 0) {
             //
-            singlePlayerScore += 10;
+            player2.score += 10;
 
             //
             zombieDeathNoise.play();
@@ -592,7 +596,7 @@ function zombieHitCallback3(zombieHit, bulletHit) {
         //
         if (zombieHit.health <= 0) {
             //
-            singlePlayerScore += 10;
+            player3.score += 10;
 
             //
             zombieDeathNoise.play();
@@ -633,7 +637,7 @@ function zombieHitCallback4(zombieHit, bulletHit) {
         //
         if (zombieHit.health <= 0) {
             //
-            singlePlayerScore += 10;
+            player4.score += 10;
 
             //
             zombieDeathNoise.play();

@@ -2,10 +2,6 @@
 let singleScene = new Phaser.Scene('Single');
 
 //
-var singlePlayerScore = 0;
-var highestSinglePlayerScore = 0;
-
-//
 var singlePlayerMusic_;
 var zombieSplatNoise;
 var zombieDeathNoise;
@@ -35,8 +31,6 @@ singleScene.preload = function(){
  * 
  */
 singleScene.create = function(){
-    //
-    singlePlayerScore = 0;
 
     //
     this.physics.world.setBounds(0, 0, 800*2, 600*2);
@@ -63,7 +57,7 @@ singleScene.create = function(){
     singlePlayerMusic_.play();
 
     //
-    scoreText = this.add.text(700, 100, '', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
+    scoreText = this.add.text(700, 100, 'text', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
 
     //
     zombieSplatNoise = this.sound.add('zombieHitNoise');
@@ -88,6 +82,8 @@ singleScene.create = function(){
     this.physics.add.collider(player, zombies, playerHitCallback);
     player.beers = [];
     playersPos.push([player.x, player.y]);
+    player.score =0;
+    player.highestScore =0;
 
     //
     explosion = this.physics.add.sprite(400,300,'explosion').setDepth(3).setScale(4).setVisible(false);
@@ -261,7 +257,9 @@ singleScene.create = function(){
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                scoreText.setText("Highest:" + this.responseText + "\nCurrent: " + singlePlayerScore);
+                scoreText.setText("Highest:" + this.responseText + "\nCurrent: " + player.score);
+                player.highestScore = parseInt(this.responseText.split(":")[1]);
+                console.log(player.highestScore);
             }
         };
         xhttp.open("GET", "get.php?name=" + name, true);
@@ -289,7 +287,7 @@ function zombieHitCallback(zombieHit, bulletHit)
         if (zombieHit.health <= 0)
         {
             //
-            singlePlayerScore += 10;
+            player.score += 10;
             
             //
             zombieDeathNoise.play();
@@ -344,7 +342,7 @@ function playerHitCallback(playerHit, bulletHit)
             playerHit.hp1Full.setVisible(false);
 
             //
-            if (singlePlayerScore > highestSinglePlayerScore){
+            if (player.score > player.highestScore){
 
             //
             var xhttp;
@@ -352,13 +350,19 @@ function playerHitCallback(playerHit, bulletHit)
             xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log("highest:" + this.responseText + "\nCurrent: " + singlePlayerScore);
-                    scoreText.setText("highest:"+this.responseText + "\nCurrent: "+singlePlayerScore);
+                    scoreText.setText("highest:"+this.responseText + "\nCurrent: "+player.score);
                 }
             };
-            xhttp.open("POST", "post.php?name=" + name + "&score="+ singlePlayerScore, true);
+            xhttp.open("POST", "post.php?name=" + name + "&score="+ player.score, true);
             xhttp.send();
         }
+            playersPos.forEach(p => {
+                console.log(p+" "  +p[0]);
+            console.log(distance(playerHit.x, playerHit.y, p[0], p[1]));
+            if (distance(playerHit.x, playerHit.y, p[0], p[1]) <= 10){
+                playersPos = playersPos.filter((e) => e.x != p.x);
+            }
+        });
     }
 
         //
@@ -461,7 +465,8 @@ function constrainReticle(reticle, player) {
  * 
  */
 singleScene.update = function(time, delta){
-    playersPos[0] = [player.x, player.y];
+        if(player)
+            playersPos[0] = [player.x, player.y];
     
         // Rotates player to face towards reticle
         player.rotation = Phaser.Math.Angle.Between(player.x, player.y, reticle.x, reticle.y);
