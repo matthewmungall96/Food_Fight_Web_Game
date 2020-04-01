@@ -21,7 +21,7 @@ var player4 = null;
  multiScene.create = function(){
     
     //
-    this.physics.world.setBounds(0, 0, 1600, 1200);
+    this.physics.world.setBounds(0, 0, 800*2, 600*2);
 
     // Add 2 groups for Bullet objects
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
@@ -278,6 +278,7 @@ var player4 = null;
     //
     var map = this.make.tilemap({key: 'map'});
     var tiles = map.addTilesetImage('tilesheet_complete');
+    map.setBaseTileSize(32, 32);
 
     //layers
     var top = map.createStaticLayer('top', tiles, 0, 0);
