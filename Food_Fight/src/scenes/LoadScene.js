@@ -17,7 +17,9 @@ var playersPos = [];
     this.load.image("singleplayer_button", "./dist/assets/images/G.U.I/single.png");
     this.load.image("multiplayer_button", "./dist/assets/images/G.U.I./multi.png");
     this.load.image("narrative_button", "./dist/assets/images/G.U.I./narrative.png");
+    this.load.image("backstory_button", "./dist/assets/images/G.U.I./backstory.png");
     this.load.image("returntomenu", "./dist/assets/images/returntomenu.png");
+    
 
     //Loading Setup Files
     this.load.image("singlesetup", "./dist/assets/images/G.U.I/singlesetup.png");
