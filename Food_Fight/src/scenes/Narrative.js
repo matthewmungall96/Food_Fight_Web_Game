@@ -7,6 +7,7 @@ narrativeScene.create = function(){
     
     //background image
     this.add.image(this.game.renderer.width /2, this.game.renderer.height / 2, "title_bg").setDepth(1).setScale(.93);
+    this.add.image(this.game.renderer.width /1.4, this.game.renderer.height / 3.7, "plot").setDepth(2).setScale(.48);
 
     //buttons
     backstory2Button = this.add.image(this.game.renderer.width / 4, this.game.renderer.height / 5.5,"backstory_button").setDisplaySize(300,80).setDepth(1);
