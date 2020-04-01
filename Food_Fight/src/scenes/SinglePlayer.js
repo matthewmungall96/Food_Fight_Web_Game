@@ -289,7 +289,6 @@ function zombieHitCallback(zombieHit, bulletHit,)
         {
             //
             singlePlayerScore += 10;
-            singlePlayerScoreText.setText('Score: ' + singlePlayerScore);
             
             //
             zombieDeathNoise.play();

@@ -24,6 +24,7 @@ menuScene.create = function(){
     //
     singlePlayButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /2.3, "singleplayer_button").setDisplaySize(300, 80).setDepth(1);   
     multiPlayerButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height /1.7, "multiplayer_button").setDisplaySize(300, 80).setDepth(1);
+    backstoryButton = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 1.34,"backstory_button").setDisplaySize(300,80).setDepth(1);
 
     //
     buttonPress = this.sound.add('pressButton');
@@ -36,6 +37,7 @@ menuScene.create = function(){
     //
     singlePlayButton.setInteractive();
     multiPlayerButton.setInteractive();
+    backstoryButton.setInteractive();
 
     //
     singlePlayButton.on("pointerdown", ()=>{
@@ -45,6 +47,11 @@ menuScene.create = function(){
     //
     multiPlayerButton.on("pointerdown", ()=>{
         clickMultiPlayerButton()
+    });
+
+    //
+    backstoryButton.on("pointerdown", ()=>{
+        clickbackstoryButton()
     });
 }
 
@@ -71,6 +78,16 @@ function clickSinglePlayerButton(){
  */
 function clickMultiPlayerButton(){
     game.scene.start('MultiSetup');
+    game.scene.stop('Menu');
+    menuScene.input.keyboard.removeKey('ESC');
+    esc = null;
+}
+
+/**
+ * 
+ */
+function clickbackstoryButton(){
+    game.scene.start('BackSetup');
     game.scene.stop('Menu');
     menuScene.input.keyboard.removeKey('ESC');
     esc = null;
