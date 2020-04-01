@@ -82,6 +82,10 @@ var playersPos = [];
     this.load.image('Fred', './dist/assets/images/cha_sprites/chaSpriteKFC.png');
     this.load.image('Rod', './dist/assets/images/cha_sprites/chaSpriteBacoHell.png');
     this.load.image('narBground','./dist/assets/images/bios.png');
+    this.load.image('ronButton','./dist/assets/images/G.U.I/ronan.png');
+    this.load.image('rodButton','./dist/assets/images/G.U.I/rod.png');
+    this.load.image('domButton','./dist/assets/images/G.U.I/dom.png');
+    this.load.image('fredButton','./dist/assets/images/G.U.I/fred.png');
 
     //loads spritesheet for animations
     this.load.spritesheet('explosion','./dist/assets/images/explosion.png', {
