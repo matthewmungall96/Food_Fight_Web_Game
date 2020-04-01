@@ -87,7 +87,7 @@ function clickMultiPlayerButton(){
  * 
  */
 function clickbackstoryButton(){
-    game.scene.start('BackSetup');
+    game.scene.start('Narrative');
     game.scene.stop('Menu');
     menuScene.input.keyboard.removeKey('ESC');
     esc = null;
