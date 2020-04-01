@@ -39,6 +39,9 @@ var player4 = null;
     this.physics.add.collider(zombies,player3Bullets, zombieHitCallback3);
     this.physics.add.collider(zombies,player4Bullets, zombieHitCallback4);
 
+     //
+     scoreText = this.add.text(700, 100, '', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
+
      //creates animation for explosion 
      this.anims.create({
          key: 'explode',
