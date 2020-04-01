@@ -229,7 +229,7 @@ singleScene.create = function(){
 
     // Move reticle upon locked pointer move
     this.input.on('pointermove', function (pointer) {
-        if (this.input.mouse.locked)
+        if (this.input.mouse.locked && player.active)
         {
             reticle.x += pointer.movementX;
             reticle.y += pointer.movementY;
@@ -342,7 +342,7 @@ function playerHitCallback(playerHit, bulletHit)
             playerHit.hp1Full.setVisible(false);
 
             //
-            if (player.score > player.highestScore){
+            if (playerHit.score > playerHit.highestScore){
 
             //
             var xhttp;
@@ -356,13 +356,12 @@ function playerHitCallback(playerHit, bulletHit)
             xhttp.open("POST", "post.php?name=" + name + "&score="+ player.score, true);
             xhttp.send();
         }
-            playersPos.forEach(p => {
-                console.log(p+" "  +p[0]);
-            console.log(distance(playerHit.x, playerHit.y, p[0], p[1]));
-            if (distance(playerHit.x, playerHit.y, p[0], p[1]) <= 10){
-                playersPos = playersPos.filter((e) => e.x != p.x);
-            }
-        });
+            playerHit.setActive(false);
+            playersPos.forEach(p =>{
+                if (distance(p[0], p[1], playerHit.x, playerHit.y) <= 5){
+                    playersPos = playersPos.filter(entry => entry[0] != playerHit.x)
+                }
+            });
     }
 
         //
@@ -465,7 +464,7 @@ function constrainReticle(reticle, player) {
  * 
  */
 singleScene.update = function(time, delta){
-        if(player)
+    if (player.active)
             playersPos[0] = [player.x, player.y];
     
         // Rotates player to face towards reticle

@@ -176,13 +176,14 @@ var playersPos = [];
         if (playersPos.length <= 0) return;
 
         //Calculates the angle between the Zombie and the target set in the global variables
-
+        
         var closestPlayer = 0;
         //If the distance between the last saved closest player and the currently calculated one is lesser, replaces the saved player id with the current and moves on
         for (let i = 0; i < playersPos.length; i++) {
-            var dist = distance(playersPos[i].x, playersPos[i].y, this.x, this.y);
-            if (dist < distance(playersPos[closestPlayer].x, playersPos[closestPlayer].y, this.x, this.y))
+            var dist = distance(playersPos[i][0], playersPos[i][1], this.x, this.y);
+            if (dist < distance(playersPos[closestPlayer][0], playersPos[closestPlayer][1], this.x, this.y))
                 closestPlayer = i;
+                console.log(dist);
         }
 
         //Sets the direction the zombie has to move towards towards the closest player

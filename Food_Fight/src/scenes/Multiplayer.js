@@ -370,19 +370,19 @@ function spawnZombiesMulti(zombies, spawnpoints, time) {
 
 multiScene.update = function(time, delta){
     //
-    if (player1) {
+    if (player1 && player1.active) {
         playersPos[0] = [player1.x, player1.y];
         player1.rotation = Phaser.Math.Angle.Between(player1.x, player1.y, reticle.x, reticle.y);
     }
-    if (player2) {
+    if (player2 && player2.active) {
         playersPos[1] = [player2.x, player2.y];
         player2.rotation = Phaser.Math.Angle.Between(player2.x, player2.y, reticle.x, reticle.y);
     }
-    if (player3) {
+    if (player3 && player3.active) {
         playersPos[2] = [player3.x, player3.y];
         player3.rotation = Phaser.Math.Angle.Between(player3.x, player3.y, reticle.x, reticle.y);
     }
-    if (player4) {
+    if (player4 && player4.active) {
         playersPos[3] = [player4.x, player4.y];
         player4.rotation = Phaser.Math.Angle.Between(player4.x, player4.y, reticle.x, reticle.y);
     }
