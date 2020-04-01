@@ -22,6 +22,10 @@ narrativeScene.create = function(){
     dominicButton.setInteractive();
     fredButton.setInteractive();
     return2Button.setInteractive();
+
+    return2Button.on("pointerdown", ()=>{
+        clickreturn2Button()
+    });
 }
 
 narrativeScene.update = function(){
@@ -46,6 +50,4 @@ function clickfredButton(){
 function clickreturn2Button(){
     game.scene.start('Menu');
     game.scene.stop('Narrative');
-    menuScene.input.keyboard.removeKey('ESC');
-    esc = null;
 }
