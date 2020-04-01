@@ -34,10 +34,36 @@ var player4 = null;
     player4Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
     
     //
-    this.physics.add.collider(zombies,player1Bullets, zombieHitCallback);
-    this.physics.add.collider(zombies,player2Bullets, zombieHitCallback);
-    this.physics.add.collider(zombies,player3Bullets, zombieHitCallback);
-    this.physics.add.collider(zombies,player4Bullets, zombieHitCallback);
+    this.physics.add.collider(zombies,player1Bullets, zombieHitCallback1);
+    this.physics.add.collider(zombies,player2Bullets, zombieHitCallback2);
+    this.physics.add.collider(zombies,player3Bullets, zombieHitCallback3);
+    this.physics.add.collider(zombies,player4Bullets, zombieHitCallback4);
+
+     //creates animation for explosion 
+     this.anims.create({
+         key: 'explode',
+         frames: this.anims.generateFrameNumbers('explosion'),
+         frameRate: 20,
+         repeat: 0,
+         hiddenOnComplete: true
+     })
+     //
+     explosion = this.physics.add.sprite(400, 300, 'explosion').setDepth(3).setScale(4).setVisible(false);
+
+
+     //
+     zombieSplatNoise = this.sound.add('zombieHitNoise');
+     zombieDeathNoise = this.sound.add('zombieDeath');
+     pistolSwoosh = this.sound.add('pistolSwooshNoise');
+     emptyGun = this.sound.add('emptyGun');
+
+     //
+     zombieSplatNoise.volume = 0.3;
+     zombieDeathNoise.volume = 0.3;
+     pistolSwoosh.volume = 0.3;
+     emptyGun.volume = 0.3;
+
+
 
     // Add background player, zombie, reticle, healthpoint sprites
     reticle = this.physics.add.sprite(800, 700, 'target');
@@ -88,6 +114,7 @@ var player4 = null;
         
         //
         player1.health = 3;
+        player1.currentBullets =15;
 
         this.physics.add.collider(player1, zombies, playerHitCallback);
     }
@@ -127,7 +154,7 @@ var player4 = null;
         
         //
         player2.health = 3;
-
+        player2.currentBullets = 15;
         
         this.physics.add.collider(player2, zombies, playerHitCallback);
     }
@@ -167,6 +194,7 @@ var player4 = null;
         
         //
         player3.health = 3;
+        player3.currentBullets = 15;
 
         this.physics.add.collider(player3, zombies, playerHitCallback);
     }
@@ -206,6 +234,7 @@ var player4 = null;
         
         //
         player4.health = 3;
+        player4.currentBullets = 15;
 
         this.physics.add.collider(player4, zombies, playerHitCallback);
     }
@@ -258,7 +287,6 @@ var player4 = null;
 
     // Fires bullet from player1 on left click of mouse
     this.input.on('pointerdown', function (pointer, time, lastFired) {
-        console.log(reticle.x + " " + reticle.y);
     	if (player1.active === false)
     		return;
 
@@ -462,3 +490,166 @@ multiScene.update = function(time, delta){
   }
 }
 
+/**
+ * 
+ * @param {*} zombieHit 
+ * @param {*} bulletHit 
+ */
+function zombieHitCallback1(zombieHit, bulletHit) {
+
+    // Reduce health of zombie
+    if (bulletHit.active === true && zombieHit.active === true) {
+        //
+        if (player1.currentBullets > 0) {
+            zombieHit.health = zombieHit.health - 1;
+        }
+
+        //
+        if (zombieHit.health <= 0) {
+            //
+            singlePlayerScore += 10;
+
+            //
+            zombieDeathNoise.play();
+
+            //
+            explosion.setVisible(true);
+            explosion.setPosition(zombieHit.x, zombieHit.y);
+
+            //
+            explosion.play('explode');
+
+            //
+            zombieHit.destroy();
+        }
+
+        //
+        zombieSplatNoise.play();
+
+        //
+        bulletHit.destroy();
+    }
+}
+
+/**
+ * 
+ * @param {*} zombieHit 
+ * @param {*} bulletHit 
+ */
+function zombieHitCallback2(zombieHit, bulletHit) {
+
+    // Reduce health of zombie
+    if (bulletHit.active === true && zombieHit.active === true) {
+        //
+        if (player2.currentBullets > 0) {
+            zombieHit.health = zombieHit.health - 1;
+        }
+
+        //
+        if (zombieHit.health <= 0) {
+            //
+            singlePlayerScore += 10;
+
+            //
+            zombieDeathNoise.play();
+
+            //
+            explosion.setVisible(true);
+            explosion.setPosition(zombieHit.x, zombieHit.y);
+
+            //
+            explosion.play('explode');
+
+            //
+            zombieHit.destroy();
+        }
+
+        //
+        zombieSplatNoise.play();
+
+        //
+        bulletHit.destroy();
+    }
+}
+
+/**
+ * 
+ * @param {*} zombieHit 
+ * @param {*} bulletHit 
+ */
+function zombieHitCallback3(zombieHit, bulletHit) {
+
+    // Reduce health of zombie
+    if (bulletHit.active === true && zombieHit.active === true) {
+        //
+        if (player3.currentBullets > 0) {
+            zombieHit.health = zombieHit.health - 1;
+        }
+
+        //
+        if (zombieHit.health <= 0) {
+            //
+            singlePlayerScore += 10;
+
+            //
+            zombieDeathNoise.play();
+
+            //
+            explosion.setVisible(true);
+            explosion.setPosition(zombieHit.x, zombieHit.y);
+
+            //
+            explosion.play('explode');
+
+            //
+            zombieHit.destroy();
+        }
+
+        //
+        zombieSplatNoise.play();
+
+        //
+        bulletHit.destroy();
+    }
+}
+
+/**
+ * 
+ * @param {*} zombieHit 
+ * @param {*} bulletHit 
+ */
+function zombieHitCallback4(zombieHit, bulletHit) {
+
+    // Reduce health of zombie
+    if (bulletHit.active === true && zombieHit.active === true) {
+        //
+        if (player4.currentBullets > 0) {
+            zombieHit.health = zombieHit.health - 1;
+        }
+
+        //
+        if (zombieHit.health <= 0) {
+            //
+            singlePlayerScore += 10;
+
+            //
+            zombieDeathNoise.play();
+
+            //
+            explosion.setVisible(true);
+            explosion.setPosition(zombieHit.x, zombieHit.y);
+
+            //
+            explosion.play('explode');
+
+            //
+            zombieHit.destroy();
+        }
+
+        //
+        zombieSplatNoise.play();
+
+        //
+        bulletHit.destroy();
+    }
+}
