@@ -1,6 +1,11 @@
 //
 let multiScene = new Phaser.Scene('Multi');
 
+var player1 = null;
+var player2 = null;
+var player3 = null;
+var player4 = null;
+
 /**
  * 
  */
@@ -43,6 +48,7 @@ let multiScene = new Phaser.Scene('Multi');
     if (controllers.length >= 1){
         //
         player1 = this.physics.add.sprite(800, 300, 'player1');
+        player1.isOn = true;
         player1.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
         
         //
@@ -62,6 +68,7 @@ let multiScene = new Phaser.Scene('Multi');
         player1hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
         
         //
+        player1.beers = [];
         for (let i = 0; i < 11; i++) {
             player1.beers.push(this.add.image(400,100,'bullet'+i));
             player1.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -75,9 +82,10 @@ let multiScene = new Phaser.Scene('Multi');
     }
 
     //creates the player 2 entity 
-    if (controller_count >= 2){
+    if (controllers.length >= 2){
         //
         player2 = this.physics.add.sprite(800, 300, 'player2');
+        player2.isOn = true;
         player2.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
         
         //
@@ -97,6 +105,7 @@ let multiScene = new Phaser.Scene('Multi');
         player2hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
         
         //
+        player2.beers = [];
         for (let i = 0; i < 11; i++) {
             player2.beers.push(this.add.image(400,100,'bullet'+i));
             player2.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -110,9 +119,10 @@ let multiScene = new Phaser.Scene('Multi');
     }
 
     //creates the player 3 entity 
-    if (controller_count >= 3){
+    if (controllers.length >= 3){
     	//
         player3 = this.physics.add.sprite(800, 300, 'player3');
+        player3.isOn = true;
         player3.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
         
         //
@@ -132,6 +142,7 @@ let multiScene = new Phaser.Scene('Multi');
         player3hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
         
         //
+        player3.beers = [];
         for (let i = 0; i < 11; i++) {
             player3.beers.push(this.add.image(400,100,'bullet'+i));
             player3.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -145,9 +156,10 @@ let multiScene = new Phaser.Scene('Multi');
     }
     
     //creates the player 4 entity 
-    if (controller_count >= 4){
+    if (controllers.length >= 4){
     	//
         player4 = this.physics.add.sprite(800, 300, 'player4');
+        player4.isOn = true;
         player4.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500);
         
         //
@@ -167,6 +179,7 @@ let multiScene = new Phaser.Scene('Multi');
         player4hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
         
         //
+        player4.beers = [];
         for (let i = 0; i < 11; i++) {
             player4.beers.push(this.add.image(400,100,'bullet'+i));
             player4.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -274,10 +287,18 @@ let multiScene = new Phaser.Scene('Multi');
 
 multiScene.update = function(time, delta){
     //
-    if (player1){playersPos[0] = [player1.x, player1.y];}
-    if (player2) {playersPos[1] = [player2.x, player2.y];}
-    if (player3) {playersPos[2] = [player3.x, player3.y];}
-    if (player4) {playersPos[3] = [player4.x, player4.y];}
+    if (player1) {
+        playersPos[0] = [player1.x, player1.y];
+    }
+    if (player2) {
+        playersPos[1] = [player2.x, player2.y];
+    }
+    if (player3) {
+        playersPos[2] = [player3.x, player3.y];
+    }
+    if (player4) {
+        playersPos[3] = [player4.x, player4.y];
+    }
     
         // Rotates player1 to face towards reticle
         player1.rotation = Phaser.Math.Angle.Between(player1.x, player1.y, reticle.x, reticle.y);
