@@ -44,8 +44,8 @@ function clickfredButton(){
     
 }
 function clickreturnButton(){
-    game.scene.start('Menu');
+   /* game.scene.start('Menu');
     game.scene.stop('Narrative');
     menuScene.input.keyboard.removeKey('ESC');
-    esc = null;
+    esc = null;*/
 }
