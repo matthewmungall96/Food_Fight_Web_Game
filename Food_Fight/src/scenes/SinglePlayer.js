@@ -85,6 +85,7 @@ singleScene.create = function(){
 
     //
     player = this.physics.add.sprite(800, 1000, 'player1');
+    this.physics.add.collider(player, zombies, playerHitCallback);
     player.beers = [];
     playersPos.push([player.x, player.y]);
 
@@ -99,20 +100,20 @@ singleScene.create = function(){
     playerinfoHolder.setOrigin(0.5, 0.5).setDisplaySize(400, 200).setDepth(3).setVisible(true);
     
     //Burger Images (Used for Health Tracking)
-    hp1Empty = this.add.image(100, 1200, 'emptyBurger');
-    hp1Full = this.add.image(100, 1200, 'fullBurger');
-    hp2Empty = this.add.image(200, 1200, 'emptyBurger');
-    hp2Full = this.add.image(200, 1200, 'fullBurger');
-    hp3Empty = this.add.image(300, 1200, 'emptyBurger'); 
-    hp3Full = this.add.image(300, 1200, 'fullBurger');
+    player.hp1Empty = this.add.image(100, 1200, 'emptyBurger');
+    player.hp1Full = this.add.image(100, 1200, 'fullBurger');
+    player.hp2Empty = this.add.image(200, 1200, 'emptyBurger');
+    player.hp2Full = this.add.image(200, 1200, 'fullBurger');
+    player.hp3Empty = this.add.image(300, 1200, 'emptyBurger'); 
+    player.hp3Full = this.add.image(300, 1200, 'fullBurger');
 
     //Burger Scaling
-    hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-    hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-    hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+    player.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    player.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+    player.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    player.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+    player.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+    player.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
 
     //
     for (let i = 0; i < 11; i++) {
@@ -273,7 +274,7 @@ singleScene.create = function(){
  * @param {*} zombieHit 
  * @param {*} bulletHit 
  */
-function zombieHitCallback(zombieHit, bulletHit,)
+function zombieHitCallback(zombieHit, bulletHit)
 {
     
     // Reduce health of zombie
@@ -327,20 +328,20 @@ function playerHitCallback(playerHit, bulletHit)
         //
         if (playerHit.health == 2)
         {
-            hp3Empty.setVisible(true);
-            hp3Full.setVisible(false);
+            playerHit.hp3Empty.setVisible(true);
+            playerHit.hp3Full.setVisible(false);
         }
         //
         else if (playerHit.health == 1)
         {
-            hp2Empty.setVisible(true);
-            hp2Full.setVisible(false);
+            playerHit.hp2Empty.setVisible(true);
+            playerHit.hp2Full.setVisible(false);
         }
         //
         else
         {
-            hp1Empty.setVisible(true);
-            hp1Full.setVisible(false);
+            playerHit.hp1Empty.setVisible(true);
+            playerHit.hp1Full.setVisible(false);
 
             //
             if (singlePlayerScore > highestSinglePlayerScore){
@@ -379,20 +380,17 @@ function playerHasDied(){
 /**
  * 
  * @param {*} zombies 
- * @param {*} player 
  * @param {*} spawnpoints 
  * @param {*} time 
- * @param {*} gameObject 
  */
-function spawnZombies(zombies, player, spawnpoints, time, gameObject) {
+function spawnZombies(zombies, spawnpoints, time) {
     //
     if ((time - zombies.lastSpawned) > 2000){
-        
         //
         zombies.lastSpawned = time;
         
         //Creation of a zombie
-        var zzz = zombies.get().setActive(true).setVisible(true);
+        var zzz = zombies.get().setActive(true).setVisible(true).setDepth(2);
         
         //
         if (zzz) {
@@ -401,8 +399,6 @@ function spawnZombies(zombies, player, spawnpoints, time, gameObject) {
             point = Math.floor(Math.random() * spawnpoints.length);
             zzz.go(spawnpoints[point].x, spawnpoints[point].y);
             
-            //Add collider between bullet and player1
-            gameObject.physics.add.collider(player, zzz, playerHitCallback);
         }
     }
 }
@@ -478,7 +474,7 @@ singleScene.update = function(time, delta){
         constrainVelocity(player, 500);
         
         // Make zombie spawn
-        spawnZombies(zombies, player, spawnpoints, time, this);
+        spawnZombies(zombies, spawnpoints, time);
 
         //
         switch (player.currentBullets) {

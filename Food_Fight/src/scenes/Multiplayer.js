@@ -25,7 +25,8 @@ var player4 = null;
 
     // Add 2 groups for Bullet objects
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
-    
+    zombies.lastSpawned=0;
+
     //
     player1Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
     player2Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
@@ -42,30 +43,38 @@ var player4 = null;
     reticle = this.physics.add.sprite(800, 700, 'target');
 
     // Set image/sprite properties
-    reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true);
+    reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(2);
+
+
+    //
+     spawnpoints = [
+         { x: 76, y: 404 },
+         { x: 464, y: 145 },
+         { x: 1155, y: 145 },
+         { x: 1503, y: 404 }
+     ];
 
     //creates the player 1 entity 
     if (controllers.length >= 1){
         //
         player1 = this.physics.add.sprite(800, 300, 'player1');
-        player1.isOn = true;
         player1.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
         
         //
-        player1hp1Empty = this.add.image(100, 100, 'emptyBurger');
-        player1hp1Full = this.add.image(100, 100, 'fullBurger');
-        player1hp2Empty = this.add.image(200, 100, 'emptyBurger');
-        player1hp2Full = this.add.image(200, 100, 'fullBurger');
-        player1hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
-        player1hp3Full = this.add.image(300, 100, 'fullBurger');
+        player1.hp1Empty = this.add.image(100, 100, 'emptyBurger');
+        player1.hp1Full = this.add.image(100, 100, 'fullBurger');
+        player1.hp2Empty = this.add.image(200, 100, 'emptyBurger');
+        player1.hp2Full = this.add.image(200, 100, 'fullBurger');
+        player1.hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
+        player1.hp3Full = this.add.image(300, 100, 'fullBurger');
         
         //
-        player1hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player1hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player1hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player1hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player1hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player1hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player1.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player1.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player1.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player1.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player1.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player1.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
         
         //
         player1.beers = [];
@@ -79,6 +88,8 @@ var player4 = null;
         
         //
         player1.health = 3;
+
+        this.physics.add.collider(player1, zombies, playerHitCallback);
     }
 
     //creates the player 2 entity 
@@ -89,20 +100,20 @@ var player4 = null;
         player2.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
         
         //
-        player2hp1Empty = this.add.image(100, 100, 'emptyBurger');
-        player2hp1Full = this.add.image(100, 100, 'fullBurger');
-        player2hp2Empty = this.add.image(200, 100, 'emptyBurger');
-        player2hp2Full = this.add.image(200, 100, 'fullBurger');
-        player2hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
-        player2hp3Full = this.add.image(300, 100, 'fullBurger');
+        player2.hp1Empty = this.add.image(100, 100, 'emptyBurger');
+        player2.hp1Full = this.add.image(100, 100, 'fullBurger');
+        player2.hp2Empty = this.add.image(200, 100, 'emptyBurger');
+        player2.hp2Full = this.add.image(200, 100, 'fullBurger');
+        player2.hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
+        player2.hp3Full = this.add.image(300, 100, 'fullBurger');
         
         //
-        player2hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player2hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player2hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player2hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player2hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player2hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player2.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player2.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player2.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player2.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player2.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player2.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
         
         //
         player2.beers = [];
@@ -116,6 +127,9 @@ var player4 = null;
         
         //
         player2.health = 3;
+
+        
+        this.physics.add.collider(player2, zombies, playerHitCallback);
     }
 
     //creates the player 3 entity 
@@ -126,20 +140,20 @@ var player4 = null;
         player3.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
         
         //
-        player3hp1Empty = this.add.image(100, 100, 'emptyBurger');
-        player3hp1Full = this.add.image(100, 100, 'fullBurger');
-        player3hp2Empty = this.add.image(200, 100, 'emptyBurger');
-        player3hp2Full = this.add.image(200, 100, 'fullBurger');
-        player3hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
-        player3hp3Full = this.add.image(300, 100, 'fullBurger');
+        player3.hp1Empty = this.add.image(100, 100, 'emptyBurger');
+        player3.hp1Full = this.add.image(100, 100, 'fullBurger');
+        player3.hp2Empty = this.add.image(200, 100, 'emptyBurger');
+        player3.hp2Full = this.add.image(200, 100, 'fullBurger');
+        player3.hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
+        player3.hp3Full = this.add.image(300, 100, 'fullBurger');
         
         //
-        player3hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player3hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player3hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player3hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player3hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player3hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player3.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player3.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player3.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player3.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player3.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player3.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
         
         //
         player3.beers = [];
@@ -153,6 +167,8 @@ var player4 = null;
         
         //
         player3.health = 3;
+
+        this.physics.add.collider(player3, zombies, playerHitCallback);
     }
     
     //creates the player 4 entity 
@@ -163,20 +179,20 @@ var player4 = null;
         player4.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
         
         //
-        player4hp1Empty = this.add.image(100, 100, 'emptyBurger');
-        player4hp1Full = this.add.image(100, 100, 'fullBurger');
-        player4hp2Empty = this.add.image(200, 100, 'emptyBurger');
-        player4hp2Full = this.add.image(200, 100, 'fullBurger');
-        player4hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
-        player4hp3Full = this.add.image(300, 100, 'fullBurger');
+        player4.hp1Empty = this.add.image(100, 100, 'emptyBurger');
+        player4.hp1Full = this.add.image(100, 100, 'fullBurger');
+        player4.hp2Empty = this.add.image(200, 100, 'emptyBurger');
+        player4.hp2Full = this.add.image(200, 100, 'fullBurger');
+        player4.hp3Empty = this.add.image(300, 100, 'emptyBurger'); 
+        player4.hp3Full = this.add.image(300, 100, 'fullBurger');
         
         //
-        player4hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player4hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player4hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player4hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player4hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player4hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player4.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player4.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player4.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player4.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player4.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
+        player4.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
         
         //
         player4.beers = [];
@@ -190,6 +206,8 @@ var player4 = null;
         
         //
         player4.health = 3;
+
+        this.physics.add.collider(player4, zombies, playerHitCallback);
     }
 
 
@@ -240,6 +258,7 @@ var player4 = null;
 
     // Fires bullet from player1 on left click of mouse
     this.input.on('pointerdown', function (pointer, time, lastFired) {
+        console.log(reticle.x + " " + reticle.y);
     	if (player1.active === false)
     		return;
 
@@ -251,7 +270,7 @@ var player4 = null;
         {
             //
             bullet.fire(player1, reticle);
-            this.physics.add.collider(zombie, bullet, zombieHitCallback);
+            this.physics.add.collider(zombies, bullet, zombieHitCallback);
         }
     }, this);
 
@@ -286,24 +305,55 @@ var player4 = null;
     var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
 }
 
+/**
+ * 
+ * @param {*} zombies 
+ * @param {*} spawnpoints 
+ * @param {*} time 
+ */
+function spawnZombiesMulti(zombies, spawnpoints, time) {
+    //
+    if ((time - zombies.lastSpawned) > 2000) {
+
+        console.log("spawning");
+        //
+        zombies.lastSpawned = time;
+
+        //Creation of a zombie
+        var zzz = zombies.get().setActive(true).setVisible(true).setDepth(2);
+
+        //
+        if (zzz) {
+
+            //
+            point = Math.floor(Math.random() * spawnpoints.length);
+            zzz.go(spawnpoints[point].x, spawnpoints[point].y);
+
+        }
+    }
+}
+
 multiScene.update = function(time, delta){
     //
     if (player1) {
         playersPos[0] = [player1.x, player1.y];
+        player1.rotation = Phaser.Math.Angle.Between(player1.x, player1.y, reticle.x, reticle.y);
     }
     if (player2) {
         playersPos[1] = [player2.x, player2.y];
+        player2.rotation = Phaser.Math.Angle.Between(player2.x, player2.y, reticle.x, reticle.y);
     }
     if (player3) {
         playersPos[2] = [player3.x, player3.y];
+        player3.rotation = Phaser.Math.Angle.Between(player3.x, player3.y, reticle.x, reticle.y);
     }
     if (player4) {
         playersPos[3] = [player4.x, player4.y];
+        player4.rotation = Phaser.Math.Angle.Between(player4.x, player4.y, reticle.x, reticle.y);
     }
     
-        // Rotates player1 to face towards reticle
-        player1.rotation = Phaser.Math.Angle.Between(player1.x, player1.y, reticle.x, reticle.y);
-        
+    spawnZombiesMulti(zombies,spawnpoints,time);
+    
         //Make reticle move with player1
         reticle.body.velocity.x = player1.body.velocity.x;
         reticle.body.velocity.y = player1.body.velocity.y;
