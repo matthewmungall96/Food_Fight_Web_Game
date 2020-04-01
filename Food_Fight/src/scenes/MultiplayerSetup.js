@@ -73,6 +73,7 @@ multiSetupScene.create = function(){
     //
     returnButton.on("pointerdown", ()=>{
         addPlayer();
+       multiPlayButton.setVisible(true);
     });
 }
 
