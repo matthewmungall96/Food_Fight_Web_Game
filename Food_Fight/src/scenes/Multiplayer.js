@@ -348,7 +348,7 @@ var player4 = null;
  */
 function spawnZombiesMulti(zombies, spawnpoints, time) {
     //
-    if ((time - zombies.lastSpawned) > 2000) {
+    if ((time - zombies.lastSpawned && playersPos.length >0) > 2000) {
 
         console.log("spawning");
         //
