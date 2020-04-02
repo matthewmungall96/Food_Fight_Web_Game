@@ -432,56 +432,58 @@ multiScene.update = function(time, delta){
  function updateBeers(player){
    switch (player.currentBullets) {
       case 0:
-      player.beers[0].setVisible(false);
-      player.beers[10].setVisible(true);
+      player.beers[1].setVisible(false);
+      player.beers[0].setVisible(true);
       break;
 
       case 1:
-      break;
-      
-      case 2:
       player.beers[2].setVisible(false);
       player.beers[1].setVisible(true);
       break;
       
-      case 3:
+      case 2:
       player.beers[3].setVisible(false);
       player.beers[2].setVisible(true);
       break;
       
-      case 4:
+      case 3:
       player.beers[4].setVisible(false);
       player.beers[3].setVisible(true);
       break;
       
-      case 5:
+      case 4:
       player.beers[5].setVisible(false);
       player.beers[4].setVisible(true);
       break;
       
-      case 7:
+      case 5:
       player.beers[6].setVisible(false);
       player.beers[5].setVisible(true);
       break;
       
-      case 9:
+      case 7:
       player.beers[7].setVisible(false);
       player.beers[6].setVisible(true);
       break;
       
-      case 11:
+      case 9:
       player.beers[8].setVisible(false);
       player.beers[7].setVisible(true);
       break;
       
-      case 13:
+      case 11:
       player.beers[9].setVisible(false);
       player.beers[8].setVisible(true);
       break;
       
-      case 15:
+      case 13:
       player.beers[10].setVisible(false);
       player.beers[9].setVisible(true);
+      break;
+      
+      case 15:
+      player.beers[10].setVisible(true);
+      player.beers[0].setVisible(false);
       break;
 
 
