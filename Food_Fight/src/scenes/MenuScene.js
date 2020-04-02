@@ -68,7 +68,7 @@ function clickSinglePlayerButton(){
     buttonPress.play(),
     mainMenuMusic.stop(),
     game.scene.stop('Menu');
-    game.scene.start('Single');
+    game.scene.start('SingleSetup');
     menuScene.input.keyboard.removeKey('ESC');
     esc = null;
 }
