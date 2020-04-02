@@ -388,7 +388,7 @@ function playerHasDied(){
  */
 function spawnZombies(zombies, spawnpoints, time) {
     //
-    if ((time - zombies.lastSpawned && playersPos.length > 0) > 2000){
+    if ((time - zombies.lastSpawned) > 2000 && playersPos.length > 0){
         //
         zombies.lastSpawned = time;
         
