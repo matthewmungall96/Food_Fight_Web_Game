@@ -183,7 +183,6 @@ var playersPos = [];
             var dist = distance(playersPos[i][0], playersPos[i][1], this.x, this.y);
             if (dist < distance(playersPos[closestPlayer][0], playersPos[closestPlayer][1], this.x, this.y))
                 closestPlayer = i;
-                console.log(dist);
         }
 
         //Sets the direction the zombie has to move towards towards the closest player
