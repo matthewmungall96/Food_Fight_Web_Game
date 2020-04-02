@@ -234,7 +234,7 @@ multiScene.update = function(time, delta){
     }
     if (player4 && player4.active) {
         playersPos[3] = [player4.x, player4.y];
-        player4.rotation = Phaser.Math.Angle.Between(player4.x, player4.y, reticle4.x, reticle.y);
+        player4.rotation = Phaser.Math.Angle.Between(player4.x, player4.y, reticle4.x, reticle4.y);
         updateBeers(player4);
     }
     
@@ -641,29 +641,32 @@ function addPlayer(controllerArray, scene){
     if (!player1 &&controllerArray.length == 1) {
         console.log(scene);
         //
-        player1 = scene.physics.add.sprite(290, 950, 'player1');
+        player1 = scene.physics.add.sprite(295, 965, 'player1');
         player1.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(2);
 
-        //
-        player1.hp1Empty = scene.add.image(100, 100, 'emptyBurger');
-        player1.hp1Full = scene.add.image(100, 100, 'fullBurger');
-        player1.hp2Empty = scene.add.image(200, 100, 'emptyBurger');
-        player1.hp2Full = scene.add.image(200, 100, 'fullBurger');
-        player1.hp3Empty = scene.add.image(300, 100, 'emptyBurger');
-        player1.hp3Full = scene.add.image(300, 100, 'fullBurger');
+        player1infoHolder = scene.add.image(289, 1167, 'playerTable');
+        player1infoHolder.setOrigin(0.5, 0.5).setDisplaySize(300, 160).setDepth(3).setVisible(true);
 
         //
-        player1.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player1.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player1.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player1.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player1.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player1.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player1.hp1Empty = scene.add.image(200, 1167, 'emptyBurger');
+        player1.hp1Full = scene.add.image(200, 1167, 'fullBurger');
+        player1.hp2Empty = scene.add.image(243, 1167, 'emptyBurger');
+        player1.hp2Full = scene.add.image(243, 1167, 'fullBurger');
+        player1.hp3Empty = scene.add.image(286, 1167, 'emptyBurger');
+        player1.hp3Full = scene.add.image(286, 1167, 'fullBurger');
+
+        //
+        player1.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player1.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
+        player1.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false); 
+        player1.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
+        player1.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player1.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
 
         //
         player1.beers = [];
         for (let i = 0; i < 11; i++) {
-            player1.beers.push(scene.add.image(400, 100, 'bullet' + i));
+            player1.beers.push(scene.add.image(370, 1167, 'bullet' + i));
             player1.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
         }
 
@@ -682,30 +685,32 @@ function addPlayer(controllerArray, scene){
     //creates the player 2 entity 
     if (!player2 &&controllerArray.length == 2) {
         //
-        player2 = scene.physics.add.sprite(580, 950, 'player2');
+        player2 = scene.physics.add.sprite(638, 965, 'player2');
         player2.isOn = true;
         player2.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+        
+        player2infoHolder = scene.add.image(644, 1167, 'playerTable');
+        player2infoHolder.setOrigin(0.5, 0.5).setDisplaySize(300, 160).setDepth(3).setVisible(true);
+        //
+        player2.hp1Empty = scene.add.image(733, 1167, 'emptyBurger');
+        player2.hp1Full = scene.add.image(733, 1167, 'fullBurger');
+        player2.hp2Empty = scene.add.image(690, 1167, 'emptyBurger');
+        player2.hp2Full = scene.add.image(690, 1167, 'fullBurger');
+        player2.hp3Empty = scene.add.image(647, 1167, 'emptyBurger');
+        player2.hp3Full = scene.add.image(647, 1167, 'fullBurger');
 
         //
-        player2.hp1Empty = scene.add.image(100, 100, 'emptyBurger');
-        player2.hp1Full = scene.add.image(100, 100, 'fullBurger');
-        player2.hp2Empty = scene.add.image(200, 100, 'emptyBurger');
-        player2.hp2Full = scene.add.image(200, 100, 'fullBurger');
-        player2.hp3Empty = scene.add.image(300, 100, 'emptyBurger');
-        player2.hp3Full = scene.add.image(300, 100, 'fullBurger');
-
-        //
-        player2.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player2.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player2.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player2.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player2.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player2.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player2.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player2.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
+        player2.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player2.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
+        player2.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player2.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
 
         //
         player2.beers = [];
         for (let i = 0; i < 11; i++) {
-            player2.beers.push(scene.add.image(400, 100, 'bullet' + i));
+            player2.beers.push(scene.add.image(563, 1167, 'bullet' + i));
             player2.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
         }
 
@@ -724,30 +729,32 @@ function addPlayer(controllerArray, scene){
     //creates the player 3 entity 
     if (!player3 &&controllerArray.length == 3) {
         //
-        player3 = scene.physics.add.sprite(860, 950, 'player3');
+        player3 = scene.physics.add.sprite(981, 965, 'player3');
         player3.isOn = true;
         player3.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+        
+        player3infoHolder = scene.add.image(975, 1167, 'playerTable');
+        player3infoHolder.setOrigin(0.5, 0.5).setDisplaySize(300, 160).setDepth(3).setVisible(true);
+        //
+        player3.hp1Empty = scene.add.image(886, 1167, 'emptyBurger');
+        player3.hp1Full = scene.add.image(886, 1167, 'fullBurger');
+        player3.hp2Empty = scene.add.image(929, 1167, 'emptyBurger');
+        player3.hp2Full = scene.add.image(929, 1167, 'fullBurger');
+        player3.hp3Empty = scene.add.image(972, 1167, 'emptyBurger');
+        player3.hp3Full = scene.add.image(972, 1167, 'fullBurger');
 
         //
-        player3.hp1Empty = scene.add.image(100, 100, 'emptyBurger');
-        player3.hp1Full = scene.add.image(100, 100, 'fullBurger');
-        player3.hp2Empty = scene.add.image(200, 100, 'emptyBurger');
-        player3.hp2Full = scene.add.image(200, 100, 'fullBurger');
-        player3.hp3Empty = scene.add.image(300, 100, 'emptyBurger');
-        player3.hp3Full = scene.add.image(300, 100, 'fullBurger');
-
-        //
-        player3.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player3.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player3.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player3.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player3.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player3.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player3.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player3.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
+        player3.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player3.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
+        player3.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player3.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
 
         //
         player3.beers = [];
         for (let i = 0; i < 11; i++) {
-            player3.beers.push(scene.add.image(400, 100, 'bullet' + i));
+            player3.beers.push(scene.add.image(1056, 1167, 'bullet' + i));
             player3.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
         }
 
@@ -766,30 +773,32 @@ function addPlayer(controllerArray, scene){
     //creates the player 4 entity 
     if (!player4 &&controllerArray.length == 4) {
         //
-        player4 = scene.physics.add.sprite(1150, 950, 'player4');
+        player4 = scene.physics.add.sprite(1324, 965, 'player4');
         player4.isOn = true;
         player4.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+        
+        player4infoHolder = scene.add.image(1330, 1167, 'playerTable');
+        player4infoHolder.setOrigin(0.5, 0.5).setDisplaySize(300, 160).setDepth(3).setVisible(true);
+        //
+        player4.hp1Empty = scene.add.image(1419, 1167, 'emptyBurger');
+        player4.hp1Full = scene.add.image(1419, 1167, 'fullBurger');
+        player4.hp2Empty = scene.add.image(1376, 1167, 'emptyBurger');
+        player4.hp2Full = scene.add.image(1376, 1167, 'fullBurger');
+        player4.hp3Empty = scene.add.image(1333, 1167, 'emptyBurger');
+        player4.hp3Full = scene.add.image(1333, 1167, 'fullBurger');
 
         //
-        player4.hp1Empty = scene.add.image(100, 100, 'emptyBurger');
-        player4.hp1Full = scene.add.image(100, 100, 'fullBurger');
-        player4.hp2Empty = scene.add.image(200, 100, 'emptyBurger');
-        player4.hp2Full = scene.add.image(200, 100, 'fullBurger');
-        player4.hp3Empty = scene.add.image(300, 100, 'emptyBurger');
-        player4.hp3Full = scene.add.image(300, 100, 'fullBurger');
-
-        //
-        player4.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player4.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player4.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player4.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-        player4.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-        player4.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+        player4.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player4.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
+        player4.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player4.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
+        player4.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(false);
+        player4.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(37.5, 37.5).setDepth(3).setVisible(true);
 
         //
         player4.beers = [];
         for (let i = 0; i < 11; i++) {
-            player4.beers.push(scene.add.image(400, 100, 'bullet' + i));
+            player4.beers.push(scene.add.image(1249, 1167, 'bullet' + i));
             player4.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
         }
 
