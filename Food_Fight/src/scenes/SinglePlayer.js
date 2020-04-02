@@ -258,7 +258,7 @@ singleScene.create = function(){
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 scoreText.setText("Highest:" + this.responseText + "\nCurrent: " + player.score);
-                player.highestScore = parseInt(this.responseText.split(":")[1]);
+                player.highestScore = parseInt(this.responseText.split(" ")[1]);
                 console.log(player.highestScore);
             }
         };
