@@ -38,7 +38,9 @@ singleSetupScene.create = function(){
     singlePlayButton.setInteractive();
     returnButton.setInteractive();
 
+    clickSingleSetupScene();
     //
+    /*
     this.input.gamepad.on('down', function (pad, button, index) {
         //
         if (!controllers.find(c => c.pad.index == pad.pad.index) && controllers.length <=4){
@@ -48,7 +50,7 @@ singleSetupScene.create = function(){
             addSinglePlayer();
         }
     });
-
+*/
     //
     singlePlayButton.on("pointerdown", ()=>{
         clickSingleSetupScene();

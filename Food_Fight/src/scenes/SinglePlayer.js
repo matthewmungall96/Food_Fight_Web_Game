@@ -48,6 +48,8 @@ singleScene.create = function(){
     playerBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
 
+    playerBullets.lastFired=0;
+
     //
     this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
 
@@ -216,6 +218,12 @@ singleScene.create = function(){
         }
     }, this);
 
+    this.input.gamepad.on('down', function (pad, button, index) {
+        if (controllers.length <= 0)
+            controllers[0] = pad;
+    }, this);
+    
+
     // Pointer lock will only work after mousedown
     game.canvas.addEventListener('mousedown', function () {
         game.input.mouse.requestPointerLock();
@@ -227,6 +235,7 @@ singleScene.create = function(){
             game.input.mouse.releasePointerLock();
     }, 0, this);
 
+    /*
     // Move reticle upon locked pointer move
     this.input.on('pointermove', function (pointer) {
         if (this.input.mouse.locked && player.active)
@@ -235,7 +244,7 @@ singleScene.create = function(){
             reticle.y += pointer.movementY;
         }
     }, this);
-
+*/
     //map
     var map = this.make.tilemap({key: 'map'});
     var tiles = map.addTilesetImage('tilesheet_complete');
@@ -466,14 +475,55 @@ function constrainReticle(reticle, player) {
 singleScene.update = function(time, delta){
     if (player.active)
             playersPos[0] = [player.x, player.y];
+
+    if(controllers.length>0){
+       
+        if (controllers[0].axes[0].value >= 0.2 || controllers[0].axes[0].value <= -0.2){
+            reticle.x += ( controllers[0].axes[0].value * delta);
+        }
+        if (controllers[0].axes[1].value >= 0.2 || controllers[0].axes[1].value <= -0.2) {
+            reticle.y += (controllers[0].axes[1].value * delta);
+        }
+        if (controllers[0].A){
+            if (player.active === false || !((time - playerBullets.lastFired) > 100))
+                return;
+
+            playerBullets.lastFired = time;
+            // Get bullet from bullets group
+            var bullet = playerBullets.get().setActive(true).setVisible(true);
+
+            //
+            if (bullet && player.currentBullets > 0) {
+                //
+                player.currentBullets = player.currentBullets - 1;
+                pistolSwoosh.play();
+                bullet.fire(player, reticle);
+            }
+
+            //
+            if (bullet && player.currentBullets == 0) {
+                emptyGun.play();
+            }
+        }
+        if(controllers[0].X){
+            if (player.currentBullets < 15) {
+                reloadTime = game.getTime() + 2000;
+                player.currentBullets = player.MaxBullets;
+            }
+        }
+
+    }
     
+
         // Rotates player to face towards reticle
         player.rotation = Phaser.Math.Angle.Between(player.x, player.y, reticle.x, reticle.y);
         
+        /*
         //Make reticle move with player
         reticle.body.velocity.x = player.body.velocity.x;
         reticle.body.velocity.y = player.body.velocity.y;
-        
+        */
+
         // Constrain velocity of player
         constrainVelocity(player, 500);
         
