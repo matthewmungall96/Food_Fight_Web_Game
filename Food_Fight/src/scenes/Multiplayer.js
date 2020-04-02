@@ -662,8 +662,8 @@ function addPlayer(controllerArray, scene){
     if (!player1 &&controllerArray.length == 1) {
         console.log(scene);
         //
-        player1 = scene.physics.add.sprite(800, 300, 'player1');
-        player1.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(2);
+        player1 = scene.physics.add.sprite(275, 950, 'player1');
+        player1.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(2);
 
         //
         player1.hp1Empty = scene.add.image(100, 100, 'emptyBurger');
@@ -703,9 +703,9 @@ function addPlayer(controllerArray, scene){
     //creates the player 2 entity 
     if (!player2 &&controllerArray.length == 2) {
         //
-        player2 = scene.physics.add.sprite(800, 300, 'player2');
+        player2 = scene.physics.add.sprite(550, 950, 'player2');
         player2.isOn = true;
-        player2.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+        player2.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
 
         //
         player2.hp1Empty = scene.add.image(100, 100, 'emptyBurger');
@@ -745,9 +745,9 @@ function addPlayer(controllerArray, scene){
     //creates the player 3 entity 
     if (!player3 &&controllerArray.length == 3) {
         //
-        player3 = scene.physics.add.sprite(800, 300, 'player3');
+        player3 = scene.physics.add.sprite(825, 950, 'player3');
         player3.isOn = true;
-        player3.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+        player3.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
 
         //
         player3.hp1Empty = scene.add.image(100, 100, 'emptyBurger');
@@ -787,9 +787,9 @@ function addPlayer(controllerArray, scene){
     //creates the player 4 entity 
     if (!player4 &&controllerArray.length == 4) {
         //
-        player4 = scene.physics.add.sprite(800, 300, 'player4');
+        player4 = scene.physics.add.sprite(1075, 950, 'player4');
         player4.isOn = true;
-        player4.setOrigin(0.5, 0.5).setDisplaySize(132, 120).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
+        player4.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
 
         //
         player4.hp1Empty = scene.add.image(100, 100, 'emptyBurger');
