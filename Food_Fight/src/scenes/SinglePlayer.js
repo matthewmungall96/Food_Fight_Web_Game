@@ -95,7 +95,7 @@ singleScene.create = function(){
     explosion = this.physics.add.sprite(400,300,'explosion').setDepth(3).setScale(4).setVisible(false);
 
     //
-    reticle = this.physics.add.sprite(800, 700, 'target');
+    reticle = this.physics.add.sprite(800, 700, 'target1');
 
     //
     playerinfoHolder = this.add.image(200, 1200, 'playerTable');
@@ -489,7 +489,7 @@ singleScene.update = function(time, delta){
             reticle.y += (controllers[0].axes[1].value * delta);
         }
         if (controllers[0].A){
-            if (player.active === false || !((time - playerPizzaBullets.lastFired) > 100))
+            if (!player.active || !((time - playerPizzaBullets.lastFired) > 100))
                 return;
 
             playerPizzaBullets.lastFired = time;

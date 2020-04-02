@@ -62,7 +62,7 @@ multiSetupScene.create = function(){
             //
             controllers.push(pad);
             console.log("new controller registered");
-            addPlayer();
+            addPlayer(controllers);
         }
     });
 
@@ -104,6 +104,7 @@ function clickReturnMenuButton(){
 /**
  * 
  */
+/*
 function addPlayer(){
     //
     if (controllers.length >= 1)
@@ -133,7 +134,7 @@ function addPlayer(){
         controller4_inactive.setVisible(false);
     } 
 }
-
+*/
 /**
  * 
  */

@@ -74,7 +74,10 @@ var playersPos = [];
     this.load.image('cheeseBullet', './dist/assets/images/food/bulletCheese.png')
 
     this.load.image('enemy', './dist/assets/characters/Zombie 1/zombie.png');
-    this.load.image('target', './dist/assets/images/U.I/cHairWhite.png');
+     this.load.image('target1', './dist/assets/images/U.I/cHairWhite.png');
+     this.load.image('target2', './dist/assets/images/U.I/cHairOrange.png');
+     this.load.image('target3', './dist/assets/images/U.I/cHairGreen.png');
+     this.load.image('target4', './dist/assets/images/U.I/cHairBlue.png');
     //this.load.image('background', 'assets/skies/underwater1.png');
 
     //loading images for narrative scene
