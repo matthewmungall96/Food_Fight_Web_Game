@@ -25,6 +25,7 @@ multiSetupScene.preload = function(){
  * 
  */
 multiSetupScene.create = function(){
+    clickMultiplayerSetupButton();
 
     //
     this.add.image(this.game.renderer.width /2, this.game.renderer.height / 2, "title_bg").setDepth(1);

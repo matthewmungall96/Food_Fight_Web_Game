@@ -68,9 +68,10 @@ var playersPos = [];
     this.load.image('bullet9', './dist/assets/images/U.I./beer9.png');
     this.load.image('bullet10', './dist/assets/images/U.I./beer10.png');
 
-    //Loading Controller Button Detection
     this.load.image('pizzaBullet', './dist/assets/images/food/bulletPizza.png');
     this.load.image('chickenBullet', './dist/assets/images/food/bulletChicken.png');
+    this.load.image('friesBullet', './dist/assets/images/food/bulletFried.png');
+    this.load.image('cheeseBullet', './dist/assets/images/food/bulletCheese.png')
 
     this.load.image('enemy', './dist/assets/characters/Zombie 1/zombie.png');
     this.load.image('target', './dist/assets/images/U.I/cHairWhite.png');
@@ -137,11 +138,11 @@ var playersPos = [];
         this.setDepth(1);
 
         //Sets various variables to make sure no remaining data can interfere with the Zombie when it is created
-        this.speed = 0.1;
+        this.speed = 0.3;
         this.direction = 0;
         this.speedX = 0;
         this.speedY = 0;
-        this.health = 5;
+        this.health = 2;
 
         //Graphically forces the Zombie to have a set size and make his hitbox follow
         this.setSize(66, 60);
@@ -394,6 +395,94 @@ var playersPos = [];
            this.destroy();
        }
    }
+});
+
+var cheeseBullets = new Phaser.Class({
+    
+    //Calling of the Phaser.GameObject.Image class to inherit of its sprite properties
+    Extends: Phaser.GameObjects.Image,
+    
+    /**
+     * Initialise function
+     *
+     * Constructor of the object, gives all its initial settings to the object when summoned.
+     *
+     * @param {Phaser.Scene} scene  Scene to attach the bullet to when created
+     */
+     initialize: function Bullet(scene) {
+
+        //Calls the pizza sprite and assigns it to itself, placed on the scene at coordinates x: 0 and y: 0
+        Phaser.GameObjects.Image.call(this, scene, 0, 0, 'cheeseBullet');
+        
+        //Sets the layer at which the sprite is to 1 in order to appear on top of the background
+        this.setDepth(1);
+        //Sets various variables to make sure no remaining data can interfere with the Zombie when it is created
+        this.speed = 1;
+        this.born = 0;
+        this.direction = 0;
+        this.xSpeed = 0;
+        this.ySpeed = 0;
+
+        //Graphically forces the Zombie to have a set size and make his hitbox follow
+        this.setSize(30, 30, true);
+        this.setDisplaySize(30,30);
+    },
+
+    /**
+     * Fire Function
+     * 
+     * Sets the position and direction of a bullet to go from an object to another when the function if called.
+     * The bullet keeps its direction and goes straight without change.
+     * 
+     * @param {Phaser.GameObjects} shooter Game Object that shot the bullet, determines starting position
+     * @param {Phaser.GameObjects} target Game Object that was targetted by the shooter, determines line of propagation of the bullet
+     */
+     fire: function (shooter, target) {
+
+        //Sets starting position
+        this.setPosition(shooter.x, shooter.y); 
+
+        //Sets direction in which the bullet has to go to
+        this.direction = Math.atan((target.x - this.x) / (target.y - this.y));
+
+        // Calculate X and y velocity of bullet to moves it from shooter to target
+        if (target.y >= this.y) {
+            this.xSpeed = this.speed * Math.sin(this.direction);
+            this.ySpeed = this.speed * Math.cos(this.direction);
+        }
+        else {
+            this.xSpeed = -this.speed * Math.sin(this.direction);
+            this.ySpeed = -this.speed * Math.cos(this.direction);
+        }
+        //Angle bullet with shooters rotation
+        this.rotation = shooter.rotation; 
+        
+        //Time since new bullet spawned
+        this.born = 0; 
+    },
+
+    /**
+     * Update function
+     * 
+     * Called with the Scene's update, determines the position of the bullet over time.
+     * 
+     * @param {number} time The current time. Either a High Resolution Timer value if it comes from Request Animation Frame, or Date.now if using SetTimeout.
+     * @param {number} delta The delta time in ms since the last frame. This is a smoothed and capped value based on the FPS rate.
+     */
+     update: function (time, delta) {
+
+        //Updates the position of the bullet with a set speed
+        this.x += this.xSpeed * delta;
+        this.y += this.ySpeed * delta;
+
+        //Logs how long the bullet has been 'alive' for
+        this.born += delta;
+
+        //If the bullet existed for more than 5 seconds, destroys it
+        if (this.born > 5000) {
+            this.destroy();
+        }
+    }
 });
 
 /**

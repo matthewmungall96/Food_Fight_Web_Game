@@ -16,7 +16,7 @@ var player = null;
 var healthpoints = null;
 var reticle = null;
 var moveKeys = null;
-var playerBullets = null;
+var playerPizzaBullets = null;
 var zombieBullets = null;
 
 /**
@@ -45,13 +45,17 @@ singleScene.create = function(){
     })
     
     // Add 2 groups for Bullet objects
-    playerBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
+    playerPizzaBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
+    playerFriesBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
+    playerChickenBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
+    playerCheeseBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
+
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
 
-    playerBullets.lastFired=0;
+    playerPizzaBullets.lastFired=0;
 
     //
-    this.physics.add.collider(zombies,playerBullets, zombieHitCallback);
+    this.physics.add.collider(zombies,playerPizzaBullets, zombieHitCallback);
 
     //
     singlePlayerMusic_ = this.sound.add('singlePlayerMusic');
@@ -201,7 +205,7 @@ singleScene.create = function(){
         if (player.active === false)
             return;
         // Get bullet from bullets group
-        var bullet = playerBullets.get().setActive(true).setVisible(true);
+        var bullet = playerPizzaBullets.get().setActive(true).setVisible(true);
         
         //
         if (bullet && player.currentBullets > 0)
@@ -397,7 +401,7 @@ function playerHasDied(){
  */
 function spawnZombies(zombies, spawnpoints, time) {
     //
-    if ((time - zombies.lastSpawned) > 2000 && playersPos.length > 0){
+    if ((time - zombies.lastSpawned) > 500 && playersPos.length > 0){
         //
         zombies.lastSpawned = time;
         
@@ -485,12 +489,12 @@ singleScene.update = function(time, delta){
             reticle.y += (controllers[0].axes[1].value * delta);
         }
         if (controllers[0].A){
-            if (player.active === false || !((time - playerBullets.lastFired) > 100))
+            if (player.active === false || !((time - playerPizzaBullets.lastFired) > 100))
                 return;
 
-            playerBullets.lastFired = time;
+            playerPizzaBullets.lastFired = time;
             // Get bullet from bullets group
-            var bullet = playerBullets.get().setActive(true).setVisible(true);
+            var bullet = playerPizzaBullets.get().setActive(true).setVisible(true);
 
             //
             if (bullet && player.currentBullets > 0) {

@@ -292,23 +292,13 @@ var player4 = null;
     		player1.setAccelerationX(0);
     });
 
-    // Fires bullet from player1 on left click of mouse
-    this.input.on('pointerdown', function (pointer, time, lastFired) {
-    	if (player1.active === false)
-    		return;
 
-        // Get bullet from bullets group
-        var bullet = player1Bullets.get().setActive(true).setVisible(true);
 
-        //
-        if (bullet)
-        {
-            //
-            bullet.fire(player1, reticle);
-            this.physics.add.collider(zombies, bullet, zombieHitCallback);
-        }
+    this.input.gamepad.on('down', function (pad, button, index) {
+        if (controllers.length <= 0)
+            controllers[0] = pad;
     }, this);
-
+    
     // Pointer lock will only work after mousedown
     game.canvas.addEventListener('mousedown', function () {
     	game.input.mouse.requestPointerLock();
@@ -387,31 +377,199 @@ multiScene.update = function(time, delta){
         player4.rotation = Phaser.Math.Angle.Between(player4.x, player4.y, reticle.x, reticle.y);
     }
     
+    if(controllers.length >= 1){
+       
+        if (controllers[0].axes[0].value >= 0.2 || controllers[0].axes[0].value <= -0.2){
+            reticle1.x += ( controllers[0].axes[0].value * delta);
+        }
+        if (controllers[0].axes[1].value >= 0.2 || controllers[0].axes[1].value <= -0.2) {
+            reticle1.y += (controllers[0].axes[1].value * delta);
+        }
+        if (controllers[0].A){
+            if (player1.active === false || !((time - player1Bullets.lastFired) > 100))
+                return;
+
+            player1Bullets.lastFired = time;
+            // Get bullet from bullets group
+            var bullet = player1Bullets.get().setActive(true).setVisible(true);
+
+            //
+            if (bullet && player.currentBullets > 0) {
+                //
+                player1.currentBullets = player1.currentBullets - 1;
+                pistolSwoosh.play();
+                bullet.fire(player1, reticle1);
+            }
+
+            //
+            if (bullet && player.currentBullets == 0) {
+                emptyGun.play();
+            }
+        }
+        if(controllers[0].X){
+            if (player.currentBullets < 15) {
+                reloadTime = game.getTime() + 2000;
+                player.currentBullets = player.MaxBullets;
+            }
+        }
+
+    if(controllers.length >= 2){
+       
+            if (controllers[1].axes[0].value >= 0.2 || controllers[1].axes[0].value <= -0.2){
+                reticle2.x += ( controllers[1].axes[0].value * delta);
+            }
+            if (controllers[1].axes[1].value >= 0.2 || controllers[1].axes[1].value <= -0.2) {
+                reticle2.y += (controllers[1].axes[1].value * delta);
+            }
+            if (controllers[1].A){
+                if (player2.active === false || !((time - playerBullets.lastFired) > 100))
+                    return;
+    
+                playerBullets.lastFired = time;
+                // Get bullet from bullets group
+                var bullet = playerBullets.get().setActive(true).setVisible(true);
+    
+                //
+                if (bullet && player.currentBullets > 0) {
+                    //
+                    player.currentBullets = player.currentBullets - 1;
+                    pistolSwoosh.play();
+                    bullet.fire(player, reticle);
+                }
+    
+                //
+                if (bullet && player.currentBullets == 0) {
+                    emptyGun.play();
+                }
+            }
+            if(controllers[1].X){
+                if (player.currentBullets < 15) {
+                    reloadTime = game.getTime() + 2000;
+                    player.currentBullets = player.MaxBullets;
+                }
+            }
+    
+        }
+
+    if(controllers.length >= 3){
+       
+            if (controllers[2].axes[0].value >= 0.2 || controllers[2].axes[0].value <= -0.2){
+                reticle3.x += ( controllers[0].axes[0].value * delta);
+            }
+            if (controllers[2].axes[1].value >= 0.2 || controllers[2].axes[1].value <= -0.2) {
+                reticle3.y += (controllers[0].axes[1].value * delta);
+            }
+            if (controllers[2].A){
+                if (player3.active === false || !((time - playerBullets.lastFired) > 100))
+                    return;
+    
+                playerBullets.lastFired = time;
+                // Get bullet from bullets group
+                var bullet = playerBullets.get().setActive(true).setVisible(true);
+    
+                //
+                if (bullet && player.currentBullets > 0) {
+                    //
+                    player.currentBullets = player.currentBullets - 1;
+                    pistolSwoosh.play();
+                    bullet.fire(player, reticle);
+                }
+    
+                //
+                if (bullet && player.currentBullets == 0) {
+                    emptyGun.play();
+                }
+            }
+            if(controllers[2].X){
+                if (player.currentBullets < 15) {
+                    reloadTime = game.getTime() + 2000;
+                    player.currentBullets = player.MaxBullets;
+                }
+            }
+    
+        }
+
+    if(controllers.length >= 4){
+       
+            if (controllers[3].axes[0].value >= 0.2 || controllers[3].axes[0].value <= -0.2){
+                reticle4.x += ( controllers[3].axes[0].value * delta);
+            }
+            if (controllers[3].axes[1].value >= 0.2 || controllers[3].axes[1].value <= -0.2) {
+                reticle4.y += (controllers[3].axes[1].value * delta);
+            }
+            if (controllers[3].A){
+                if (player3.active === false || !((time - player3Bullets.lastFired) > 100))
+                    return;
+    
+                playerBullets.lastFired = time;
+                // Get bullet from bullets group
+                var bullet = playerBullets.get().setActive(true).setVisible(true);
+    
+                //
+                if (bullet && player3.currentBullets > 0) {
+                    //
+                    player.currentBullets = player.currentBullets - 1;
+                    pistolSwoosh.play();
+                    bullet.fire(player, reticle);
+                }
+    
+                //
+                if (bullet && player3.currentBullets == 0) {
+                    emptyGun.play();
+                }
+            }
+            if(controllers[3].X){
+                if (player3.currentBullets < 15) {
+                    reloadTime = game.getTime() + 2000;
+                    player3.currentBullets = player.MaxBullets;
+                }
+            }
+    
+        }
+    }
+
     spawnZombiesMulti(zombies,spawnpoints,time);
     
         //Make reticle move with player1
-        reticle.body.velocity.x = player1.body.velocity.x;
-        reticle.body.velocity.y = player1.body.velocity.y;
+        if (controllers.length>0){
+            reticle1.body.velocity.x = player1.body.velocity.x;
+            reticle1.body.velocity.y = player1.body.velocity.y;
+        }
         
+        if (controllers.length>1){
+            reticle2.body.velocity.x = player1.body.velocity.x;
+            reticle2.body.velocity.y = player1.body.velocity.y;
+        }
+        
+        if (controllers.length>2){
+            reticle3.body.velocity.x = player1.body.velocity.x;
+            reticle3.body.velocity.y = player1.body.velocity.y;
+        }
+
+        if(controllers.length>3){
+            reticle4.body.velocity.x = player4.body.velocity.x;
+            reticle4.body.velocity.y = player4.body.velocity.y;
+        }
+   
         // Constrain velocity of player1
         constrainVelocity(player1, 500);
         
         // Constrain position of constrainReticle
         switch (controllers.length) {
         	case 1:
-        	constrainReticle(reticle, player1);
+        	constrainReticle(reticle1, player1);
             break;
             
             case 2:
-            constrainReticle(reticle, player2);
+            constrainReticle(reticle2, player2);
             break;
             
             case 3:
-            constrainReticle(reticle, player3);
+            constrainReticle(reticle3, player3);
             break;
             
             case 4:
-            constrainReticle(reticle, player4);
+            constrainReticle(reticle4, player4);
             break;
             
             default:
@@ -660,3 +818,4 @@ function zombieHitCallback4(zombieHit, bulletHit) {
         bulletHit.destroy();
     }
 }
+
