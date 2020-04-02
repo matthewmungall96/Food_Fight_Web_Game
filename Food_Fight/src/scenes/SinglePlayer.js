@@ -179,7 +179,7 @@ singleScene.create = function(){
 
     //
     this.input.keyboard.on('keydown_P', function (event) {
-        clickReturnMenuButton();
+        goOnPause(singlePlayerMusic_, this.scene.sys.config);
     });
 
     // Stops player acceleration on uppress of WASD keys
@@ -239,7 +239,7 @@ singleScene.create = function(){
             game.input.mouse.releasePointerLock();
     }, 0, this);
 
-    /*
+    
     // Move reticle upon locked pointer move
     this.input.on('pointermove', function (pointer) {
         if (this.input.mouse.locked && player.active)
@@ -248,7 +248,7 @@ singleScene.create = function(){
             reticle.y += pointer.movementY;
         }
     }, this);
-*/
+
     //map
     var map = this.make.tilemap({key: 'map'});
     var tiles = map.addTilesetImage('tilesheet_complete');
@@ -375,6 +375,7 @@ function playerHitCallback(playerHit, bulletHit)
                     playersPos = playersPos.filter(entry => entry[0] != playerHit.x)
                 }
             });
+            playerHasDied();
     }
 
         //
@@ -391,6 +392,7 @@ function playerHitCallback(playerHit, bulletHit)
 function playerHasDied(){
     player.setActive(false).setVisible(false);
     playersPos[0] = null;
+    GameOver();
 }
 
 /**
@@ -602,10 +604,20 @@ singleScene.update = function(time, delta){
 /**
  * 
  */
-    function clickReturnMenuButton(){
+    function GameOver(){
         //
         singlePlayerMusic_.stop();
+
+        console.log(game.scene.getScenes());
         //
+        game.scene.resume('Menu');
         game.scene.stop('Single');
-        game.scene.start('Menu');
+        console.log(game.scene.getScenes());
+    }
+
+    function goOnPause(music, key){
+        if(music)
+        music.stop()
+        game.scene.run('Pause');
+        game.scene.pause(key);
     }

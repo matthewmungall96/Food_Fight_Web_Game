@@ -4,6 +4,8 @@ let loadScene = new Phaser.Scene('Load');
 
 var playersPos = [];
 
+var prevScene ="";
+
 /**
  * Preload function
  * 

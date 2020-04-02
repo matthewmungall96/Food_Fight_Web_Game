@@ -32,7 +32,8 @@ menuScene.create = function(){
     
     //
     mainMenuMusic.volume = 0.1;
-    mainMenuMusic.play();
+        mainMenuMusic.play();
+    
     
     //
     singlePlayButton.setInteractive();
@@ -59,28 +60,27 @@ menuScene.create = function(){
  * 
  */
 menuScene.update = function(){
+    if (game.input.mouse.locked) {
+        game.input.mouse.releasePointerLock();
+    }
 }
 
 /**
  * 
  */
 function clickSinglePlayerButton(){
-    buttonPress.play(),
-    mainMenuMusic.stop(),
-    game.scene.stop('Menu');
-    game.scene.start('SingleSetup');
-    menuScene.input.keyboard.removeKey('ESC');
-    esc = null;
+    buttonPress.play();
+    mainMenuMusic.stop();
+    game.scene.pause('Menu');
+    game.scene.start('Single');
 }
 
 /**
  * 
  */
 function clickMultiPlayerButton(){
-    game.scene.start('MultiSetup');
-    game.scene.stop('Menu');
-    menuScene.input.keyboard.removeKey('ESC');
-    esc = null;
+    game.scene.start('Multi');
+    game.scene.pause('Menu');
 }
 
 /**
@@ -88,8 +88,6 @@ function clickMultiPlayerButton(){
  */
 function clickbackstoryButton(){
     game.scene.start('Narrative');
-    game.scene.stop('Menu');
-    menuScene.input.keyboard.removeKey('ESC');
-    esc = null;
+    game.scene.pause('Menu');
 }
 

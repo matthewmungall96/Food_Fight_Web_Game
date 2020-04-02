@@ -1,10 +1,10 @@
 //
 let multiSetupScene = new Phaser.Scene('MultiSetup');
 
-//
-var controllers = [];
+
 
 //
+/*
 var controller1_active;
 var controller1_inactive;
 var controller2_active;
@@ -13,7 +13,7 @@ var controller3_active;
 var controller3_inactive;
 var controller4_active;
 var controller4_inactive;
-
+*/
 /**
  * 
  */
@@ -25,6 +25,7 @@ multiSetupScene.preload = function(){
  * 
  */
 multiSetupScene.create = function(){
+    /*
     clickMultiplayerSetupButton();
 
     //
@@ -75,12 +76,13 @@ multiSetupScene.create = function(){
     returnButton.on("pointerdown", ()=>{
         addPlayer();
        multiPlayButton.setVisible(true);
-    });
+    });*/
 }
 
 /**
  * 
  */
+/*
 function clickMultiplayerSetupButton(){
     //
     buttonPress.play();
@@ -89,10 +91,11 @@ function clickMultiplayerSetupButton(){
     game.scene.stop('MultiSetup');
     game.scene.start('Multi');
 }
-
+*/
 /**
  * 
  */
+/*
 function clickReturnMenuButton(){
     //
     buttonPress.play();
@@ -100,7 +103,7 @@ function clickReturnMenuButton(){
     //
     game.scene.stop('MultiSetup');
     game.scene.start('Menu');
-}
+}*/
 /**
  * 
  */

@@ -57,6 +57,7 @@ narrativeScene.create = function(){
     backstory2Button.on("pointerdown", ()=>{
         clickbackstory2Button()
     });
+    console.log(game.scene.getScenes(true));
 }
 
 narrativeScene.update = function(){
@@ -145,6 +146,6 @@ function clickfredButton(){
 }
 
 function clickreturn2Button(){
-    game.scene.start('Menu');
+    game.scene.resume('Menu');
     game.scene.stop('Narrative');
 }

@@ -1,6 +1,7 @@
 //
 let multiScene = new Phaser.Scene('Multi');
 
+var controllers =[];
 var player1 = null;
 var player2 = null;
 var player3 = null;
@@ -143,7 +144,9 @@ var player4 = null;
     		player1.setAccelerationX(0);
     });
 
-
+     this.input.keyboard.on('keydown_P', function (event) {
+         goOnPause(null, this.scene.sys.config);
+     });
 
     this.input.gamepad.on('down', function (pad, button, index) {
         if (controllers.length <= 0)

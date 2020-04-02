@@ -19,7 +19,7 @@ window.onload=function(){
     input: {
         gamepad: true
     },
-    scene: [loadScene, menuScene, singleSetupScene, singleScene, multiSetupScene, multiScene,narrativeScene ]
+    scene: [loadScene, menuScene, singleScene, multiScene, narrativeScene, pauseScene]
     };
     
 game = new Phaser.Game(config); 
