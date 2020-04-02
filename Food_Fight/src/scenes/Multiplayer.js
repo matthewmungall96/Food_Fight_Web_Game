@@ -25,7 +25,7 @@ var player4 = null;
 
     // Add 2 groups for Bullet objects
     zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
-    zombies.lastSpawned=0;
+    zombies.lastSpawned = 0;
 
     //
     player1Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
@@ -195,7 +195,7 @@ this.input.gamepad.on('down', function (pad, button, index) {
  */
 function spawnZombiesMulti(zombies, spawnpoints, time) {
     //
-    if ((time - zombies.lastSpawned && playersPos.length >0) > 2000) {
+    if ((time - zombies.lastSpawned) > 500 && playersPos.length > 0){
 
         console.log("spawning");
         //
@@ -217,6 +217,8 @@ function spawnZombiesMulti(zombies, spawnpoints, time) {
 
 multiScene.update = function(time, delta){
     //
+    spawnZombiesMulti();
+
     if (player1 && player1.active) {
         playersPos[0] = [player1.x, player1.y];
         player1.rotation = Phaser.Math.Angle.Between(player1.x, player1.y, reticle1.x, reticle1.y);
@@ -664,7 +666,7 @@ function addPlayer(controllerArray, scene){
     if (!player1 &&controllerArray.length == 1) {
         console.log(scene);
         //
-        player1 = scene.physics.add.sprite(275, 950, 'player1');
+        player1 = scene.physics.add.sprite(290, 950, 'player1');
         player1.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(2);
 
         //
@@ -705,7 +707,7 @@ function addPlayer(controllerArray, scene){
     //creates the player 2 entity 
     if (!player2 &&controllerArray.length == 2) {
         //
-        player2 = scene.physics.add.sprite(550, 950, 'player2');
+        player2 = scene.physics.add.sprite(580, 950, 'player2');
         player2.isOn = true;
         player2.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
 
@@ -747,7 +749,7 @@ function addPlayer(controllerArray, scene){
     //creates the player 3 entity 
     if (!player3 &&controllerArray.length == 3) {
         //
-        player3 = scene.physics.add.sprite(825, 950, 'player3');
+        player3 = scene.physics.add.sprite(860, 950, 'player3');
         player3.isOn = true;
         player3.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
 
@@ -789,7 +791,7 @@ function addPlayer(controllerArray, scene){
     //creates the player 4 entity 
     if (!player4 &&controllerArray.length == 4) {
         //
-        player4 = scene.physics.add.sprite(1075, 950, 'player4');
+        player4 = scene.physics.add.sprite(1150, 950, 'player4');
         player4.isOn = true;
         player4.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
 
