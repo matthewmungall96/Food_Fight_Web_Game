@@ -80,10 +80,10 @@ var player4 = null;
      reticle4 = this.physics.add.sprite(800, 700, 'target4');
 
     // Set image/sprite properties
-    reticle1.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(2).setVisible(false);
-     reticle2.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(2).setVisible(false);
-     reticle3.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(2).setVisible(false);
-     reticle4.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(2).setVisible(false);
+    reticle1.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(3).setVisible(false);
+     reticle2.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(3).setVisible(false);
+     reticle3.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(3).setVisible(false);
+     reticle4.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(3).setVisible(false);
 
 
     //
@@ -193,16 +193,16 @@ this.input.gamepad.on('down', function (pad, button, index) {
  * @param {*} spawnpoints 
  * @param {*} time 
  */
-function spawnZombiesMulti(zombies, spawnpoints, time) {
+function spawnZombiesMulti(zombiesGroup, spawnpoints, time) {
     //
-    if ((time - zombies.lastSpawned) > 500 && playersPos.length > 0){
+    if ((time - zombiesGroup.lastSpawned) > 500 && playersPos.length > 0){
 
         console.log("spawning");
         //
-        zombies.lastSpawned = time;
+        zombiesGroup.lastSpawned = time;
 
         //Creation of a zombie
-        var zzz = zombies.get().setActive(true).setVisible(true).setDepth(2);
+        var zzz = zombiesGroup.get().setActive(true).setVisible(true).setDepth(2);
 
         //
         if (zzz) {
@@ -216,8 +216,6 @@ function spawnZombiesMulti(zombies, spawnpoints, time) {
 }
 
 multiScene.update = function(time, delta){
-    //
-    spawnZombiesMulti();
 
     if (player1 && player1.active) {
         playersPos[0] = [player1.x, player1.y];
@@ -250,8 +248,8 @@ multiScene.update = function(time, delta){
         }
 
         if (controllers[0].A){
-            console.log("P1 A")
             if (player1 && player1.active && ((time - player1Bullets.lastFired) > 100)){
+                console.log(reticle1.x + " " +reticle1.y);
             player1Bullets.lastFired = time;
             // Get bullet from bullets group
             var bullet = player1Bullets.get().setActive(true).setVisible(true);
@@ -389,31 +387,8 @@ multiScene.update = function(time, delta){
         }
     
 
-    spawnZombiesMulti(zombies,spawnpoints,time);
+    //spawnZombiesMulti(zombies,spawnpoints,time);
         
-        /*
-        // Constrain position of constrainReticle
-        switch (controllers.length) {
-        	case 1:
-        	constrainReticle(reticle1, player1);
-            break;
-            
-            case 2:
-            constrainReticle(reticle2, player2);
-            break;
-            
-            case 3:
-            constrainReticle(reticle3, player3);
-            break;
-            
-            case 4:
-            constrainReticle(reticle4, player4);
-            break;
-            
-            default:
-            break;
-        }
-*/
     }
     
 /**
