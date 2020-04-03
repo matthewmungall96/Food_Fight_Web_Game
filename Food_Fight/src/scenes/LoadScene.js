@@ -39,6 +39,7 @@ var playersPos = [];
     //Loading Game Music Files
     this.load.audio("mainMenu", "./dist/assets/music/Main_Menu.wav");
     this.load.audio("singlePlayerMusic", "./dist/assets/music/Single_Player_Music.wav");
+    this.load.audio("multiPlayerMusic", "./dist/assets/music/Multiplayer_Music.wav");
 
     //Loading Game SFX Files
     this.load.audio("pressButton","./dist/assets/sfx/button_press.wav");

@@ -1,5 +1,6 @@
 //Creation of the scene object
 let multiScene = new Phaser.Scene('Multi');
+var multiPlayer_Music;
 
 //global variables that hold an array of the different controllers and eadh player individually
 var controllers =[];
@@ -32,6 +33,10 @@ var player4 = null;
    //Creates a group that will hold the zombies and resets the value that shows when has the last zombie spawned at
    zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
    zombies.lastSpawned = 0;
+
+   multiPlayer_Music = this.sound.add('multiPlayerMusic');
+   multiPlayer_Music.volume = 0.1;
+   multiPlayer_Music.play();
 
    //Creates a group to hold each player's bullets individually
    player1Bullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
@@ -913,6 +918,8 @@ if (playersPos.length > 0 && controllers.length >= 2)
  * 
  */
 function GameOverMulti() {
+  if(multiPlayer_Music)
+  multiPlayer_Music.stop();
 
   //Stops the current scene and starts the Menu one
   game.scene.resume('Menu');

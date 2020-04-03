@@ -8,8 +8,6 @@ var zombieDeathNoise;
 var pistolSwoosh;
 var emptyGun;
 
-var interv;
-
 //Creation of the variable that holds the scores
 var scoreText;
 
@@ -239,7 +237,7 @@ singleScene.create = function(){
     scoreText.setText("Highest: " + player.highestScore + "\nCurrent: " + player.score);
 
     //Creation of a routine called every second to update the score from the database
-    interv = setInterval(() => {
+    this.interval = setInterval(() => {
         var xhttp;
         var name = 'SinglePlayer';
         xhttp = new XMLHttpRequest();
@@ -362,7 +360,7 @@ function playerHitCallback(playerHit, zombie)
     }
 
         //Stops the requests to the database
-        clearTimeout(interv);
+        clearTimeout(this.interval);
 
         //Destroy zombie
         zombie.destroy();
