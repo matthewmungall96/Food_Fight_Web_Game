@@ -245,8 +245,6 @@ singleScene.create = function(){
             if (this.readyState == 4 && this.status == 200) {
                 player.highestScore = parseInt(this.responseText.split(" ")[1]);
                 scoreText.setText("Highest:" + player.highestScore + "\nCurrent: " + player.score);
-                console.log(player.highestScore);
-                console.log(this.responseText);
             }
         };
         xhttp.open("GET", "get.php?name=" + name, true);

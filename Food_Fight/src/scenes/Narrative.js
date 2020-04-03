@@ -108,7 +108,6 @@ narrativeScene.create = function(){
     backstory2Button.on("pointerdown", ()=>{
         clickbackstory2Button()
     });
-    console.log(game.scene.getScenes(true));
 }
 
 /**

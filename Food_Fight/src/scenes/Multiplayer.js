@@ -218,7 +218,6 @@ this.input.gamepad.on('down', function (pad, button, index) {
      //Verifies that the player still exists and that it's not too soon to fire again
      if (controllers[0].A){
        if (player1 && player1.active && ((time - player1Bullets.lastFired) > 100)){//Resets the timer for the player to shoot to current time
-         console.log(reticle1.x + " " +reticle1.y);
 
          player1Bullets.lastFired = time;
      // Get bullet from bullets group
