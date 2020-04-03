@@ -16,10 +16,10 @@ var playersPos = [];
     this.load.image("title_bg", "./dist/assets/images/bground.jpg");
     this.load.image("logo", "./dist/assets/images/foodFight.png");
     this.load.image("singleplayer_button", "./dist/assets/images/G.U.I/single.png");
-    this.load.image("multiplayer_button", "./dist/assets/images/G.U.I./multi.png");
-    this.load.image("narrative_button", "./dist/assets/images/G.U.I./narrative.png");
-    this.load.image("backstory_button", "./dist/assets/images/G.U.I./backstory.png");
-    this.load.image("returntomenu", "./dist/assets/images/G.U.I./returntomenu.png");
+    this.load.image("multiplayer_button", "./dist/assets/images/G.U.I/multi.png");
+    this.load.image("narrative_button", "./dist/assets/images/G.U.I/narrative.png");
+    this.load.image("backstory_button", "./dist/assets/images/G.U.I/backstory.png");
+    this.load.image("returntomenu", "./dist/assets/images/G.U.I/returntomenu.png");
     
 
     //Loading Setup Files
@@ -54,20 +54,20 @@ var playersPos = [];
     this.load.image('player4', './dist/assets/characters/Man Old/manOld_gun.png');
 
     //Loading Player U.I.
-    this.load.image('playerTable', './dist/assets/images/U.I./table.png');
-    this.load.image('emptyBurger', './dist/assets/images/U.I./burgerG.png');
-    this.load.image('fullBurger', './dist/assets/images/U.I./burgerC.png');
-    this.load.image('bullet0', './dist/assets/images/U.I./beer0.png');
-    this.load.image('bullet1', './dist/assets/images/U.I./beer1.png');
-    this.load.image('bullet2', './dist/assets/images/U.I./beer2.png');
-    this.load.image('bullet3', './dist/assets/images/U.I./beer3.png');
-    this.load.image('bullet4', './dist/assets/images/U.I./beer4.png');
-    this.load.image('bullet5', './dist/assets/images/U.I./beer5.png');
-    this.load.image('bullet6', './dist/assets/images/U.I./beer6.png');
-    this.load.image('bullet7', './dist/assets/images/U.I./beer7.png');
-    this.load.image('bullet8', './dist/assets/images/U.I./beer8.png');   
-    this.load.image('bullet9', './dist/assets/images/U.I./beer9.png');
-    this.load.image('bullet10', './dist/assets/images/U.I./beer10.png');
+    this.load.image('playerTable', './dist/assets/images/U.I/table.png');
+    this.load.image('emptyBurger', './dist/assets/images/U.I/burgerG.png');
+    this.load.image('fullBurger', './dist/assets/images/U.I/burgerC.png');
+    this.load.image('bullet0', './dist/assets/images/U.I/beer0.png');
+    this.load.image('bullet1', './dist/assets/images/U.I/beer1.png');
+    this.load.image('bullet2', './dist/assets/images/U.I/beer2.png');
+    this.load.image('bullet3', './dist/assets/images/U.I/beer3.png');
+    this.load.image('bullet4', './dist/assets/images/U.I/beer4.png');
+    this.load.image('bullet5', './dist/assets/images/U.I/beer5.png');
+    this.load.image('bullet6', './dist/assets/images/U.I/beer6.png');
+    this.load.image('bullet7', './dist/assets/images/U.I/beer7.png');
+    this.load.image('bullet8', './dist/assets/images/U.I/beer8.png');   
+    this.load.image('bullet9', './dist/assets/images/U.I/beer9.png');
+    this.load.image('bullet10', './dist/assets/images/U.I/beer10.png');
 
     this.load.image('pizzaBullet', './dist/assets/images/food/bulletPizza.png');
     this.load.image('chickenBullet', './dist/assets/images/food/bulletChicken.png');
