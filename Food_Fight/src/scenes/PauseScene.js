@@ -28,7 +28,7 @@ pauseScene.create = function () {
      * 2. return2Menu
     */
     return2Button = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 1.1, 'return').setDisplaySize(300, 80).setDepth(1).setScale(0.3);
-    return2Menu = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, 'singleplayer_button').setDisplaySize(600, 160).setDepth(1).setScale(0.3);
+    return2Menu = this.add.image(this.game.renderer.width / 2, this.game.renderer.height / 2, 'returntomenu').setDisplaySize(600, 160).setDepth(1).setScale(0.3);
 
     /**
      * .SetInteractive();
