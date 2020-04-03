@@ -1,3 +1,8 @@
+/**
+ * PauseScene.js
+ * File used to store the scripting for the Pause Menu Scene
+ */
+
 //Creation of the scene object
 let pauseScene = new Phaser.Scene('Pause');
 
