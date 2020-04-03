@@ -40,7 +40,7 @@ pauseScene.update = function (time, delta) {
 
 function QuitToMenu(key) {
     game.scene.stop(key);
-    game.scene.run('Menu');
+    game.scene.start('Menu');
     game.scene.stop('Pause');
 }
 
