@@ -5,8 +5,6 @@ include 'database.php';
 $name = $_REQUEST['name']; 
 $score = $_REQUEST['score'];
 
-echo "recieved ". $name . " score " . $score;
-
 $sql = "SELECT * FROM scores WHERE Name = '$name'";
 
 $result = mysqli_query($con, $sql);
