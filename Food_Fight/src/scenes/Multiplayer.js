@@ -52,7 +52,7 @@ var player4 = null;
    player4Bullets.lastFired = 0;
 
    //Initialises the value that printes the scores 
-   scoreText = this.add.text(640, 100, 'Scores  ', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
+   scoreText = this.add.text(600, 100, 'Scores  ', { font: '24px Courier', fill: '#00ff00' }).setDepth(3);
 
    //Generates an animation stored in the scene for the explosion tileset 
    this.anims.create({
@@ -180,6 +180,7 @@ this.input.gamepad.on('down', function (pad, button, index) {
  * @param {number} delta Time that passed since previous frame
  */
  multiScene.update = function(time, delta){
+   
 
    //If the matching player exists on the scene (if a controller has been connected to control it), logs its coordinates, updates its rotation to his reticle and updates it's 'beer'
    if (player1 && player1.active) {
@@ -502,18 +503,18 @@ if (playersPos.length > 0 && controllers.length >= 2)
       }
 
       //Updates the score text object
-      scoreText = "";
+      str = "";
       if (player1) {
-         scoreText += " P1:" + player1.score
+         str += " P1:" + player1.score
       }
       if (player2) {
-         scoreText += " P2:" + player2.score
+         str += " P2:" + player2.score
       }
       if (player3) {
-         scoreText += " P3:" + player3.score
+         str += " P3:" + player3.score
       }
       if (player4) {
-         scoreText += " P4:" + player4.score
+         str += " P4:" + player4.score
       }
 
       //Plays the zombie splattered sound
@@ -557,19 +558,20 @@ if (playersPos.length > 0 && controllers.length >= 2)
        }
 
        //Updates the score text object
-       scoreText = "";
+       str = "";
        if (player1) {
-          scoreText += " P1:" + player1.score
+          str += " P1:" + player1.score
        }
        if (player2) {
-          scoreText += " P2:" + player2.score
+          str += " P2:" + player2.score
        }
        if (player3) {
-          scoreText += " P3:" + player3.score
+          str += " P3:" + player3.score
        }
        if (player4) {
-          scoreText += " P4:" + player4.score
+          str += " P4:" + player4.score
        }
+       scoreText.setText(str);
 
        //Plays the zombie splattered sound
        zombieSplatNoise.play();
@@ -612,19 +614,20 @@ if (playersPos.length > 0 && controllers.length >= 2)
        }
 
        //Updates the score text object
-       scoreText = "";
+       str = "";
        if (player1) {
-          scoreText += " P1:" + player1.score
+          str += " P1:" + player1.score
        }
        if (player2) {
-          scoreText += " P2:" + player2.score
+          str += " P2:" + player2.score
        }
        if (player3) {
-          scoreText += " P3:" + player3.score
+          str += " P3:" + player3.score
        }
        if (player4) {
-          scoreText += " P4:" + player4.score
+          str += " P4:" + player4.score
        }
+       scoreText.setText(str);
 
        //Plays the zombie splattered sound
        zombieSplatNoise.play();
@@ -667,19 +670,20 @@ if (playersPos.length > 0 && controllers.length >= 2)
        }
 
        //Updates the score text object
-       scoreText = "";
+       str = "";
        if (player1) {
-          scoreText += " P1:" + player1.score
+          str += " P1:" + player1.score
        }
        if (player2) {
-          scoreText += " P2:" + player2.score
+          str += " P2:" + player2.score
        }
        if (player3) {
-          scoreText += " P3:" + player3.score
+          str += " P3:" + player3.score
        }
        if (player4) {
-          scoreText += " P4:" + player4.score
+          str += " P4:" + player4.score
        }
+       scoreText.setText(str);
 
        //Plays the zombie splattered sound
        zombieSplatNoise.play();
