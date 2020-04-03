@@ -1,3 +1,8 @@
+/**
+ * Menu.js
+ * File used to store the scripting for the Main Menu Scene
+ */
+
 //Creation of the scene object
 let menuScene = new Phaser.Scene('Menu');
 
