@@ -551,8 +551,6 @@ singleScene.update = function(time, delta){
         //If a player exists, stops it
         if(singlePlayerMusic_)
         singlePlayerMusic_.stop();
-
-        if(singleScene.timeout)
         clearTimeout(interv);
 
         //Stops the current scene and starts the Menu one
