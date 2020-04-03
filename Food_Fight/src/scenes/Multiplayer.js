@@ -109,7 +109,7 @@ var player4 = null;
 
    //Adds the ability for the player to pause the current scene
    this.input.keyboard.on('keydown_P', function (event) {
-     goOnPause(null, this.scene.sys.config);
+     goOnPause(multiPlayer_Music, this.scene.sys.config);
    });
 
    //Pointer lock will only work after mousedown
@@ -919,7 +919,7 @@ if (playersPos.length > 0 && controllers.length >= 2)
  */
 function GameOverMulti() {
   if(multiPlayer_Music)
-  multiPlayer_Music.stop();
+    multiPlayer_Music.stop();
 
   //Stops the current scene and starts the Menu one
   game.scene.resume('Menu');
