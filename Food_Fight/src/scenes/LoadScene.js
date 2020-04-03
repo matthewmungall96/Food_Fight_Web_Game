@@ -2,9 +2,8 @@
 //Creation of the scene object
 let loadScene = new Phaser.Scene('Load');
 
+//Variable that stores all the players position through time
 var playersPos = [];
-
-var prevScene ="";
 
 /**
  * Preload function
@@ -80,7 +79,6 @@ var prevScene ="";
      this.load.image('target2', './dist/assets/images/U.I/cHairOrange.png');
      this.load.image('target3', './dist/assets/images/U.I/cHairGreen.png');
      this.load.image('target4', './dist/assets/images/U.I/cHairBlue.png');
-    //this.load.image('background', 'assets/skies/underwater1.png');
 
     //loading images for narrative scene
     this.load.image('Ron', './dist/assets/images/cha_sprites/chaSpriteRon.png');
@@ -97,6 +95,7 @@ var prevScene ="";
     this.load.image('domBackstory','./dist/assets/images/G.U.I/domBackstory.png');
     this.load.image('fredBackstory','./dist/assets/images/G.U.I/fredBackstory.png');
     this.load.image('plot','./dist/assets/images/G.U.I/plot.png');
+
     //loads spritesheet for animations
     this.load.spritesheet('explosion','./dist/assets/images/explosion.png', {
         frameWidth: 16,
@@ -181,8 +180,6 @@ var prevScene ="";
         //Security check to ensure that a player is alive
         if (playersPos.length <= 0) return;
 
-        //Calculates the angle between the Zombie and the target set in the global variables
-        
         var closestPlayer = 0;
         //If the distance between the last saved closest player and the currently calculated one is lesser, replaces the saved player id with the current and moves on
         for (let i = 0; i < playersPos.length; i++) {
@@ -239,6 +236,7 @@ var prevScene ="";
         
         //Sets the layer at which the sprite is to 1 in order to appear on top of the background
         this.setDepth(1);
+
         //Sets various variables to make sure no remaining data can interfere with the Zombie when it is created
         this.speed = 1;
         this.born = 0;
@@ -333,6 +331,7 @@ var prevScene ="";
             
             //Sets the layer at which the sprite is to 1 in order to appear on top of the background
             this.setDepth(1);
+
             //Sets various variables to make sure no remaining data can interfere with the Zombie when it is created
             this.speed = 1;
             this.born = 0;
@@ -402,6 +401,12 @@ var prevScene ="";
    }
 });
 
+/**
+ * Cheese bullet class
+ *
+ * Uses a base of Phaser.GameObject.Image class to act like a sprite with customized routines and variables
+ *
+ */
 var cheeseBullets = new Phaser.Class({
     
     //Calling of the Phaser.GameObject.Image class to inherit of its sprite properties
@@ -421,6 +426,7 @@ var cheeseBullets = new Phaser.Class({
         
         //Sets the layer at which the sprite is to 1 in order to appear on top of the background
         this.setDepth(1);
+        
         //Sets various variables to make sure no remaining data can interfere with the Zombie when it is created
         this.speed = 1;
         this.born = 0;

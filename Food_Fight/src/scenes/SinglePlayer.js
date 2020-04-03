@@ -375,7 +375,7 @@ function playerHitCallback(playerHit, bulletHit)
                     playersPos = playersPos.filter(entry => entry[0] != playerHit.x)
                 }
             });
-            playerHasDied();
+            playerHasDied(playerHit);
     }
 
         //
@@ -389,7 +389,7 @@ function playerHitCallback(playerHit, bulletHit)
 /**
  * 
  */
-function playerHasDied(){
+function playerHasDied(player){
     player.setActive(false).setVisible(false);
     playersPos[0] = null;
     GameOver();
@@ -606,6 +606,7 @@ singleScene.update = function(time, delta){
  */
     function GameOver(){
         //
+        if(singlePlayerMusic_)
         singlePlayerMusic_.stop();
 
         console.log(game.scene.getScenes());
