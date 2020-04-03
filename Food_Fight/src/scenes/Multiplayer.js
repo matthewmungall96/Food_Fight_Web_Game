@@ -236,6 +236,7 @@ this.input.gamepad.on('down', function (pad, button, index) {
       //If the player has no more pellets to shoot, plays an empty gun sound
      if (bullet && player1.currentBullets == 0) {
        emptyGun.play();
+       bullet.destroy();
      }
    }
 
@@ -282,6 +283,7 @@ if(controllers.length >= 2){
      //If the player has no more pellets to shoot, plays an empty gun sound
      if (bullet && player2.currentBullets == 0) {
        emptyGun.play();
+       bullet.destroy();
      }
    }
  }
@@ -328,6 +330,7 @@ if(controllers.length >= 3){
      //If the player has no more pellets to shoot, plays an empty gun sound
      if (bullet && player3.currentBullets == 0) {
        emptyGun.play();
+       bullet.destroy();
      }
    }
  }
@@ -374,6 +377,7 @@ if(controllers.length >= 4){
      //If the player has no more pellets to shoot, plays an empty gun sound
      if (bullet && player3.currentBullets == 0) {
        emptyGun.play();
+       bullet.destroy();
      }
    }
  }

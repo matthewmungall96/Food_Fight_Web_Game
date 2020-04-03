@@ -1,26 +1,24 @@
-//
+//Creation of the Single player scene
 let singleScene = new Phaser.Scene('Single');
 
-//
+//Creation of the variables holding the different sounds of the scene
 var singlePlayerMusic_;
 var zombieSplatNoise;
 var zombieDeathNoise;
 var pistolSwoosh;
 var emptyGun;
 
-//
+//Creation of the variable that holds the scores
 var scoreText;
 
-//
+//Creation of the variables that hold the different main objects of the game
 var player = null;
-var healthpoints = null;
 var reticle = null;
-var moveKeys = null;
-var playerPizzaBullets = null;
-var zombieBullets = null;
 
 /**
+ * Preload funtion
  * 
+ * Imports the tileset and the map that goes in the single player mode
  */
 singleScene.preload = function(){
     this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
@@ -28,14 +26,17 @@ singleScene.preload = function(){
 }
 
 /**
+ * Create function
  * 
+ * Called once the preloading is complete.
+ * Sets all the content of the game, generating sprites, triggers and sounds for the game to run
  */
 singleScene.create = function(){
 
-    //
+    //Sets the boundaries of the world in which the objects can appear on
     this.physics.world.setBounds(0, 0, 800*2, 600*2);
 
-    //creates animation for explosion 
+    //Creates animation for explosion 
     this.anims.create({
         key: 'explode',
         frames: this.anims.generateFrameNumbers('explosion'),
@@ -44,64 +45,67 @@ singleScene.create = function(){
         hiddenOnComplete: true
     })
     
-    // Add 2 groups for Bullet objects
+    //Creates the different types of bullets in groups and resets the time at which the last bullet has been shot at
     playerPizzaBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
-    playerFriesBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
-    playerChickenBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
-    playerCheeseBullets = this.physics.add.group({ classType: pizzaBullets, runChildUpdate: true });
-
-    zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
-
     playerPizzaBullets.lastFired=0;
+    
+    //Creates the group that holds the zombies and resets the time at which the last zombie has been spawned at
+    zombies = this.physics.add.group({ classType: Zombie, runChildUpdate: true});
+    zombies.lastSpawned = 0;
 
-    //
+    //Saves in the physics of the scene the function to call when a zombie collides with a bullet
     this.physics.add.collider(zombies,playerPizzaBullets, zombieHitCallback);
 
-    //
+    //Imports, scale and play the music for the scene
     singlePlayerMusic_ = this.sound.add('singlePlayerMusic');
     singlePlayerMusic_.volume = 0.1;
     singlePlayerMusic_.play();
 
-    //
-    scoreText = this.add.text(700, 100, 'text', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
+    //Creates the object that shows the current score
+    scoreText = this.add.text(700, 100, 'Score', { font: '32px Courier', fill: '#00ff00' }).setDepth(3);
 
-    //
+    //Imports the different sounds playable in the scene
     zombieSplatNoise = this.sound.add('zombieHitNoise');
     zombieDeathNoise = this.sound.add('zombieDeath');
     pistolSwoosh = this.sound.add('pistolSwooshNoise');
     emptyGun = this.sound.add('emptyGun');
 
-    //
+    //Scales the volume of the sound effects
     zombieSplatNoise.volume = 0.3;
     zombieDeathNoise.volume = 0.3;
     pistolSwoosh.volume = 0.3;
     emptyGun.volume = 0.3;
     
-    //
+    //Logs the points at which the zombies can spawn at
     spawnpoints = [
     {x:460, y:224},
     {x:1153,y:220}
     ];
 
-    //
+    //Creates the player object and adds to the physics the event when a zombie touches them
     player = this.physics.add.sprite(800, 1000, 'player1');
     this.physics.add.collider(player, zombies, playerHitCallback);
-    player.beers = [];
-    playersPos.push([player.x, player.y]);
-    player.score =0;
-    player.highestScore =0;
 
-    //
+    //Initializes the holder of the beer sprites
+    player.beers = [];
+
+    //Logs the player's position in the global variable playersPos
+    playersPos.push([player.x, player.y]);
+
+    //Resets score and highscore of the player
+    player.score =0;
+
+    //Creates a sprite after the explosion animation declared higher up
     explosion = this.physics.add.sprite(400,300,'explosion').setDepth(3).setScale(4).setVisible(false);
 
-    //
+    //Creates a reticle for the player to control
     reticle = this.physics.add.sprite(800, 700, 'target1');
 
-    //
+    //Creates a sprite for the UI
     playerinfoHolder = this.add.image(200, 1200, 'playerTable');
     playerinfoHolder.setOrigin(0.5, 0.5).setDisplaySize(400, 200).setDepth(3).setVisible(true);
     
-    //Burger Images (Used for Health Tracking)
+    //Creates 6 burgers representing the 3 full or empty health points of the player
     player.hp1Empty = this.add.image(100, 1200, 'emptyBurger');
     player.hp1Full = this.add.image(100, 1200, 'fullBurger');
     player.hp2Empty = this.add.image(200, 1200, 'emptyBurger');
@@ -109,7 +113,7 @@ singleScene.create = function(){
     player.hp3Empty = this.add.image(300, 1200, 'emptyBurger'); 
     player.hp3Full = this.add.image(300, 1200, 'fullBurger');
 
-    //Burger Scaling
+    //Scales and resizes the burgers
     player.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     player.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
     player.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
@@ -117,118 +121,75 @@ singleScene.create = function(){
     player.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     player.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
 
-    //
+    //Imports the 10 states of beer sprite representing the ammunition of the player
     for (let i = 0; i < 11; i++) {
         player.beers.push(this.add.image(400, 1200, 'bullet' + i));
         player.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     }
-    //
+    //Initializes the beers with the full one
     player.beers[10].setVisible(true);
 
-    //
+    //Resizes and scales the reticle and player in the world
     player.setOrigin(0.5, 0.5).setDisplaySize(66, 60).setCollideWorldBounds(true).setDrag(500, 500).setDepth(1);
     reticle.setOrigin(0.5, 0.5).setDisplaySize(25, 25).setCollideWorldBounds(true).setDepth(1).setScale(1);
 
 
-    // Set sprite variables
+    //Resets the player's variable to a starting point
     player.health = 3;
     player.currentBullets = 15;
-    player.MaxBullets = 15;
-    zombies.lastSpawned = 0;
 
     // Set camera properties
     this.cameras.main.zoom = 0.5;
-    //this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0,60,800,600).setName('main');
-
-    // Creates object for input with WASD kets
-    moveKeys = this.input.keyboard.addKeys({
-        'up': Phaser.Input.Keyboard.KeyCodes.W,
-        'down': Phaser.Input.Keyboard.KeyCodes.S,
-        'left': Phaser.Input.Keyboard.KeyCodes.A,
-        'right': Phaser.Input.Keyboard.KeyCodes.D,
-        'reload': Phaser.Input.Keyboard.KeyCodes.R,
-        'pause': Phaser.Input.Keyboard.KeyCodes.P
-    });
-
-    // Enables movement of player with WASD keys
-    this.input.keyboard.on('keydown_W', function (event) {
-        player.setAccelerationY(-800);
-        console.log("w");
-    });
-    this.input.keyboard.on('keydown_S', function (event) {
-        player.setAccelerationY(800);
-        console.log("s");
-    });
-    this.input.keyboard.on('keydown_A', function (event) {
-        player.setAccelerationX(-800);
-        console.log("a");
-    });
-    this.input.keyboard.on('keydown_D', function (event) {
-        player.setAccelerationX(800); 
-        console.log("d");
-    });
     
-    //
+    //If the R key is pressed
     this.input.keyboard.on('keydown_R', function (event) {
+        //If the player didn't have all their ammunition, refills it
         if (player.currentBullets < 15){
-            reloadTime = game.getTime()  + 2000;
-            player.currentBullets = player.MaxBullets;
+            player.currentBullets = 15;
         }
     });
 
-    //
+    //If the P key is pressed
     this.input.keyboard.on('keydown_P', function (event) {
+        //Uses a function to pause the current scene and bring up the pause scene
         goOnPause(singlePlayerMusic_, this.scene.sys.config);
     });
 
-    // Stops player acceleration on uppress of WASD keys
-    this.input.keyboard.on('keyup_W', function (event) {
-        if (moveKeys['down'].isUp)
-            player.setAccelerationY(0);
-    });
-    this.input.keyboard.on('keyup_S', function (event) {
-        if (moveKeys['up'].isUp)
-            player.setAccelerationY(0);
-    });
-    this.input.keyboard.on('keyup_A', function (event) {
-        if (moveKeys['right'].isUp)
-            player.setAccelerationX(0);
-    });
-    this.input.keyboard.on('keyup_D', function (event) {
-        if (moveKeys['left'].isUp)
-            player.setAccelerationX(0);
-    });
 
     // Fires bullet from player on left click of mouse
     this.input.on('pointerdown', function (pointer, time, lastFired) {
-        if (player.active === false)
+        //If the player isn't alive, abort the trigger
+        if (!player.active)
             return;
-        // Get bullet from bullets group
+
+        //Generates a new bullet in the given group
         var bullet = playerPizzaBullets.get().setActive(true).setVisible(true);
         
-        //
+        //If the bullet has successfully been created and the player can still shoot
         if (bullet && player.currentBullets > 0)
         {
-            //
+            //Removes 1 from the ammunition count and fires the bullet with a sound
             player.currentBullets = player.currentBullets - 1;
             pistolSwoosh.play();
             bullet.fire(player, reticle);
         }
 
-        //
-        if (bullet && player.currentBullets == 0){
+        //If the bullet has been created but the player cannot shoot, destroys the bullet and plays empty gun sound
+        if (bullet && player.currentBullets <= 0){
             emptyGun.play();
+            bullet.destroy();
         }
     }, this);
 
+    //When a gamepad has a key pressed on, saves the first one ever connected
     this.input.gamepad.on('down', function (pad, button, index) {
         if (controllers.length <= 0)
             controllers[0] = pad;
     }, this);
     
 
-    // Pointer lock will only work after mousedown
+    //Pointer lock will only work after mousedown
     game.canvas.addEventListener('mousedown', function () {
         game.input.mouse.requestPointerLock();
     });
@@ -240,7 +201,7 @@ singleScene.create = function(){
     }, 0, this);
 
     
-    // Move reticle upon locked pointer move
+    //Move reticle upon locked pointer move
     this.input.on('pointermove', function (pointer) {
         if (this.input.mouse.locked && player.active)
         {
@@ -249,30 +210,43 @@ singleScene.create = function(){
         }
     }, this);
 
-    //map
+    //Created of the level using the tile map and the tile sheet
     var map = this.make.tilemap({key: 'map'});
     var tiles = map.addTilesetImage('tilesheet_complete');
     map.setBaseTileSize(32, 32);
 
-    //layers
+    //Creation of the layers of the level using the map
     var top = map.createStaticLayer('top', tiles, 0, 0).setDepth(2).setScale(1.8);
     var mid = map.createStaticLayer('mid', tiles, 0, 0).setDepth(1).setScale(1.8);
     var bot = map.createStaticLayer('bot', tiles, 0, 0).setScale(1.8);
 
-    //
-    this.physics.add.collider(player, top);
-    top.setCollisionByProperty({collides:true});
-    
-    //
+
+    //Creation of a XMLHttp request to the post.php file to try and initialize the database with a value if inextistant and fetches the highest score logged if existing
+    var xhttp;
+    var name = 'SinglePlayer';
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            player.highestScore = parseInt(this.responseText.split(" ")[1]);
+        }
+    };
+    xhttp.open("POST", "post.php?name=" + name, true);
+    xhttp.send();
+
+    //Initialization of the text variable with the content it needs
+    scoreText.setText("Highest: " + player.highestScore + "\nCurrent: " + player.score);
+
+    //Creation of a routine called every second to update the score from the database
     this.interval = setInterval(() => {
         var xhttp;
-        var name = 'Test';
+        var name = 'SinglePlayer';
         xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                scoreText.setText("Highest:" + this.responseText + "\nCurrent: " + player.score);
                 player.highestScore = parseInt(this.responseText.split(" ")[1]);
+                scoreText.setText("Highest:" + player.highestScore + "\nCurrent: " + player.score);
                 console.log(player.highestScore);
+                console.log(this.responseText);
             }
         };
         xhttp.open("GET", "get.php?name=" + name, true);
@@ -281,85 +255,89 @@ singleScene.create = function(){
 }
 
 /**
+ * Zombie hit callback method
  * 
- * @param {*} zombieHit 
- * @param {*} bulletHit 
+ * Called when a zombie gets hit by a bullet
+ * 
+ * @param {Phaser.GameObject} zombieHit The zombie that has been hit by a bullet
+ * @param {Phaser.GameObject} bulletHit the bullet that hit the zombie
  */
 function zombieHitCallback(zombieHit, bulletHit)
 {
     
-    // Reduce health of zombie
+    //If the two objects are still active
     if (bulletHit.active === true && zombieHit.active === true)
     {
-        //
-        if (player.currentBullets > 0){
-            zombieHit.health = zombieHit.health - 1;
-        }
+        //Reduces the health of the zombie 
+        zombieHit.health = zombieHit.health - 1;
 
-        //
+        //If the zombie runs out of health
         if (zombieHit.health <= 0)
         {
-            //
+            //Awards 10 points to the player
             player.score += 10;
             
-            //
+            //Plays a death sound
             zombieDeathNoise.play();
             
-            //
+            //Moves the explosion sprite on the zombie that died and plays the animation
             explosion.setVisible(true);
             explosion.setPosition(zombieHit.x, zombieHit.y);
-           
-            //
             explosion.play('explode');
             
-            //
+            //Destroys the zombie object
             zombieHit.destroy();
        }
 
-        //
+        //Plays a splatter noise
         zombieSplatNoise.play();
         
-        //
+        //Destroys the bullet
         bulletHit.destroy();
     }
 }
 
 /**
+ * Player hit callback method
  * 
- * @param {*} playerHit 
- * @param {*} bulletHit 
+ * Called when a player is touched by a zombie
+ * 
+ * @param {*} playerHit The player that takes damage
+ * @param {*} zombie The zombie that hit the player
  */
-function playerHitCallback(playerHit, bulletHit)
+function playerHitCallback(playerHit, zombie)
 {
-    //
-    if (bulletHit.active === true && playerHit.active === true)
+    //If the two objects are still active
+    if (zombie.active === true && playerHit.active === true)
     {
+        //Removes a health point to the player
         playerHit.health = playerHit.health - 1;
 
-        //
+        //If the player has 2 health points left, shows the 3rd point as empty
         if (playerHit.health == 2)
         {
             playerHit.hp3Empty.setVisible(true);
             playerHit.hp3Full.setVisible(false);
         }
-        //
+        //If the player has 1 health points left, shows the 2nd point as empty
         else if (playerHit.health == 1)
         {
             playerHit.hp2Empty.setVisible(true);
             playerHit.hp2Full.setVisible(false);
         }
-        //
+        //If the player runs out of health points
         else
         {
+            //Shows the last health point as empty
             playerHit.hp1Empty.setVisible(true);
             playerHit.hp1Full.setVisible(false);
 
-            //
+            //If the player has beaten the highest score logged in the database
             if (playerHit.score > playerHit.highestScore){
 
-            //
+            //Creates a request to the database to update the highest score
             var xhttp;
-            var name = 'Test';
+            var name = 'SinglePlayer';
             xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -369,51 +347,60 @@ function playerHitCallback(playerHit, bulletHit)
             xhttp.open("POST", "post.php?name=" + name + "&score="+ player.score, true);
             xhttp.send();
         }
+            //Deactivates the player
             playerHit.setActive(false);
+            
+            //Removes the player from the playersPos variable by filtering the content and only returning the values that are not the ones of the player that just died
             playersPos.forEach(p =>{
                 if (distance(p[0], p[1], playerHit.x, playerHit.y) <= 5){
                     playersPos = playersPos.filter(entry => entry[0] != playerHit.x)
                 }
             });
+            
+            //Calls the function playerHasDied to finish the game over state
             playerHasDied(playerHit);
     }
 
-        //
+        //Stops the requests to the database
         clearTimeout(this.interval);
 
-        // Destroy bullet
-        bulletHit.destroy();
+        //Destroy zombie
+        zombie.destroy();
     }
 }
 
 /**
+ * Player has died function
  * 
+ * Deactivates the player and calls in the GameOver function to change scenes
  */
 function playerHasDied(player){
     player.setActive(false).setVisible(false);
-    playersPos[0] = null;
     GameOver();
 }
 
 /**
+ * Spawn zombies function
  * 
- * @param {*} zombies 
- * @param {*} spawnpoints 
- * @param {*} time 
+ * Spawn zombies as long as the player is alive at random given locations
+ * 
+ * @param {Phaser.Group} zombies Group that holds the zombies sprites
+ * @param {Array} spawnpoints Locations at which the zombies can be spawned at
+ * @param {number} time Time in ms of the computer (passed from the update function)
  */
 function spawnZombies(zombies, spawnpoints, time) {
-    //
+    //If a player is still alive and the last zombie has been spawned more than 500ms ago
     if ((time - zombies.lastSpawned) > 500 && playersPos.length > 0){
-        //
+        //Resets the timer to the current time
         zombies.lastSpawned = time;
         
         //Creation of a zombie
         var zzz = zombies.get().setActive(true).setVisible(true).setDepth(2);
         
-        //
+        //If successful creation
         if (zzz) {
 
-            //
+            //Selects a random point in the spawnpoint array and sends the zombie there
             point = Math.floor(Math.random() * spawnpoints.length);
             zzz.go(spawnpoints[point].x, spawnpoints[point].y);
             
@@ -422,121 +409,73 @@ function spawnZombies(zombies, spawnpoints, time) {
 }
 
 /**
- * 
- * @param {*} sprite 
- * @param {*} maxVelocity 
- */
-function constrainVelocity(sprite, maxVelocity)
-{
-    //
-    if (!sprite || !sprite.body)
-      return;
-//
-  var angle, currVelocitySqr, vx, vy;
-  
-  //
-  vx = sprite.body.velocity.x;
-  vy = sprite.body.velocity.y;
-
-  //
-  currVelocitySqr = vx * vx + vy * vy;
-
-  //
-  if (currVelocitySqr > maxVelocity * maxVelocity)
-  {
-    angle = Math.atan2(vy, vx);
-    vx = Math.cos(angle) * maxVelocity;
-    vy = Math.sin(angle) * maxVelocity;
-    sprite.body.velocity.x = vx;
-    sprite.body.velocity.y = vy;
-}
-}
-
-/**
- * 
- * @param {*} reticle 
- * @param {*} player 
- */
-function constrainReticle(reticle, player) {
-    // X distance between player & reticle
-    var distX = reticle.x - player.x; 
-    // Y distance between player & reticle
-    var distY = reticle.y - player.y; 
-
-    // Ensures reticle cannot be moved offscreen (player follow)
-    if (distX > 800)
-        reticle.x = player.x + 800;
-    else if (distX < -800)
-        reticle.x = player.x - 800;
-
-    if (distY > 600)
-        reticle.y = player.y + 600;
-    else if (distY < -600)
-        reticle.y = player.y - 600;
-}
-
-/**
- * 
+ * Update funtion
+ *
+ * Called on each new frame calculated
+ *
+ * @param {number} time Time of the computer
+ * @param {number} delta Time that passed since previous frame
  */
 singleScene.update = function(time, delta){
+    //If the player is still alive, logs its position
     if (player.active)
-            playersPos[0] = [player.x, player.y];
+        playersPos[0] = [player.x, player.y];
 
+    //If a controller is still hooked on the machine
     if(controllers.length>0){
-       
+        //If the controller's left stick is out of the set dead zone (20% of the full range), moves the reticle in that direction
         if (controllers[0].axes[0].value >= 0.2 || controllers[0].axes[0].value <= -0.2){
             reticle.x += ( controllers[0].axes[0].value * delta);
         }
         if (controllers[0].axes[1].value >= 0.2 || controllers[0].axes[1].value <= -0.2) {
             reticle.y += (controllers[0].axes[1].value * delta);
         }
+
+        //If the controller's A button is pressed
         if (controllers[0].A){
+            //If the player is dead or the previous shot is too recent, abort
             if (!player.active || !((time - playerPizzaBullets.lastFired) > 100))
                 return;
 
+            //If a shot is possible, resets the timer to current time
             playerPizzaBullets.lastFired = time;
-            // Get bullet from bullets group
+            
+            //Creates a new bullet
             var bullet = playerPizzaBullets.get().setActive(true).setVisible(true);
 
-            //
+            //If creation successful and player has ammunition
             if (bullet && player.currentBullets > 0) {
-                //
+                //Removes  from the ammunition count and fires the bullet with a sound
                 player.currentBullets = player.currentBullets - 1;
                 pistolSwoosh.play();
                 bullet.fire(player, reticle);
             }
 
-            //
-            if (bullet && player.currentBullets == 0) {
+            //If the bullet has been created but the player couldn't shoot, plays empty gun sound and destroys the bullet
+            if (bullet && player.currentBullets <= 0) {
                 emptyGun.play();
+                bullet.destroy();
             }
         }
+
+        //If the controller's X button is pressed
         if(controllers[0].X){
+            //If the player didn't have full ammunition, refills it
             if (player.currentBullets < 15) {
-                reloadTime = game.getTime() + 2000;
-                player.currentBullets = player.MaxBullets;
+                player.currentBullets = 15;
             }
         }
 
     }
     
 
-        // Rotates player to face towards reticle
+        //Rotates player to face towards reticle
         player.rotation = Phaser.Math.Angle.Between(player.x, player.y, reticle.x, reticle.y);
-        
-        /*
-        //Make reticle move with player
-        reticle.body.velocity.x = player.body.velocity.x;
-        reticle.body.velocity.y = player.body.velocity.y;
-        */
-
-        // Constrain velocity of player
-        constrainVelocity(player, 500);
         
         // Make zombie spawn
         spawnZombies(zombies, spawnpoints, time);
 
-        //
+        //Switch on the number of available bullets to update the beer sprite
         switch (player.currentBullets) {
 
             case 0:
@@ -602,20 +541,32 @@ singleScene.update = function(time, delta){
     }
 
 /**
+ * Game over function
+ * 
+ * Stops the music, resumes the paused Menu scene and stops the current scene
  * 
  */
     function GameOver(){
-        //
+        //If a player exists, stops it
         if(singlePlayerMusic_)
         singlePlayerMusic_.stop();
 
-        console.log(game.scene.getScenes());
-        //
+        if(singleScene.timeout)
+        clearTimeout(singleScene.timeout);
+
+        //Stops the current scene and starts the Menu one
         game.scene.resume('Menu');
         game.scene.stop('Single');
-        console.log(game.scene.getScenes());
     }
 
+    /**
+     * Go on pause function
+     * 
+     * Pauses the given scene and brings up the pause scene
+     * 
+     * @param {Phaser.Sound.BaseSoundManager} music Sound manager holding the Scene's music
+     * @param {String} key Name of the scene that has to get paused
+     */
     function goOnPause(music, key){
         if(music)
         music.stop()
