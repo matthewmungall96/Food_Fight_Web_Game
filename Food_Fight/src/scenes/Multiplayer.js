@@ -203,6 +203,10 @@ this.input.gamepad.on('down', function (pad, button, index) {
     player4.rotation = Phaser.Math.Angle.Between(player4.x, player4.y, reticle4.x, reticle4.y);
     updateBeers(player4);
   }
+
+  if(playersPos.length <= 0 && controllers.length >0){
+    GameOverMulti();
+  }
   
 //Controller #1
   if(controllers.length >= 1){
@@ -300,10 +304,10 @@ if(controllers.length >= 2){
 if(controllers.length >= 3){
      //If the controller's left stick is out of the set dead zone (set at 20% of the total range), moves the player's reticle in this direction
      if (controllers[2].axes[0].value >= 0.2 || controllers[2].axes[0].value <= -0.2){
-      reticle3.x += ( controllers[1].axes[0].value * delta);
+      reticle3.x += ( controllers[2].axes[0].value * delta);
     }
     if (controllers[2].axes[1].value >= 0.2 || controllers[2].axes[1].value <= -0.2) {
-     reticle3.y += (controllers[1].axes[1].value * delta);
+     reticle3.y += (controllers[2].axes[1].value * delta);
    }
 
    //If the controller's A button is pressed, shoots a bullet
@@ -900,4 +904,17 @@ if (playersPos.length > 0 && controllers.length >= 2)
       //Reveals the reticle to the player
       reticle4.setVisible(true);
   }
+}
+
+/**
+ * Game over function
+ * 
+ * Stops the music, resumes the paused Menu scene and stops the current scene
+ * 
+ */
+function GameOverMulti() {
+
+  //Stops the current scene and starts the Menu one
+  game.scene.resume('Menu');
+  game.scene.stop('Multi');
 }
