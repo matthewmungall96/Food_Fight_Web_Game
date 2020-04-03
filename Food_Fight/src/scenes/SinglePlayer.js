@@ -102,28 +102,28 @@ singleScene.create = function(){
     reticle = this.physics.add.sprite(800, 700, 'target1');
 
     //Creates a sprite for the UI
-    playerinfoHolder = this.add.image(200, 1200, 'playerTable');
+    playerinfoHolder = this.add.image(800, 1150, 'playerTable');
     playerinfoHolder.setOrigin(0.5, 0.5).setDisplaySize(400, 200).setDepth(3).setVisible(true);
     
     //Creates 6 burgers representing the 3 full or empty health points of the player
-    player.hp1Empty = this.add.image(100, 1200, 'emptyBurger');
-    player.hp1Full = this.add.image(100, 1200, 'fullBurger');
-    player.hp2Empty = this.add.image(200, 1200, 'emptyBurger');
-    player.hp2Full = this.add.image(200, 1200, 'fullBurger');
-    player.hp3Empty = this.add.image(300, 1200, 'emptyBurger'); 
-    player.hp3Full = this.add.image(300, 1200, 'fullBurger');
+    player.hp1Empty = this.add.image(650, 1150, 'emptyBurger');
+    player.hp1Full = this.add.image(650, 1150, 'fullBurger');
+    player.hp2Empty = this.add.image(725, 1150, 'emptyBurger');
+    player.hp2Full = this.add.image(725, 1150, 'fullBurger');
+    player.hp3Empty = this.add.image(800, 1150, 'emptyBurger'); 
+    player.hp3Full = this.add.image(800, 1150, 'fullBurger');
 
     //Scales and resizes the burgers
-    player.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    player.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-    player.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    player.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
-    player.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
-    player.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(true);
+    player.hp1Empty.setOrigin(0.5, 0.5).setDisplaySize(40, 40).setDepth(3).setVisible(false);
+    player.hp1Full.setOrigin(0.5, 0.5).setDisplaySize(40, 40).setDepth(3).setVisible(true);
+    player.hp2Empty.setOrigin(0.5, 0.5).setDisplaySize(40, 40).setDepth(3).setVisible(false);
+    player.hp2Full.setOrigin(0.5, 0.5).setDisplaySize(40, 40).setDepth(3).setVisible(true);
+    player.hp3Empty.setOrigin(0.5, 0.5).setDisplaySize(40, 40).setDepth(3).setVisible(false);
+    player.hp3Full.setOrigin(0.5, 0.5).setDisplaySize(40, 40).setDepth(3).setVisible(true);
 
     //Imports the 10 states of beer sprite representing the ammunition of the player
     for (let i = 0; i < 11; i++) {
-        player.beers.push(this.add.image(400, 1200, 'bullet' + i));
+        player.beers.push(this.add.image(900, 1150, 'bullet' + i));
         player.beers[i].setOrigin(0.5, 0.5).setDisplaySize(75, 75).setDepth(3).setVisible(false);
     }
     //Initializes the beers with the full one
