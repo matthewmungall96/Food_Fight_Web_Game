@@ -25,6 +25,7 @@ pauseScene.create = function () {
     return2Menu.setInteractive();
     return2Menu.on("pointerdown", () => {
         if (game.scene.isPaused('Single')) {
+            clearTimeout(singleScene.interval);
             QuitToMenu("Single");
         }
         else if (game.scene.isPaused('Multi')) {
