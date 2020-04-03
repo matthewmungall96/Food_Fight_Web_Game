@@ -13,7 +13,7 @@ var player4 = null;
  multiScene.preload = function(){
    
    this.load.image("tilesheet_complete", "./dist/assets/map/tilesheet_complete.png");
-   this.load.tilemapTiledJSON("map", "./dist/assets/map/map2.json");
+   this.load.tilemapTiledJSON("map2", "./dist/assets/map/map2.json");
 }
 
 /**
@@ -180,7 +180,7 @@ this.input.gamepad.on('down', function (pad, button, index) {
 
 
     //
-    var map = this.make.tilemap({key: 'map'});
+    var map = this.make.tilemap({key: 'map2'});
     var tiles = map.addTilesetImage('tilesheet_complete');
     map.setBaseTileSize(32, 32);
 
